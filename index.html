@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CoC Services — Pangea_Clasharch</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+<!-- PayPal SDK (solo para bases) -->
+<script src="https://www.paypal.com/sdk/js?client-id=AePArV57KsM4-RHEyqSMDJgjkskAPAuvYicJbaMZKVoWYtO3q1U1-evBJP0DtlOPF1KviyinVCb_lMCS&currency=USD"></script>
+
+<style>
+/* ═══════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════ */
+:root {
+  --fire:     #e63c1e;
+  --gold:     #f5c518;
+  --gold2:    #ffe86a;
+  --dark:     #0d0a06;
+  --dark2:    #161008;
+  --dark3:    #1f1609;
+  --stone:    #2e2214;
+  --stone2:   #4a3618;
+  --text:     #f2e8d0;
+  --textdim:  #b8a07a;
+  --teal:     #00b4d8;
+  --teal2:    #48cae4;
+  --glow:     0 0 14px #f5c51855, 0 0 36px #f5c51820;
+  --fireglow: 0 0 14px #e63c1e88, 0 0 36px #e63c1e30;
+  --tealglow: 0 0 14px #00b4d888, 0 0 36px #00b4d830;
+  --vipglow:  0 0 14px #9b30ff88, 0 0 36px #9b30ff30;
+  --card-bg:  #1a1208ee;
+  --modal-bg: #130f06fc;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUND TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%,  #3d1a0055 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 95%  75%,  #e63c1e18 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at  5%  60%,  #f5c51812 0%, transparent 50%),
+    repeating-linear-gradient(0deg,  transparent 0, transparent 39px, #f5c51806 39px, #f5c51806 40px),
+    repeating-linear-gradient(90deg, transparent 0, transparent 39px, #f5c51806 39px, #f5c51806 40px);
+  pointer-events: none;
+}
+.wrap { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════
+   NAVBAR
+═══════════════════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: linear-gradient(90deg, #0c0904f5 0%, #1b1107f5 50%, #0c0904f5 100%);
+  border-bottom: 2px solid var(--gold);
+  box-shadow: 0 2px 28px #f5c51850, 0 6px 24px #00000099;
+  backdrop-filter: blur(12px);
+}
+.nav-inner {
+  max-width: 1220px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 68px;
+}
+.nav-logo {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.75rem; letter-spacing: 2px;
+  color: var(--gold);
+  text-shadow: var(--glow), 2px 3px 0 #6a3c00;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--fire); text-shadow: var(--fireglow), 2px 3px 0 #6e0f00; }
+.nav-links { display: flex; gap: 6px; list-style: none; }
+.nav-links a {
+  font-family: 'Bangers', cursive;
+  font-size: 1.1rem; letter-spacing: 1.5px;
+  color: var(--textdim); text-decoration: none;
+  padding: 8px 16px; border-radius: 6px;
+  border: 1px solid transparent; transition: all .22s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute;
+  bottom: 5px; left: 16px; right: 16px; height: 2px;
+  background: var(--gold); transform: scaleX(0);
+  transition: transform .22s; box-shadow: var(--glow);
+}
+.nav-links a:hover {
+  color: var(--gold); border-color: #f5c51838;
+  background: #f5c51810; text-shadow: var(--glow);
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* ═══════════════════════════════════
+   HERO
+═══════════════════════════════════ */
+.hero { text-align: center; padding: 84px 24px 64px; }
+.hero-badge {
+  display: inline-block;
+  font-family: 'Bangers', cursive;
+  font-size: .95rem; letter-spacing: 3px;
+  color: var(--fire); border: 1.5px solid var(--fire);
+  padding: 4px 20px; border-radius: 999px; margin-bottom: 20px;
+  animation: pulse-fire 2.4s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+  0%,100% { box-shadow: 0 0 8px #e63c1e55; }
+  50%      { box-shadow: 0 0 24px #e63c1ecc, 0 0 44px #e63c1e44; }
+}
+.hero h1 {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 1; color: var(--gold);
+  text-shadow: 4px 6px 0 #6a3c00, var(--glow);
+  letter-spacing: 3px; margin-bottom: 14px;
+}
+.hero h1 span { color: var(--fire); text-shadow: 4px 6px 0 #6e0f00, var(--fireglow); }
+.hero p {
+  font-size: 1.15rem; color: var(--textdim);
+  max-width: 600px; margin: 0 auto 34px; font-weight: 600;
+}
+.hero-cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* ── GENERIC BUTTONS ── */
+.btn {
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem; letter-spacing: 2px; border: none; cursor: pointer;
+  padding: 14px 34px; border-radius: 8px;
+  transition: transform .18s, box-shadow .18s;
+  text-decoration: none; display: inline-block;
+}
+.btn-gold {
+  background: linear-gradient(135deg, #f5c518, #d49400, #f5c518);
+  color: #1a0e00; box-shadow: 0 4px 18px #f5c51866, inset 0 1px 0 #ffe46a;
+}
+.btn-gold:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 30px #f5c518aa; }
+.btn-fire {
+  background: linear-gradient(135deg, #e63c1e, #a81e00, #e63c1e);
+  color: #fff; box-shadow: 0 4px 18px #e63c1e66, inset 0 1px 0 #ff6644;
+}
+.btn-fire:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 30px #e63c1eaa; }
+
+/* ═══════════════════════════════════
+   SECTIONS
+═══════════════════════════════════ */
+.section-wrap { max-width: 1220px; margin: 0 auto; padding: 60px 24px; }
+.section-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--gold); text-shadow: 3px 4px 0 #6a3c00, var(--glow);
+  letter-spacing: 2px; margin-bottom: 6px;
+}
+.section-sub { font-size: 1rem; color: var(--textdim); margin-bottom: 30px; font-weight: 600; }
+.divider {
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 4px 0 32px; box-shadow: var(--glow);
+}
+
+/* ── "HOW IT WORKS" PILLS ── */
+.how-pills {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px;
+}
+.pill {
+  font-family: 'Bangers', cursive; font-size: .95rem; letter-spacing: 1.5px;
+  padding: 8px 20px; border-radius: 999px;
+  border: 1.5px solid; display: flex; align-items: center; gap: 7px;
+}
+.pill-gold  { border-color: var(--gold); color: var(--gold);  background: #f5c51810; }
+.pill-teal  { border-color: var(--teal); color: var(--teal2); background: #00b4d810; }
+
+/* ═══════════════════════════════════
+   FILTER BAR
+═══════════════════════════════════ */
+.filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.filter-btn {
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 2px;
+  padding: 10px 28px; border-radius: 8px;
+  border: 2px solid var(--stone2); background: var(--dark3);
+  color: var(--textdim); cursor: pointer; transition: all .22s;
+}
+.filter-btn.active, .filter-btn:hover {
+  border-color: var(--gold); color: var(--gold);
+  background: #f5c51812; box-shadow: var(--glow); text-shadow: var(--glow);
+}
+
+/* ═══════════════════════════════════
+   BASE CARDS  (PayPal flow)
+═══════════════════════════════════ */
+#bases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 24px;
+}
+.base-card {
+  background: var(--card-bg); border: 1.5px solid var(--stone2);
+  border-radius: 14px; overflow: hidden;
+  transition: transform .22s, border-color .22s, box-shadow .22s;
+  position: relative; animation: fadeUp .5s ease both;
+}
+.base-card:hover { transform: translateY(-7px); box-shadow: 0 10px 36px #f5c51844; }
+.base-card.vip   { border-color: #6a1faa44; }
+.base-card.vip:hover { border-color: #bb44ff; box-shadow: 0 10px 36px #bb44ff55; }
+
+.base-card-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+  background: linear-gradient(135deg, #1a1230, #2a1a4a, #0e0b1a);
+}
+.base-badge {
+  position: absolute; top: 12px; right: 12px;
+  font-family: 'Bangers', cursive; font-size: .9rem; letter-spacing: 2px;
+  padding: 3px 14px; border-radius: 4px;
+}
+.badge-premium { background: linear-gradient(135deg,#f5c518,#d49400); color:#1a0e00; box-shadow:0 2px 10px #f5c51866; }
+.badge-vip     { background: linear-gradient(135deg,#9b30ff,#5900cc); color:#fff;    box-shadow:0 2px 10px #9b30ff88; }
+
+.base-card-body { padding: 16px 18px 20px; }
+.base-card h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.15rem;
+  color: var(--gold); text-shadow: 1px 2px 0 #6a3c00; margin-bottom: 6px;
+}
+.base-card p { font-size: .88rem; color: var(--textdim); margin-bottom: 14px; line-height: 1.55; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.card-price  { font-family: 'Bangers', cursive; font-size: 1.45rem; color: var(--gold2); text-shadow: 1px 2px 0 #6a3c00; }
+
+/* ── PayPal buy button ── */
+.btn-buy {
+  display: block; width: 100%;
+  font-family: 'Bangers', cursive; font-size: 1.15rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, #f5c518, #d49400, #f5c518);
+  color: #1a0e00; border: none; cursor: pointer;
+  padding: 13px 0; border-radius: 8px;
+  box-shadow: 0 4px 16px #f5c51866, inset 0 1px 0 #ffe46a;
+  transition: transform .18s, box-shadow .18s;
+}
+.btn-buy:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 26px #f5c518aa; }
+.btn-buy-vip {
+  background: linear-gradient(135deg, #9b30ff, #5900cc, #9b30ff);
+  color: #fff; box-shadow: 0 4px 16px #9b30ff66, inset 0 1px 0 #c266ff;
+}
+.btn-buy-vip:hover { box-shadow: 0 8px 26px #9b30ffaa; }
+
+/* ═══════════════════════════════════
+   SERVICE CARDS  (Tawk.to chat flow)
+═══════════════════════════════════ */
+#services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+  gap: 24px;
+}
+.service-card {
+  background: var(--card-bg); border: 1.5px solid var(--stone2);
+  border-radius: 14px; overflow: hidden;
+  transition: transform .22s, border-color .22s, box-shadow .22s;
+  animation: fadeUp .5s ease both;
+}
+.service-card:hover {
+  transform: translateY(-7px); border-color: var(--teal);
+  box-shadow: 0 10px 36px #00b4d844;
+}
+.service-card-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+  background: linear-gradient(135deg, #042035, #0a3a5a, #020e1a);
+}
+.service-card-body { padding: 18px 20px 22px; }
+.service-tag {
+  font-family: 'Bangers', cursive; font-size: .85rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--teal), #0077b6);
+  color: #fff; padding: 2px 12px; border-radius: 4px;
+  display: inline-block; margin-bottom: 10px;
+  box-shadow: 0 2px 8px #00b4d866;
+}
+.service-card h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.3rem;
+  color: var(--teal2); text-shadow: 1px 2px 0 #004466; margin-bottom: 8px;
+}
+.service-card p { font-size: .93rem; color: var(--textdim); line-height: 1.6; margin-bottom: 16px; }
+
+/* Chat highlight inside description */
+.service-card p strong { color: var(--gold2); font-weight: 700; }
+
+/* ── Tawk chat button ── */
+.btn-chat {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  font-family: 'Bangers', cursive; font-size: 1.15rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, #00b4d8, #0077b6, #00b4d8);
+  color: #fff; border: none; cursor: pointer;
+  padding: 13px 0; border-radius: 8px;
+  box-shadow: 0 4px 16px #00b4d866, inset 0 1px 0 #48cae4;
+  transition: transform .18s, box-shadow .18s;
+  animation: pulse-teal 3s ease-in-out infinite;
+}
+.btn-chat:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 26px #00b4d8aa; animation: none; }
+@keyframes pulse-teal {
+  0%,100% { box-shadow: 0 4px 16px #00b4d855; }
+  50%      { box-shadow: 0 4px 24px #00b4d8cc, 0 0 40px #00b4d830; }
+}
+.btn-chat svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ── "Chat" indicator on service card ── */
+.live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Bangers', cursive; font-size: .82rem; letter-spacing: 1.5px;
+  color: var(--teal2); margin-bottom: 14px;
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #00ff88;
+  animation: blink 1.4s ease-in-out infinite;
+  box-shadow: 0 0 6px #00ff88aa;
+}
+@keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
+
+/* ═══════════════════════════════════
+   PAYPAL MODAL
+═══════════════════════════════════ */
+#pp-overlay {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: #000000aa; backdrop-filter: blur(7px);
+  align-items: center; justify-content: center;
+}
+#pp-overlay.open { display: flex; }
+#pp-modal {
+  background: var(--modal-bg); border: 2px solid var(--gold);
+  border-radius: 18px; width: min(520px, 94vw);
+  padding: 34px 28px 28px;
+  box-shadow: 0 0 60px #f5c51840, 0 24px 60px #00000099;
+  position: relative;
+  animation: modalIn .32s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes modalIn {
+  from { opacity:0; transform:scale(.82) translateY(32px); }
+  to   { opacity:1; transform:scale(1)   translateY(0); }
+}
+.modal-close {
+  position: absolute; top: 14px; right: 18px;
+  font-size: 1.6rem; color: var(--textdim);
+  background: none; border: none; cursor: pointer;
+  line-height: 1; transition: color .2s;
+}
+.modal-close:hover { color: var(--fire); }
+.modal-header { text-align: center; margin-bottom: 18px; }
+.modal-icon   { font-size: 2.4rem; display: block; margin-bottom: 6px; }
+.modal-name   {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.55rem; letter-spacing: 2px;
+  color: var(--gold); text-shadow: 2px 3px 0 #6a3c00, var(--glow); margin-bottom: 4px;
+}
+.modal-type-badge {
+  font-family: 'Bangers', cursive; font-size: .9rem; letter-spacing: 2px;
+  padding: 2px 14px; border-radius: 4px; display: inline-block; margin-bottom: 10px;
+}
+.modal-price {
+  font-family: 'Bangers', cursive; font-size: 1.9rem;
+  color: var(--gold2); text-shadow: 1px 2px 0 #6a3c00;
+}
+.modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 18px 0 22px; box-shadow: var(--glow);
+}
+#paypal-button-container { min-height: 50px; }
+.modal-secure { text-align: center; font-size: .8rem; color: var(--textdim); margin-top: 14px; }
+.modal-secure span { color: var(--gold); font-weight: 700; }
+
+/* ═══════════════════════════════════
+   SUCCESS BANNER
+═══════════════════════════════════ */
+#success-banner {
+  display: none; position: fixed;
+  top: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 1000;
+  background: linear-gradient(135deg, #0e2210, #1a3a14);
+  border: 2px solid #25d366; border-radius: 14px;
+  padding: 18px 32px; text-align: center;
+  box-shadow: 0 4px 30px #25d36666; animation: fadeUp .4s ease; max-width: 90vw;
+}
+#success-banner h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.4rem;
+  color: #25d366; letter-spacing: 1px; margin-bottom: 6px;
+}
+#success-banner p { font-size: .93rem; color: var(--text); }
+
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
+footer {
+  text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--stone2);
+  color: var(--textdim); font-size: .88rem;
+  position: relative; z-index: 1;
+}
+footer strong { color: var(--gold); font-family: 'Bangers', cursive; letter-spacing: 1px; }
+
+/* ═══════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero h1    { animation: fadeUp .7s ease both; }
+.hero p     { animation: fadeUp .7s .15s ease both; }
+.hero-cta   { animation: fadeUp .7s .3s  ease both; }
+.hero-badge { animation: fadeUp .5s ease both; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--dark2); }
+::-webkit-scrollbar-thumb { background: var(--stone2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero { padding: 52px 16px 40px; }
+  .section-wrap { padding: 40px 16px; }
+  #pp-modal { padding: 28px 18px 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══ NAVBAR ══ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">⚔️ Clash<span>Pro</span></a>
+    <ul class="nav-links">
+      <li><a href="#bases">Bases</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <span class="hero-badge">⚡ SERVICIOS PROFESIONALES DE COC</span>
+  <h1>DOMINA <span>TU</span> ALDEA</h1>
+  <p>Bases name y bases de leyenda con pago directo por PayPal. Servicios personalizados vía chat en vivo.</p>
+  <div class="hero-cta">
+    <a href="#bases"     class="btn btn-gold">🏰 Ver Bases</a>
+    <a href="#servicios" class="btn btn-fire">⚔️ Ver Servicios</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECCIÓN 1: BASES  (PayPal)
+══════════════════════════════════ -->
+<div class="section-wrap" id="bases">
+  <h2 class="section-title">🏰 Diseño de Bases</h2>
+  <p class="section-sub">Compra directa y segura. Paga con PayPal y recibe tu base al instante por WhatsApp.</p>
+  <div class="divider"></div>
+
+  <div class="how-pills">
+    <span class="pill pill-gold">🛒 Compra con PayPal</span>
+    <span class="pill pill-gold">✅ Confirmación automática</span>
+    <span class="pill pill-gold">📲 Entrega por WhatsApp</span>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">⚔️ Todas</button>
+    <button class="filter-btn" data-filter="premium">⭐ Premium</button>
+    <button class="filter-btn" data-filter="vip">💎 VIP</button>
+  </div>
+
+  <div id="bases-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECCIÓN 2: SERVICIOS  (Chat)
+══════════════════════════════════ -->
+<div class="section-wrap" id="servicios">
+  <h2 class="section-title">⚔️ Servicios de Cuenta</h2>
+  <p class="section-sub">Precio personalizado según tu caso. Habla con nosotros en el chat en vivo y te cotizamos al instante.</p>
+  <div class="divider"></div>
+
+  <div class="how-pills">
+    <span class="pill pill-teal">💬 Abre el chat en vivo</span>
+    <span class="pill pill-teal">🎯 Cotización personalizada</span>
+    <span class="pill pill-teal">⚡ Respuesta inmediata</span>
+  </div>
+
+  <div id="services-grid"></div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contacto">
+  <p>© 2025 <strong>Pangea_clasharch</strong> · Servicios no oficiales · No afiliado con Supercell</p>
+  <p style="margin-top:8px">Soporte en vivo por el <strong>Chat</strong> o <strong>WhatsApp</strong> 💬</p>
+</footer>
+</div><!-- /.wrap -->
+
+<!-- ══ PAYPAL MODAL ══ -->
+<div id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-name-txt">
+  <div id="pp-modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    <div class="modal-header">
+      <span class="modal-icon" id="modal-icon">🏰</span>
+      <div class="modal-name" id="modal-name-txt">Nombre</div>
+      <span class="modal-type-badge" id="modal-type-badge"></span>
+      <div class="modal-price" id="modal-price-txt">$0.00 USD</div>
+    </div>
+    <div class="modal-divider"></div>
+    <div id="paypal-button-container"></div>
+    <p class="modal-secure">🔒 Pago cifrado por <span>PayPal</span> — 100 % seguro</p>
+  </div>
+</div>
+
+<!-- ══ SUCCESS BANNER ══ -->
+<div id="success-banner">
+  <h3>✅ ¡Pago Confirmado!</h3>
+  <p>Redirigiendo a WhatsApp para coordinar tu entrega…</p>
+</div>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════ -->
+<script>
+/* ═══════════════════════════════════════════
+   CONFIG GLOBAL
+═══════════════════════════════════════════ */
+const WA_NUMBER = "18295395068"; // +1 829-539-5068
+
+/* ═══════════════════════════════════════════
+   OBJETO CENTRAL DE IMÁGENES (.jpg)
+   Edita solo aquí para actualizar toda la web.
+═══════════════════════════════════════════ */
+const IMGS = {
+  juegos_clan:      "juegos_clan.jpg",
+  servicioGuerras: "servicio_guerras.jpg",
+  oroCapital:      "oro_capital.jpg",
+  basePremium1:    "base_premium_1.jpg",
+  basePremium2:    "base_premium_2.jpg",
+  basePremium3:    "base_premium_3.jpg",
+  baseVip1:        "base_vip_1.jpg",
+  baseVip2:        "base_vip_2.jpg",
+  baseVip3:        "base_vip_3.jpg",
+};
+
+/* ═══════════════════════════════════════════
+   BASES  →  flujo PayPal
+═══════════════════════════════════════════ */
+const BASES = [
+  {
+    id:"p1", type:"premium", icon:"🏰",
+    name:"Murallas de Piedra I",
+    desc:"Diseño económico anti-2 estrellas ideal para TH10-TH12. Celdas centrales reforzadas para frenar cualquier ataque masivo.",
+    price:2.00, priceLabel:"$2.00 USD",
+    img:IMGS.basePremium1,
+  },
+  {
+    id:"p2", type:"premium", icon:"🛡️",
+    name:"Bastión Dorado",
+    desc:"Base balanceada para guerras y defensa de trofeos. Embudos activos y compartimentos separados. Perfecta para TH13.",
+    price:2.50, priceLabel:"$2.50 USD",
+    img:IMGS.basePremium2,
+  },
+  {
+    id:"p3", type:"premium", icon:"🐉",
+    name:"Fortaleza del Dragón",
+    desc:"Trampa activa con embudos de aire diseñados para TH14. Anti-Drag, anti-Lalo y anti-Super Minion incluido.",
+    price:3.00, priceLabel:"$3.00 USD",
+    img:IMGS.basePremium3,
+  },
+  {
+    id:"v1", type:"vip", icon:"💎",
+    name:"Núcleo Infernal VIP",
+    desc:"Base exclusiva anti-3 estrellas para TH15-TH16. Nunca publicada online. Incluye guía de defensa y seguimiento de ataques.",
+    price:6.00, priceLabel:"$6.00 USD",
+    img:IMGS.baseVip1,
+  },
+  {
+    id:"v2", type:"vip", icon:"🌑",
+    name:"Bastión Oscuro VIP",
+    desc:"Diseño maestro con embudos tricapa. Anti-Laloon, anti-Zap-Drag, anti-Queen Charge. Para jugadores de alto nivel.",
+    price:7.00, priceLabel:"$7.00 USD",
+    img:IMGS.baseVip2,
+  },
+  {
+    id:"v3", type:"vip", icon:"👑",
+    name:"Ciudadela del Caos VIP",
+    desc:"La base más completa para TH16. Actualización mensual garantizada. Utilizada activamente en Legends League.",
+    price:10.00, priceLabel:"$10.00 USD",
+    img:IMGS.baseVip3,
+  },
+];
+
+/* ═══════════════════════════════════════════
+   SERVICIOS  →  flujo Chat (Tawk.to)
+═══════════════════════════════════════════ */
+const SERVICES = [
+  {
+    id:"jc", icon:"🎮",
+    tag:"Juegos del Clan",
+    name:"Completación de Juegos",
+    img: IMGS.juegosClan,
+    desc:`Alcanzamos la <strong>puntuación máxima</strong> en los Juegos del Clan por tu cuenta. Sin que tengas que jugar un solo nivel. El proceso tarda entre 24-48 h y no requiere que cambies tu contraseña. Precio según temporada. <strong>¡Consulta disponibilidad!</strong>`,
+  },
+  {
+    id:"gw", icon:"⚔️",
+    tag:"Guerras de Clanes",
+    name:"Manejo Profesional de Guerras",
+    img: IMGS.servicioGuerras,
+    desc:`Gestionamos tu cuenta durante <strong>Guerras de Clanes y Liga de Guerras</strong>. Nuestros atacantes profesionales aseguran <strong>3 estrellas</strong> en cada ataque con estrategias actualizadas (Lalo, Zap-Drag, Queen Charge). Precio varía según Town Hall y duración del servicio.`,
+  },
+  {
+    id:"gc", icon:"💰",
+    tag:"Capital del Clan",
+    name:"Venta de Oro de la Capital",
+    img: IMGS.oroCapital,
+    desc:`Te proporcionamos <strong>Oro de la Capital</strong> de forma segura para acelerar las mejoras de tu Distrito. El precio <strong>varía según la cantidad solicitada</strong>: a mayor volumen, mejor precio por unidad. Chatea con nosotros y te damos la cotización exacta en minutos.`,
+  },
+];
+
+/* ═══════════════════════════════════════════
+   RENDER: BASES
+═══════════════════════════════════════════ */
+function renderBases(filter = "all") {
+  const grid = document.getElementById("bases-grid");
+  grid.innerHTML = "";
+  const list = filter === "all" ? BASES : BASES.filter(b => b.type === filter);
+
+  list.forEach((b, i) => {
+    const isVip    = b.type === "vip";
+    const typeName = isVip ? "VIP" : "Premium";
+    const btnCls   = isVip ? "btn-buy btn-buy-vip" : "btn-buy";
+
+    const card = document.createElement("div");
+    card.className = `base-card ${isVip ? "vip" : ""}`;
+    card.style.animationDelay = `${i * 0.09}s`;
+
+    card.innerHTML = `
+      <div style="position:relative">
+        <img class="base-card-img" src="${b.img}" alt="${b.name}"
+             onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a,#0e0b1a)';this.src=''">
+        <span class="base-badge ${isVip ? 'badge-vip':'badge-premium'}">${typeName}</span>
+      </div>
+      <div class="base-card-body">
+        <h3>${b.icon} ${b.name}</h3>
+        <p>${b.desc}</p>
+        <div class="card-footer">
+          <span class="card-price">${b.priceLabel}</span>
+        </div>
+        <button class="${btnCls}" onclick='openModal(${JSON.stringify(b)})'>
+          🛒 Comprar Ahora
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER: SERVICIOS
+═══════════════════════════════════════════ */
+function renderServices() {
+  const grid = document.getElementById("services-grid");
+  grid.innerHTML = "";
+
+  SERVICES.forEach((s, i) => {
+    const card = document.createElement("div");
+    card.className = "service-card";
+    card.style.animationDelay = `${i * 0.1}s`;
+
+    card.innerHTML = `
+      <img class="service-card-img" src="${s.img}" alt="${s.name}"
+           onerror="this.style.background='linear-gradient(135deg,#042035,#0a3a5a,#020e1a)';this.src=''">
+      <div class="service-card-body">
+        <span class="service-tag">${s.tag}</span>
+        <div class="live-badge"><span class="live-dot"></span> Soporte en vivo disponible</div>
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+        <button class="btn-chat" onclick="openTawkChat()">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.59 1.11 4.93 2.9 6.61L4 22l4.64-1.55C9.99 20.79 10.99 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/>
+          </svg>
+          Consultar por Chat
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   TAWK.TO  →  abrir chat
+═══════════════════════════════════════════ */
+function openTawkChat() {
+  if (typeof Tawk_API !== "undefined" && typeof Tawk_API.maximize === "function") {
+    Tawk_API.maximize();
+  } else {
+    // Fallback: si el widget aún no cargó, espera y reintenta
+    console.warn("Tawk_API no está lista, reintentando...");
+    setTimeout(() => {
+      if (typeof Tawk_API !== "undefined" && typeof Tawk_API.maximize === "function") {
+        Tawk_API.maximize();
+      }
+    }, 1500);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   MODAL PAYPAL  →  abrir / cerrar
+═══════════════════════════════════════════ */
+let currentProduct = null;
+
+function openModal(product) {
+  currentProduct = product;
+
+  document.getElementById("modal-icon").textContent      = product.icon || "🏰";
+  document.getElementById("modal-name-txt").textContent  = product.name;
+  document.getElementById("modal-price-txt").textContent = product.priceLabel;
+
+  // Badge dinámico
+  const badge = document.getElementById("modal-type-badge");
+  if (product.type === "vip") {
+    badge.textContent = "💎 VIP";
+    badge.style.cssText = "background:linear-gradient(135deg,#9b30ff,#5900cc);color:#fff;box-shadow:0 2px 10px #9b30ff88;padding:3px 16px;border-radius:4px;font-family:'Bangers',cursive;font-size:.9rem;letter-spacing:2px;display:inline-block;margin-bottom:10px;";
+  } else {
+    badge.textContent = "⭐ Premium";
+    badge.style.cssText = "background:linear-gradient(135deg,#f5c518,#d49400);color:#1a0e00;box-shadow:0 2px 10px #f5c51866;padding:3px 16px;border-radius:4px;font-family:'Bangers',cursive;font-size:.9rem;letter-spacing:2px;display:inline-block;margin-bottom:10px;";
+  }
+
+  document.getElementById("pp-overlay").classList.add("open");
+  renderPayPalButtons(product);
+}
+
+function closeModal() {
+  document.getElementById("pp-overlay").classList.remove("open");
+  document.getElementById("paypal-button-container").innerHTML = "";
+  currentProduct = null;
+}
+
+// Click fuera del modal → cerrar
+document.getElementById("pp-overlay").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ═══════════════════════════════════════════
+   PAYPAL BUTTONS
+═══════════════════════════════════════════ */
+function renderPayPalButtons(product) {
+  const container = document.getElementById("paypal-button-container");
+  container.innerHTML = "";
+
+  paypal.Buttons({
+    style: { layout:"vertical", color:"gold", shape:"rect", label:"pay", height:46 },
+
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          description: product.name,
+          amount: { currency_code:"USD", value: product.price.toFixed(2) }
+        }]
+      });
+    },
+
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function() {
+        closeModal();
+        showSuccessAndRedirect(product);
+      });
+    },
+
+    onError: function(err) {
+      console.error("PayPal error:", err);
+      alert("Hubo un problema con el pago. Por favor, intenta de nuevo.");
+    }
+  }).render("#paypal-button-container");
+}
+
+/* ═══════════════════════════════════════════
+   ÉXITO  →  WhatsApp
+═══════════════════════════════════════════ */
+function showSuccessAndRedirect(product) {
+  const banner = document.getElementById("success-banner");
+  banner.style.display = "block";
+
+  const waMsg = encodeURIComponent(
+    `¡Hola! He pagado por ${product.name}. Aquí mi comprobante para coordinar la entrega.`
+  );
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+
+  setTimeout(() => {
+    banner.style.display = "none";
+    window.open(waUrl, "_blank");
+  }, 2800);
+}
+
+/* ═══════════════════════════════════════════
+   FILTROS DE BASES
+═══════════════════════════════════════════ */
+function initFilters() {
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderBases(btn.dataset.filter);
+    });
+  });
+}
+
+/* ── INIT ── */
+renderBases("all");
+renderServices();
+initFilters();
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69e8380412cc6f1c3c722f4b/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>
