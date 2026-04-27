@@ -536,52 +536,70 @@ const WA_NUMBER = "18295395068"; // +1 829-539-5068
 
 /* ═══════════════════════════════════════════
    OBJETO CENTRAL DE IMÁGENES (.jpg)
+   Todas las fotos viven en la carpeta  img/
    Edita solo aquí para actualizar toda la web.
 ═══════════════════════════════════════════ */
 const IMGS = {
-  // ── Servicios ──────────────────────────────────────────────
-  juegosClan:      "juegos_clan.jpg",       // Juegos del Clan
-  servicioGuerras: "servicio_guerras.jpg",  // Guerras de Clanes
-  oroCapital:      "oro_capital.jpg",       // Oro de la Capital
+  // ── Servicios ────────────────────────────────────────────
+  juegosClan:      "img/juegos_clan.jpg",       // Juegos del Clan
+  servicioGuerras: "img/servicio_guerras.jpg",  // Guerras de Clanes
+  oroCapital:      "img/oro_capital.jpg",       // Oro de la Capital
 
-  // ── Bases ──────────────────────────────────────────────────
-  basePremium1:    "base_premium_1.jpg",    // Bases Name Premium
-  baseVip1:        "base_vip_1.jpg",        // Bases VIP
-
-  // ── Para agregar una imagen nueva en el futuro ──────────────
-  // Sigue el mismo patrón:  clave: "nombre_del_archivo.jpg",
-  // Luego úsala en BASES o SERVICES con  img: IMGS.tuClave
+  // ── Bases ────────────────────────────────────────────────
+  basePremium1:    "img/base_premium_1.jpg",    // Base Premium #1
+  basePremium2:    "img/base_premium_2.jpg",    // Base Premium #2
+  basePremium3:    "img/base_premium_3.jpg",    // Base Premium #3
+  baseVip1:        "img/base_vip_1.jpg",        // Base VIP #1
+  baseVip2:        "img/base_vip_2.jpg",        // Base VIP #2
+  baseVip3:        "img/base_vip_3.jpg",        // Base VIP #3
 };
 
 /* ═══════════════════════════════════════════
    BASES  →  flujo PayPal
 ═══════════════════════════════════════════ */
 const BASES = [
-
-  // ── BASE PREMIUM ────────────────────────────────────────────
   {
-    id:         "p1",
-    type:       "premium",
-    icon:       "🏰",
-    name:       "Bases Name Premium",
-    desc:       "Bases personalizadas con tu nombre formado por tropas dentro de la aldea. Diseño exclusivo, elegante y económico. Perfectas para destacar en tu clan sin gastar de más.",
-    price:      2.00,
-    priceLabel: "$2.00 USD",
-    img:        IMGS.basePremium1,
+    id:"p1", type:"premium", icon:"🏰",
+    name:"Murallas de Piedra I",
+    desc:"Diseño económico anti-2 estrellas ideal para TH10-TH12. Celdas centrales reforzadas para frenar cualquier ataque masivo.",
+    price:2.00, priceLabel:"$2.00 USD",
+    img:IMGS.basePremium1,
   },
-
-  // ── BASE VIP ────────────────────────────────────────────────
   {
-    id:         "v1",
-    type:       "vip",
-    icon:       "💎",
-    name:       "Bases VIP",
-    desc:       "Bases name de alto nivel con diseño caligráfico elaborado, usando tropas premium. Exclusivas, nunca repetidas y con acabado profesional. Para clashers que quieren lo mejor.",
-    price:      6.00,
-    priceLabel: "$6.00 USD",
-    img:        IMGS.baseVip1,
+    id:"p2", type:"premium", icon:"🛡️",
+    name:"Bastión Dorado",
+    desc:"Base balanceada para guerras y defensa de trofeos. Embudos activos y compartimentos separados. Perfecta para TH13.",
+    price:2.50, priceLabel:"$2.50 USD",
+    img:IMGS.basePremium2,
   },
-
+  {
+    id:"p3", type:"premium", icon:"🐉",
+    name:"Fortaleza del Dragón",
+    desc:"Trampa activa con embudos de aire diseñados para TH14. Anti-Drag, anti-Lalo y anti-Super Minion incluido.",
+    price:3.00, priceLabel:"$3.00 USD",
+    img:IMGS.basePremium3,
+  },
+  {
+    id:"v1", type:"vip", icon:"💎",
+    name:"Núcleo Infernal VIP",
+    desc:"Base exclusiva anti-3 estrellas para TH15-TH16. Nunca publicada online. Incluye guía de defensa y seguimiento de ataques.",
+    price:6.00, priceLabel:"$6.00 USD",
+    img:IMGS.baseVip1,
+  },
+  {
+    id:"v2", type:"vip", icon:"🌑",
+    name:"Bastión Oscuro VIP",
+    desc:"Diseño maestro con embudos tricapa. Anti-Laloon, anti-Zap-Drag, anti-Queen Charge. Para jugadores de alto nivel.",
+    price:7.00, priceLabel:"$7.00 USD",
+    img:IMGS.baseVip2,
+  },
+  {
+    id:"v3", type:"vip", icon:"👑",
+    name:"Ciudadela del Caos VIP",
+    desc:"La base más completa para TH16. Actualización mensual garantizada. Utilizada activamente en Legends League.",
+    price:10.00, priceLabel:"$10.00 USD",
+    img:IMGS.baseVip3,
+  },
 ];
 
 /* ═══════════════════════════════════════════
@@ -823,46 +841,58 @@ s0.parentNode.insertBefore(s1,s0);
 </html>
 
 <!--
-════════════════════════════════════════════════════════════════
+════════════════════════════════════════════════════════════════════
   📸  GUÍA: CÓMO AGREGAR UNA IMAGEN NUEVA (paso a paso)
-════════════════════════════════════════════════════════════════
+════════════════════════════════════════════════════════════════════
 
-  PASO 1 — Prepara el archivo
-  ───────────────────────────
+  PASO 1 — Prepara y ubica el archivo
+  ─────────────────────────────────────
   • El archivo debe estar en formato  .jpg
-  • Colócalo en la MISMA carpeta donde está este index.html
-  • Usa un nombre sin espacios ni caracteres especiales
-    ✅  base_premium_2.jpg
-    ❌  base premium 2.jpg  /  basé(2).jpg
+  • Colócalo DENTRO de la carpeta  img/  que está junto a index.html
+
+  Estructura correcta del proyecto:
+      mi-proyecto/
+      ├── index.html           ← este archivo
+      └── img/
+          ├── base_premium_1.jpg
+          ├── base_vip_1.jpg
+          ├── juegos_clan.jpg
+          └── tu_nueva_imagen.jpg   ← aquí va tu nueva foto
+
+  Usa un nombre sin espacios ni caracteres especiales:
+      ✅  base_premium_2.jpg
+      ❌  base premium 2.jpg  /  basé(2).jpg
 
   PASO 2 — Registra la imagen en el objeto IMGS
-  ──────────────────────────────────────────────
-  Busca en el <script> la sección que dice:
+  ───────────────────────────────────────────────
+  Busca en el <script> la sección:
       const IMGS = { ... };
 
-  Agrega una línea nueva siguiendo el patrón:
-      clave: "nombre_del_archivo.jpg",
+  Agrega una línea nueva con el prefijo  img/  obligatorio:
+      clave: "img/nombre_del_archivo.jpg",
 
   Ejemplo — si tu nuevo archivo se llama  base_premium_2.jpg :
-      basePremium2: "base_premium_2.jpg",
+      basePremium2: "img/base_premium_2.jpg",
 
   PASO 3 — Úsala en una tarjeta de base
   ───────────────────────────────────────
   Busca la sección  const BASES = [ ... ];
-  Copia uno de los bloques existentes y pégalo después del último,
-  cambiando los valores que necesites:
+  Copia uno de los bloques existentes, pégalo al final de la lista
+  (antes del  ];  de cierre) y edita los valores:
 
       {
-        id:         "p2",           ← ID único (no repetir)
-        type:       "premium",      ← "premium"  o  "vip"
-        icon:       "🛡️",           ← Emoji que aparece en el título
-        name:       "Mi Nueva Base",
-        desc:       "Descripción de la base.",
-        price:      3.50,           ← Precio numérico (para PayPal)
-        priceLabel: "$3.50 USD",    ← Precio que ve el usuario
-        img:        IMGS.basePremium2,  ← La clave que pusiste en PASO 2
+        id:         "p2",               ← ID único, no repetir
+        type:       "premium",          ← "premium"  o  "vip"
+        icon:       "🛡️",               ← Emoji del título
+        name:       "Nombre de la Base",
+        desc:       "Descripción breve de la base.",
+        price:      3.50,               ← Precio numérico para PayPal
+        priceLabel: "$3.50 USD",        ← Precio visible en la tarjeta
+        img:        IMGS.basePremium2,  ← La clave del PASO 2
       },
 
-  ¡Guarda el archivo y recarga el navegador!  ✅
-════════════════════════════════════════════════════════════════
+  ⚠️  Recuerda poner una coma  ,  al final de cada bloque.
+
+  ¡Guarda index.html, sube los cambios a GitHub y listo!  ✅
+════════════════════════════════════════════════════════════════════
 -->
