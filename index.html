@@ -212,6 +212,8 @@ nav {
 .base-card:hover { transform: translateY(-7px); box-shadow: 0 10px 36px #f5c51844; }
 .base-card.vip   { border-color: #6a1faa44; }
 .base-card.vip:hover { border-color: #bb44ff; box-shadow: 0 10px 36px #bb44ff55; }
+.base-card.comp  { border-color: #7a1a0044; }
+.base-card.comp:hover { border-color: var(--fire); box-shadow: 0 10px 36px #e63c1e55; }
 
 .base-card-img {
   width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
@@ -224,6 +226,7 @@ nav {
 }
 .badge-premium { background: linear-gradient(135deg,#f5c518,#d49400); color:#1a0e00; box-shadow:0 2px 10px #f5c51866; }
 .badge-vip     { background: linear-gradient(135deg,#9b30ff,#5900cc); color:#fff;    box-shadow:0 2px 10px #9b30ff88; }
+.badge-comp    { background: linear-gradient(135deg,#e63c1e,#a81e00); color:#fff;    box-shadow:0 2px 10px #e63c1e88; }
 
 .base-card-body { padding: 16px 18px 20px; }
 .base-card h3 {
@@ -436,7 +439,7 @@ footer strong { color: var(--gold); font-family: 'Bangers', cursive; letter-spac
 <!-- ══ NAVBAR ══ -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="#">⚔️ Clash<span>Pro</span></a>
+    <a class="nav-logo" href="#">⚔️ Pangea <span>Clasharch</span></a>
     <ul class="nav-links">
       <li><a href="#bases">Bases</a></li>
       <li><a href="#servicios">Servicios</a></li>
@@ -472,6 +475,7 @@ footer strong { color: var(--gold); font-family: 'Bangers', cursive; letter-spac
 
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">⚔️ Todas</button>
+    <button class="filter-btn" data-filter="competitiva">🏆 Competitiva</button>
     <button class="filter-btn" data-filter="premium">⭐ Premium</button>
     <button class="filter-btn" data-filter="vip">💎 VIP</button>
   </div>
@@ -542,10 +546,9 @@ const WA_NUMBER = "18295395068"; // +1 829-539-5068
 const IMGS = {
   // ── Servicios ─────────────────────────────────────────────
   juegosClan:      "img/juegos_clan.jpg",       // Juegos del Clan
-  servicioGuerras: "img/servicio_guerras.jpg",  // Guerras de Clanes
-  oroCapital:      "img/oro_capital.jpg",       // Oro de la Capital
 
   // ── Bases ─────────────────────────────────────────────────
+  baseComp1:       "img/th18_comp.jpg",         // Bases Competitivas TH18
   basePremium1:    "img/base_premium_1.jpg",    // Bases Name Premium
   baseVip1:        "img/base_vip_1.jpg",        // Bases VIP
 };
@@ -555,7 +558,19 @@ const IMGS = {
 ═══════════════════════════════════════════ */
 const BASES = [
 
-  // ── BASE PREMIUM ─────────────────────────────────────────────
+  // ── BASES COMPETITIVAS TH18 (nueva categoría) ─────────────
+  {
+    id:         "c1",
+    type:       "competitiva",
+    icon:       "🏆",
+    name:       "Bases Competitivas TH18",
+    desc:       "Bases diseñadas específicamente para el Ayuntamiento 18. Estrategias anti-3 estrellas actualizadas para el meta competitivo más reciente. Ideales para Legends League y guerras de alto nivel.",
+    price:      15.00,
+    priceLabel: "$15.00 USD",
+    img:        IMGS.baseComp1,        // → img/th18_comp.jpg
+  },
+
+  // ── BASES NAME PREMIUM ────────────────────────────────────
   {
     id:         "p1",
     type:       "premium",
@@ -564,10 +579,10 @@ const BASES = [
     desc:       "Bases personalizadas con tu nombre formado por tropas dentro de la aldea. Diseño exclusivo, elegante y económico. Perfectas para destacar en tu clan sin gastar de más.",
     price:      4.00,
     priceLabel: "$4.00 USD",
-    img:        IMGS.basePremium1,   // → img/base_premium_1.jpg
+    img:        IMGS.basePremium1,     // → img/base_premium_1.jpg
   },
 
-  // ── BASE VIP ─────────────────────────────────────────────────
+  // ── BASES VIP ────────────────────────────────────────────
   {
     id:         "v1",
     type:       "vip",
@@ -576,7 +591,7 @@ const BASES = [
     desc:       "Bases name de alto nivel con diseño caligráfico elaborado, usando tropas premium. Exclusivas, nunca repetidas y con acabado profesional. Para clashers que quieren lo mejor.",
     price:      10.00,
     priceLabel: "$10.00 USD",
-    img:        IMGS.baseVip1,       // → img/base_vip_1.jpg
+    img:        IMGS.baseVip1,         // → img/base_vip_1.jpg
   },
 
 ];
@@ -585,27 +600,18 @@ const BASES = [
    SERVICIOS  →  flujo Chat (Tawk.to)
 ═══════════════════════════════════════════ */
 const SERVICES = [
+
+  // ── JUEGOS DEL CLAN ───────────────────────────────────────
   {
-    id:"jc", icon:"🎮",
-    tag:"Juegos del Clan",
-    name:"Completación de Juegos",
-    img: IMGS.juegosClan,
-    desc:`Alcanzamos la <strong>puntuación máxima</strong> en los Juegos del Clan por tu cuenta. Sin que tengas que jugar un solo nivel. El proceso tarda entre 24-48 h y no requiere que cambies tu contraseña. Precio según temporada. <strong>¡Consulta disponibilidad!</strong>`,
+    id:   "jc",
+    icon: "🎮",
+    tag:  "Juegos del Clan",
+    name: "Maximización de Recompensas: Juegos del Clan",
+    img:  IMGS.juegosClan,             // → img/juegos_clan.jpg
+    desc: `Alcanzamos la <strong>puntuación máxima</strong> en los Juegos del Clan por tu cuenta. Sin que tengas que jugar un solo nivel. El proceso tarda entre 24-48 h y no requiere que cambies tu contraseña. <strong>¡Consulta disponibilidad!</strong>`,
+    priceLabel: "4 USD por cada 10,000 puntos",
   },
-  {
-    id:"gw", icon:"⚔️",
-    tag:"Guerras de Clanes",
-    name:"Manejo Profesional de Guerras",
-    img: IMGS.servicioGuerras,
-    desc:`Gestionamos tu cuenta durante <strong>Guerras de Clanes y Liga de Guerras</strong>. Nuestros atacantes profesionales aseguran <strong>3 estrellas</strong> en cada ataque con estrategias actualizadas (Lalo, Zap-Drag, Queen Charge). Precio varía según Town Hall y duración del servicio.`,
-  },
-  {
-    id:"gc", icon:"💰",
-    tag:"Capital del Clan",
-    name:"Venta de Oro de la Capital",
-    img: IMGS.oroCapital,
-    desc:`Te proporcionamos <strong>Oro de la Capital</strong> de forma segura para acelerar las mejoras de tu Distrito. El precio <strong>varía según la cantidad solicitada</strong>: a mayor volumen, mejor precio por unidad. Chatea con nosotros y te damos la cotización exacta en minutos.`,
-  },
+
 ];
 
 /* ═══════════════════════════════════════════
@@ -617,19 +623,36 @@ function renderBases(filter = "all") {
   const list = filter === "all" ? BASES : BASES.filter(b => b.type === filter);
 
   list.forEach((b, i) => {
-    const isVip    = b.type === "vip";
-    const typeName = isVip ? "VIP" : "Premium";
-    const btnCls   = isVip ? "btn-buy btn-buy-vip" : "btn-buy";
+    const isVip   = b.type === "vip";
+    const isComp  = b.type === "competitiva";
+
+    // Badge label shown on the card image corner
+    const typeName = isVip  ? "VIP"
+                   : isComp ? "Competitiva"
+                   :          "Premium";
+
+    // Buy button colour: gold (premium/comp) or purple (vip)
+    const btnCls = isVip ? "btn-buy btn-buy-vip" : "btn-buy";
+
+    // Card border class
+    const cardClass = isVip  ? "base-card vip"
+                    : isComp ? "base-card comp"
+                    :          "base-card";
+
+    // Badge CSS class
+    const badgeCls = isVip  ? "badge-vip"
+                   : isComp ? "badge-comp"
+                   :          "badge-premium";
 
     const card = document.createElement("div");
-    card.className = `base-card ${isVip ? "vip" : ""}`;
+    card.className = cardClass;
     card.style.animationDelay = `${i * 0.09}s`;
 
     card.innerHTML = `
       <div style="position:relative">
         <img class="base-card-img" src="${b.img}" alt="${b.name}"
              onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a,#0e0b1a)';this.src=''">
-        <span class="base-badge ${isVip ? 'badge-vip':'badge-premium'}">${typeName}</span>
+        <span class="base-badge ${badgeCls}">${typeName}</span>
       </div>
       <div class="base-card-body">
         <h3>${b.icon} ${b.name}</h3>
@@ -666,6 +689,7 @@ function renderServices() {
         <div class="live-badge"><span class="live-dot"></span> Soporte en vivo disponible</div>
         <h3>${s.name}</h3>
         <p>${s.desc}</p>
+        ${s.priceLabel ? `<div class="card-price" style="margin-bottom:14px">${s.priceLabel}</div>` : ""}
         <button class="btn-chat" onclick="openTawkChat()">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.02 2 11c0 2.59 1.11 4.93 2.9 6.61L4 22l4.64-1.55C9.99 20.79 10.99 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/>
@@ -707,11 +731,14 @@ function openModal(product) {
   document.getElementById("modal-name-txt").textContent  = product.name;
   document.getElementById("modal-price-txt").textContent = product.priceLabel;
 
-  // Badge dinámico
+  // Badge dinámico según tipo
   const badge = document.getElementById("modal-type-badge");
   if (product.type === "vip") {
     badge.textContent = "💎 VIP";
     badge.style.cssText = "background:linear-gradient(135deg,#9b30ff,#5900cc);color:#fff;box-shadow:0 2px 10px #9b30ff88;padding:3px 16px;border-radius:4px;font-family:'Bangers',cursive;font-size:.9rem;letter-spacing:2px;display:inline-block;margin-bottom:10px;";
+  } else if (product.type === "competitiva") {
+    badge.textContent = "🏆 Competitiva";
+    badge.style.cssText = "background:linear-gradient(135deg,#e63c1e,#a81e00);color:#fff;box-shadow:0 2px 10px #e63c1e88;padding:3px 16px;border-radius:4px;font-family:'Bangers',cursive;font-size:.9rem;letter-spacing:2px;display:inline-block;margin-bottom:10px;";
   } else {
     badge.textContent = "⭐ Premium";
     badge.style.cssText = "background:linear-gradient(135deg,#f5c518,#d49400);color:#1a0e00;box-shadow:0 2px 10px #f5c51866;padding:3px 16px;border-radius:4px;font-family:'Bangers',cursive;font-size:.9rem;letter-spacing:2px;display:inline-block;margin-bottom:10px;";
