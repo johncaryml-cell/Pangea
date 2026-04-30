@@ -793,20 +793,23 @@ function renderPayPalButtons(product) {
 }
 
 /* ═══════════════════════════════════════════
-   ÉXITO  →  WhatsApp
+   ÉXITO  →  gracias.html  (con parámetro ?servicio=)
+   La página gracias.html se encarga de redirigir a WhatsApp.
 ═══════════════════════════════════════════ */
 function showSuccessAndRedirect(product) {
   const banner = document.getElementById("success-banner");
   banner.style.display = "block";
 
-  const waMsg = encodeURIComponent(
-    `¡Hola! He pagado por ${product.name}. Aquí mi comprobante para coordinar la entrega.`
-  );
-  const waUrl = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+  // Codificar el nombre del producto para usarlo en la URL
+  // (reemplaza espacios con _ para una URL más limpia)
+  const serviceParam = encodeURIComponent(product.name.replace(/\s+/g, "_"));
+  const thanksUrl    = `gracias.html?servicio=${serviceParam}`;
 
+  // Dar 2.8 s para que el usuario vea el banner de confirmación
+  // y luego redirigir a la página de agradecimiento
   setTimeout(() => {
     banner.style.display = "none";
-    window.open(waUrl, "_blank");
+    window.location.href = thanksUrl;
   }, 2800);
 }
 
