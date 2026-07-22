@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pangea Clasharch — Panel</title>
+<title>Clash Services — Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet"/>
 <!-- PayPal SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=AePArV57KsM4-RHEyqSMDJgjkskAPAuvYicJbaMZKVoWYtO3q1U1-evBJP0DtlOPF1KviyinVCb_lMCS&currency=USD"></script>
@@ -13,12 +13,13 @@
    CSS VARIABLES — edita aquí para cambiar fondos
 ══════════════════════════════════════════ */
 :root {
-  --bg-login:     url('img/comunidad.jpg') center/cover no-repeat;
-  --bg-capital:   url('img/oro_capital.jpg') center/cover no-repeat;
-  --bg-ll:        url('img/servicio_guerras.jpg') center/cover no-repeat;
-  --bg-muros:     url('img/juegos_clan.jpg') center/cover no-repeat;
-  --bg-bases:     url('img/base_premium_1.jpg') center/cover no-repeat;
-  --bg-cuentas:   url('img/th18_comp.jpg') center/cover no-repeat;
+  /* ─── FONDOS: reemplaza cada archivo dentro de tu carpeta img/ en GitHub ─── */
+  --bg-login:     url('img/fondo_general.jpg')       center/cover no-repeat; /* Pantalla de login/registro */
+  --bg-capital:   url('img/fondo_cap.jpg')      center/cover no-repeat; /* Vista "Capital del Clan" */
+  --bg-ll:        url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Bases Liga Legendaria" */
+  --bg-muros:     url('img/fondo_general.jpg')      center/cover no-repeat; /* Vista "Subida de Muros" */
+  --bg-bases:     url('img/fondo_general.jpg')       center/cover no-repeat; /* Encabezado de "Bases VIP" */
+  --bg-cuentas:   url('img/fondo_general.jpg')        center/cover no-repeat; /* Encabezado de "Cuentas" */
 
   --gold:   #f5c518;
   --gold2:  #ffe86a;
@@ -784,6 +785,23 @@ body {
 .section-header h2 .r { color: var(--fire); }
 .section-header p { font-size: .92rem; color: var(--textdim); padding-bottom: 18px; }
 
+/* Variante con imagen de fondo (usada en Bases VIP y Cuentas) */
+.section-header-bg {
+  position: relative;
+  border-bottom: none;
+  padding: 40px 28px 32px;
+  margin: 0 0 4px;
+  background-size: cover;
+  background-position: center;
+}
+.section-header-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0d0a06bb 0%, #0d0a06ee 75%, #0d0a06 100%);
+}
+.section-header-bg > * { position: relative; z-index: 1; }
+.section-header-bg p { padding-bottom: 0; }
+
 /* FILTER BAR */
 .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; padding: 18px 28px 0; }
 .filter-btn {
@@ -839,7 +857,7 @@ body {
 <div id="login-overlay">
   <div class="login-box">
     <div class="login-logo">
-      <span class="y">Pangea</span> <span class="r">Clasharch</span>
+      <span class="y">Clash</span> <span class="r">Services</span>
     </div>
     <p class="login-sub">⚔️ PANEL DE SERVICIOS ⚔️</p>
     <div class="login-error" id="login-error"></div>
@@ -858,7 +876,7 @@ body {
   <!-- TOP NAVBAR -->
   <nav id="navbar">
     <div class="nb-logo" onclick="navigate('home')">
-      <span class="y">PANGEA</span> <span class="r">CLASHARCH</span>
+      <span class="y">CLASH</span> <span class="r">SERVICES</span>
       <span class="badge">PANEL</span>
     </div>
 
@@ -871,7 +889,7 @@ body {
       <div class="nb-item" data-view="capital"><span class="icon">💰</span> Capital</div>
       <div class="nb-item" data-view="ll"><span class="icon">⚔️</span> Liga Leg.</div>
       <div class="nb-item" data-view="muros"><span class="icon">🧱</span> Muros</div>
-      <div class="nb-item" data-view="bases"><span class="icon">🏰</span> Bases</div>
+      <div class="nb-item" data-view="bases"><span class="icon">🏰</span> Bases VIP</div>
       <div class="nb-item" data-view="cuentas"><span class="icon">👑</span> Cuentas</div>
       <div class="nb-item" data-view="soporte"><span class="icon">💬</span> Soporte</div>
       <div class="nb-item" data-view="referencias"><span class="icon">⭐</span> Referencias</div>
@@ -894,18 +912,18 @@ body {
 
         <div class="home-hero">
           <span class="home-hero-tag">⚡ PANEL DE SERVICIOS</span>
-          <h1>Bienvenido de nuevo, <span class="y" id="home-user-name">Clasher</span> 👋</h1>
+          <h1>Bienvenido a <span class="y">Clash Services</span>, <span id="home-user-name">Clasher</span> 👋</h1>
           <p class="home-hero-sub">
             Tu base, tu clan y tus cuentas — todo gestionado en un solo lugar.
-            <strong>Elige un servicio abajo</strong> para cotizar, comprar o dar seguimiento a tu pedido.
+            <strong>Elige el servicio abajo</strong> para cotizar, comprar o dar seguimiento a tu pedido.
           </p>
         </div>
 
         <div class="home-banner">
           <span class="coup-icon">🎁</span>
           <div class="home-banner-text">
-            <strong>¡Por cada 3 compras, recibe un cupón de descuento!</strong><br>
-            Acumula tus servicios y escríbenos para reclamar tu recompensa 🏆
+            <strong>Por cada 3 compras recibe un cupón de descuento 🎟️.</strong><br>
+            Toma captura de tus 3 compras y guárdalas como evidencia. Reclama vía WhatsApp.
           </div>
           <a href="https://wa.me/18295395068?text=Quiero%20reclamar%20mi%20cupón%20de%20descuento" target="_blank" class="btn-wa-big" style="white-space:nowrap;font-size:1rem;padding:10px 20px;">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -918,31 +936,31 @@ body {
           <div class="home-card" onclick="navigate('capital')">
             <div class="card-icon">💰</div>
             <div class="card-title">Capital del Clan</div>
-            <div class="card-sub">Mejora tus distritos rápido</div>
+            <div class="card-sub">Maxeo completo desde $40</div>
             <div class="card-arrow">→</div>
           </div>
           <div class="home-card" onclick="navigate('ll')">
             <div class="card-icon">⚔️</div>
-            <div class="card-title">Liga Legendaria</div>
-            <div class="card-sub">3 estrellas garantizadas</div>
+            <div class="card-title">Bases Liga Legendaria</div>
+            <div class="card-sub">Desde $4 USD</div>
             <div class="card-arrow">→</div>
           </div>
           <div class="home-card" onclick="navigate('muros')">
             <div class="card-icon">🧱</div>
             <div class="card-title">Subida de Muros</div>
-            <div class="card-sub">1–10 USD por nivel</div>
+            <div class="card-sub">Desde $1 hasta $10 USD</div>
             <div class="card-arrow">→</div>
           </div>
           <div class="home-card" onclick="navigate('bases')">
             <div class="card-icon">🏰</div>
-            <div class="card-title">Bases Name</div>
+            <div class="card-title">Bases VIP</div>
             <div class="card-sub">Pago directo con PayPal</div>
             <div class="card-arrow">→</div>
           </div>
           <div class="home-card" onclick="navigate('cuentas')">
             <div class="card-icon">👑</div>
-            <div class="card-title">Venta de Cuentas</div>
-            <div class="card-sub">Cuentas selectas TH+</div>
+            <div class="card-title">Cuentas</div>
+            <div class="card-sub">Próximamente nuevas opciones</div>
             <div class="card-arrow">→</div>
           </div>
           <div class="home-card" onclick="navigate('referencias')">
@@ -953,23 +971,11 @@ body {
           </div>
         </div>
 
-        <div class="home-section-title">📰 Novedades &amp; Servicio Destacado</div>
-        <div class="home-featured">
-          <div class="featured-card">
-            <div class="featured-eyebrow">🔥 Recién llegado</div>
-            <h3>Nuevas Bases VIP de temporada</h3>
-            <p>Diseños caligráficos exclusivos, nunca repetidos, pensados para el meta actual de guerra y Legends League.</p>
-            <ul class="featured-list">
-              <li>Base VIP calidad premium <span class="fl-price">$10.00</span></li>
-              <li>Base competitiva TH18 <span class="fl-price">$15.00</span></li>
-            </ul>
-            <button class="btn-featured" onclick="navigate('bases')">Ver Bases Name</button>
-          </div>
-          <div class="featured-card spotlight">
-            <div class="featured-eyebrow">⭐ Servicio destacado</div>
-            <h3>Liga Legendaria — 3 estrellas garantizadas</h3>
-            <p>Nuestro equipo se especializa en ataques profesionales (Lalo, Zap-Drag, Queen Charge) para mantenerte arriba en Legends League sin estrés.</p>
-            <button class="btn-featured alt" onclick="navigate('ll')">Conocer más</button>
+        <div class="home-section-title">📋 Cómo funciona</div>
+        <div class="home-banner" style="border-color:var(--stone2);background:linear-gradient(135deg,var(--dark3),var(--dark2));">
+          <span class="coup-icon">🧭</span>
+          <div class="home-banner-text" style="color:var(--textdim);">
+            Explora nuestros servicios desde el panel principal: <strong style="color:var(--gold2);">Capital del Clan, Bases de Liga Legendaria, Subida de Muros, Bases VIP</strong> y más. Todo lo que necesitas está organizado en sus apartados correspondientes.
           </div>
         </div>
 
@@ -985,8 +991,11 @@ body {
           <span class="y">Capital</span><br><span class="r">del Clan</span>
         </h1>
         <p class="hero-phrase">
-          Acelera las mejoras de tu <strong>Distrito de la Capital</strong> sin malgastar semanas de farmeo. Nuestro equipo gestiona tus ataques de Incursión para maximizar el Oro de Capital disponible. <strong>Precio personalizado según tu Town Hall y cantidad solicitada.</strong>
+          Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día, asegurando un progreso rápido y eficiente. <strong>Precio personalizado según tu tanda y cantidad solicitada.</strong>
         </p>
+        <div class="hero-price-row">
+          <span class="price-chip">Maxeo completo: $40 – $45 USD</span>
+        </div>
         <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Mejora%20de%20Capital%20del%20Clan" target="_blank" class="btn-wa-big">
           <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           COTIZA TU SERVICIO
@@ -1003,8 +1012,11 @@ body {
           <span class="y">Bases</span><br><span class="r">Liga Legendaria</span>
         </h1>
         <p class="hero-phrase">
-          Mantente en <strong>Legends League</strong> con ataques profesionales de 3 estrellas. Nuestros especialistas dominan Lalo, Zap-Drag, Queen Charge y las estrategias más actualizadas. <strong>Tu Town Hall en las mejores manos.</strong>
+          Obtén bases de Liga Legendaria probadas en el más alto nivel. Distribuciones populares de jugadores icónicos y diseños que resisten los ataques más exigentes. <strong>Bases seleccionadas y optimizadas para mantenerte firme en Legends League.</strong>
         </p>
+        <div class="hero-price-row">
+          <span class="price-chip">Desde $4 USD</span>
+        </div>
         <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Liga%20Legendaria" target="_blank" class="btn-wa-big">
           <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           COTIZA TU SERVICIO
@@ -1021,12 +1033,10 @@ body {
           <span class="y">Subida</span><br><span class="r">de Muros</span>
         </h1>
         <p class="hero-phrase">
-          Maximiza la defensa de tu aldea con muros de nivel máximo. <strong>Precios desde 1 hasta 10 USD</strong> según la cantidad y nivel requerido. Proceso seguro, sin cambio de contraseña permanente. ¡Tu base nunca había estado tan blindada!
+          Maximiza la defensa de tu aldea con muros de nivel máximo. Además de blindar tu base, le da un cambio visual y estético único. Proceso seguro sin necesidad de contraseñas ni acceso directo a tu correo. <strong>Tu aldea nunca había estado tan blindada 🔐, sin riesgo de ban.</strong>
         </p>
         <div class="hero-price-row">
-          <span class="price-chip">Nivel bajo: 1–3 USD</span>
-          <span class="price-chip">Nivel medio: 3–6 USD</span>
-          <span class="price-chip">Nivel alto: 6–10 USD</span>
+          <span class="price-chip">Desde $1 hasta $10 USD, según cantidad y nivel</span>
         </div>
         <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Subida%20de%20Muros" target="_blank" class="btn-wa-big">
           <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -1037,55 +1047,28 @@ body {
 
     <!-- ── BASES NAME (PayPal) ── -->
     <div class="view" id="view-bases">
-      <div class="section-header">
-        <h2><span class="y">Creación de</span> <span class="r">Aldeas</span></h2>
-        <p>Bases con tu nombre formado por tropas. Pago directo y seguro por PayPal.</p>
-      </div>
-      <div class="filter-bar">
-        <button class="filter-btn active" data-bfilter="all">⚔️ Todas</button>
-        <button class="filter-btn" data-bfilter="premium">⭐ Premium</button>
-        <button class="filter-btn" data-bfilter="vip">💎 VIP</button>
+      <div class="section-header section-header-bg" style="background-image:var(--bg-bases);">
+        <h2><span class="y">Bases</span> <span class="r">VIP</span></h2>
+        <p>Tu nombre formado con muros en la aldea. Pago directo y seguro por PayPal.</p>
       </div>
 
       <!--
         ═══════════════════════════════════════════════════
         AGREGAR BASE: copia un bloque data-base="..." y
         pégalo justo antes del cierre </div id="bases-container">
-        Cambia: name, type (premium|vip), price (número),
-        priceLabel, img, desc, icon
+        Cambia: name, price (número), priceLabel, img, desc, icon
+        Todas las bases pertenecen a la categoría única "Bases VIP".
         ═══════════════════════════════════════════════════
       -->
       <div class="bases-grid" id="bases-container">
 
-        <div class="base-card" data-base='{"id":"p1","type":"premium","icon":"🏰","name":"Bases Name Premium","price":4.00,"priceLabel":"$4.00 USD","img":"img/base_premium_1.jpg","desc":"Tu nombre formado por tropas en la aldea. Diseño exclusivo y elegante para TH10-TH14."}' style="position:relative">
-          <img class="base-card-img" src="img/base_premium_1.jpg" alt="Base Premium" onerror="this.style.background='linear-gradient(135deg,#2e1e08,#4a3010)'">
-          <span class="base-badge badge-premium" style="position:absolute;top:10px;right:10px;">Premium</span>
-          <div class="base-card-body">
-            <h3>🏰 Bases Name Premium</h3>
-            <p>Tu nombre formado por tropas en la aldea. Diseño exclusivo y elegante para TH10-TH14.</p>
-            <div class="base-price">$4.00 USD</div>
-            <button class="btn-buy" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
-          </div>
-        </div>
-
-        <div class="base-card vip" data-base='{"id":"v1","type":"vip","icon":"💎","name":"Bases VIP","price":10.00,"priceLabel":"$10.00 USD","img":"img/base_vip_1.jpg","desc":"Diseño caligráfico elaborado con tropas premium. Exclusiva, nunca repetida, acabado profesional."}' style="position:relative">
+        <div class="base-card vip" data-base='{"id":"v1","type":"vip","icon":"💎","name":"Bases VIP","price":4.00,"priceLabel":"Desde $4.00 USD","img":"img/base_vip_1.jpg","desc":"Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas."}' style="position:relative">
           <img class="base-card-img" src="img/base_vip_1.jpg" alt="Base VIP" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
           <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
           <div class="base-card-body">
             <h3>💎 Bases VIP</h3>
-            <p>Diseño caligráfico elaborado con tropas premium. Exclusiva, nunca repetida, acabado profesional.</p>
-            <div class="base-price">$10.00 USD</div>
-            <button class="btn-buy btn-buy-vip" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
-          </div>
-        </div>
-
-        <div class="base-card vip" data-base='{"id":"c1","type":"vip","icon":"🏆","name":"Bases Competitivas TH18","price":15.00,"priceLabel":"$15.00 USD","img":"img/th18_comp.jpg","desc":"Bases anti-3 estrellas para TH18. Actualizadas para el meta competitivo de Legends League."}' style="position:relative">
-          <img class="base-card-img" src="img/th18_comp.jpg" alt="Base TH18" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">TH18</span>
-          <div class="base-card-body">
-            <h3>🏆 Bases Competitivas TH18</h3>
-            <p>Bases anti-3 estrellas para TH18. Actualizadas para el meta competitivo de Legends League.</p>
-            <div class="base-price">$15.00 USD</div>
+            <p>Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas.</p>
+            <div class="base-price">Desde $4.00 USD</div>
             <button class="btn-buy btn-buy-vip" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
           </div>
         </div>
@@ -1095,83 +1078,59 @@ body {
 
     <!-- ── CUENTAS ── -->
     <div class="view" id="view-cuentas">
-      <div class="section-header">
+      <div class="section-header section-header-bg" style="background-image:var(--bg-cuentas);">
         <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
-        <p>Cuentas verificadas. Haz clic para consultar por WhatsApp.</p>
+        <p>Actualmente no hay cuentas disponibles. Próximamente nuevas opciones.</p>
+      </div>
+
+      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
+        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
+        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
+        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
+          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
+        </p>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Avísame por WhatsApp
+        </a>
       </div>
 
       <!--
         ═══════════════════════════════════════════════════
-        AGREGAR CUENTA: copia un bloque .account-card
-        Cambia: img src, nombre, descripción, precio,
-        héroes (cada hero-box), y status-badge class + texto
-        Clases de status: status-en-venta | status-disponible
-                          status-en-proceso | status-vendida
+        CUANDO TENGAS CUENTAS PARA VENDER:
+        1) Borra el <div> de "Aún no disponible" de arriba.
+        2) Descomenta el bloque <div class="accounts-grid"> de abajo
+           y agrega dentro un .account-card por cada cuenta.
+        3) Héroes correctos a usar en cada hero-box: Rey, Reina,
+           Centinela, Duque, Luchadora, Príncipe.
+        4) Mientras la cuenta esté lista para vender, su status-badge
+           debe decir "Disponible" (clase status-disponible).
         ═══════════════════════════════════════════════════
-      -->
       <div class="accounts-grid">
 
         <div class="account-card">
-          <img class="account-img" src="img/th18_comp.jpg" alt="TH16" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+          <img class="account-img" src="img/th18_comp.jpg" alt="Cuenta TH" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
           <div class="heroes-row">
             <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">95</span><span style="font-size:.5rem;color:#888">Rey</span></div>
             <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">90</span><span style="font-size:.5rem;color:#888">Reina</span></div>
-            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">65</span><span style="font-size:.5rem;color:#888">Gran W.</span></div>
-            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Eterno</span></div>
-            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Royal C.</span></div>
-            <div class="hero-box"><span class="hb-icon">⭐</span><span class="hb-lvl">TH16</span><span style="font-size:.45rem;color:#888">Town H.</span></div>
+            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">65</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
+            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Duque</span></div>
+            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
+            <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
           </div>
           <div class="account-body">
-            <h3>TH16 — Casi Maxeado</h3>
-            <p>Héroes altos, paredes maxeadas, cuenta limpia sin bans.</p>
+            <h3>Nombre / Town Hall de la cuenta</h3>
+            <p>Descripción breve de la cuenta.</p>
             <div class="account-footer">
-              <span class="account-price">$120 USD</span>
-              <span class="status-badge status-en-venta">En venta</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="account-card">
-          <img class="account-img" src="img/base_vip_1.jpg" alt="TH14" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <div class="heroes-row">
-            <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">80</span><span style="font-size:.5rem;color:#888">Rey</span></div>
-            <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">80</span><span style="font-size:.5rem;color:#888">Reina</span></div>
-            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">55</span><span style="font-size:.5rem;color:#888">Gran W.</span></div>
-            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">35</span><span style="font-size:.5rem;color:#888">Eterno</span></div>
-            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">0</span><span style="font-size:.5rem;color:#888">Royal C.</span></div>
-            <div class="hero-box"><span class="hb-icon">⭐</span><span class="hb-lvl">TH14</span><span style="font-size:.45rem;color:#888">Town H.</span></div>
-          </div>
-          <div class="account-body">
-            <h3>TH14 — Rápida Progresión</h3>
-            <p>Ideal para jugadores que buscan empezar en alto nivel a buen precio.</p>
-            <div class="account-footer">
-              <span class="account-price">$55 USD</span>
+              <span class="account-price">$0 USD</span>
               <span class="status-badge status-disponible">Disponible</span>
             </div>
           </div>
         </div>
 
-        <div class="account-card">
-          <img class="account-img" src="img/base_premium_1.jpg" alt="TH15" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <div class="heroes-row">
-            <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">90</span><span style="font-size:.5rem;color:#888">Rey</span></div>
-            <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">85</span><span style="font-size:.5rem;color:#888">Reina</span></div>
-            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">60</span><span style="font-size:.5rem;color:#888">Gran W.</span></div>
-            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">40</span><span style="font-size:.5rem;color:#888">Eterno</span></div>
-            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">20</span><span style="font-size:.5rem;color:#888">Royal C.</span></div>
-            <div class="hero-box"><span class="hb-icon">⭐</span><span class="hb-lvl">TH15</span><span style="font-size:.45rem;color:#888">Town H.</span></div>
-          </div>
-          <div class="account-body">
-            <h3>TH15 — En Proceso</h3>
-            <p>Cuenta en revisión final. Disponible próximamente.</p>
-            <div class="account-footer">
-              <span class="account-price">$85 USD</span>
-              <span class="status-badge status-en-proceso">En proceso</span>
-            </div>
-          </div>
-        </div>
-
       </div>
+      ═══════════════════════════════════════════════════
+      -->
     </div>
 
     <!-- ── REFERENCIAS ── -->
@@ -1184,8 +1143,8 @@ body {
         <div class="coupon-banner">
           <span class="coup-icon">🎁</span>
           <div class="coupon-banner-text">
-            <h3>¡Por cada 3 compras, recibe un cupón de descuento!</h3>
-            <p>Acumula tus servicios y escríbenos a WhatsApp con tu historial de pagos para reclamar tu recompensa.</p>
+            <h3>Por cada 3 compras recibe un cupón de descuento 🎟️</h3>
+            <p>Toma captura de tus 3 compras y guárdalas como evidencia. Reclama vía WhatsApp.</p>
           </div>
         </div>
 
@@ -1218,40 +1177,13 @@ body {
     <div class="view" id="view-soporte">
       <div class="section-header">
         <h2><span class="y">Soporte</span> <span class="r">Directo</span></h2>
-        <p>Estamos aquí para ayudarte. Elige el canal según tu necesidad.</p>
+        <p>Accede a soporte inmediato mediante nuestro chat en vivo.</p>
       </div>
-      <div class="support-grid">
-        <div class="support-card">
-          <div class="s-icon">🐛</div>
-          <h3>REPORTAR ERROR</h3>
-          <p>¿Tuviste un problema con tu pedido o algo no funcionó como esperabas?</p>
-          <a href="https://wa.me/18295395068?text=Hola,%20quiero%20reportar%20un%20error%20en%20mi%20pedido" target="_blank" class="btn-support btn-support-wa">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Reportar por WA
-          </a>
-        </div>
-        <div class="support-card">
-          <div class="s-icon">💰</div>
-          <h3>COTIZACIÓN</h3>
-          <p>¿Quieres saber el precio exacto de un servicio según tu TH? Te respondemos en minutos.</p>
-          <a href="https://wa.me/18295395068?text=Hola,%20quiero%20una%20cotización%20personalizada" target="_blank" class="btn-support btn-support-wa">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Cotizar por WA
-          </a>
-        </div>
-        <div class="support-card">
-          <div class="s-icon">📅</div>
-          <h3>PAGO A PLAZOS</h3>
-          <p>¿No tienes el total ahora? Podemos acordar un plan de pagos para servicios premium.</p>
-          <a href="https://wa.me/18295395068?text=Hola,%20me%20interesa%20un%20plan%20de%20pago%20a%20plazos" target="_blank" class="btn-support btn-support-wa">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Hablar por WA
-          </a>
-        </div>
+      <div class="support-grid" style="max-width:420px;margin:0 auto;">
         <div class="support-card">
           <div class="s-icon">💬</div>
           <h3>CHAT EN VIVO</h3>
-          <p>¿Prefieres escribir en tiempo real? Abre el chat y te atendemos al instante.</p>
+          <p>Cotizaciones, pagos y reportes en un solo canal directo 📲.</p>
           <button class="btn-support btn-support-chat" onclick="openTawkChat()">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.59 1.11 4.93 2.9 6.61L4 22l4.64-1.55C9.99 20.79 10.99 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/></svg>
             Abrir Chat
@@ -1264,16 +1196,16 @@ body {
     <div class="view" id="view-terminos">
       <div class="terms-wrap">
         <h2>Términos y Condiciones</h2>
-        <p class="terms-sub">⚔️ PANGEA CLASHARCH — Última actualización: 2025</p>
+        <p class="terms-sub">⚔️ CLASH SERVICES — Última actualización: 2025</p>
 
         <div class="terms-section">
           <h3>1. ACEPTACIÓN DE LOS TÉRMINOS</h3>
-          <p>Al adquirir cualquier servicio ofrecido por Pangea Clasharch, el usuario declara haber leído, comprendido y aceptado la totalidad de estos términos. Pangea Clasharch se reserva el derecho de modificarlos sin previo aviso.</p>
+          <p>Al adquirir cualquier servicio ofrecido por Clash Services, el usuario declara haber leído, comprendido y aceptado la totalidad de estos términos. Clash Services se reserva el derecho de modificarlos sin previo aviso.</p>
         </div>
 
         <div class="terms-section">
           <h3>2. NATURALEZA DEL SERVICIO</h3>
-          <p>Pangea Clasharch es un proveedor independiente de servicios para el videojuego Clash of Clans. No estamos afiliados, patrocinados ni respaldados por Supercell. Clash of Clans es marca registrada de Supercell Oy.</p>
+          <p>Clash Services es un proveedor independiente de servicios para el videojuego Clash of Clans. No estamos afiliados, patrocinados ni respaldados por Supercell. Clash of Clans es marca registrada de Supercell Oy.</p>
         </div>
 
         <div class="terms-section">
@@ -1282,13 +1214,13 @@ body {
             <li>Todos los precios están expresados en dólares estadounidenses (USD).</li>
             <li>Los pagos se realizan vía PayPal. Una vez procesado el pago, el cliente debe enviar el comprobante por WhatsApp para coordinar la entrega.</li>
             <li>No se ofrecen reembolsos una vez iniciada la prestación del servicio.</li>
-            <li>En caso de error comprobable por parte de Pangea Clasharch, se gestionará una solución o compensación de forma individual.</li>
+            <li>En caso de error comprobable por parte de Clash Services, se gestionará una solución o compensación de forma individual.</li>
           </ul>
         </div>
 
         <div class="terms-section">
           <h3>4. CONFIDENCIALIDAD</h3>
-          <p>Para servicios que requieran acceso temporal a la cuenta del cliente, Pangea Clasharch garantiza que las credenciales proporcionadas no serán almacenadas ni compartidas con terceros. Se recomienda al cliente cambiar su contraseña inmediatamente después de la entrega del servicio.</p>
+          <p>Para servicios que requieran acceso temporal a la cuenta del cliente, Clash Services garantiza que las credenciales proporcionadas no serán almacenadas ni compartidas con terceros. Se recomienda al cliente cambiar su contraseña inmediatamente después de la entrega del servicio.</p>
         </div>
 
         <div class="terms-section">
@@ -1302,12 +1234,12 @@ body {
 
         <div class="terms-section">
           <h3>6. CUPONES DE DESCUENTO</h3>
-          <p>El programa de cupones (1 cupón por cada 3 compras) se gestiona de forma manual. El cliente debe contactar a Pangea Clasharch por WhatsApp y presentar sus comprobantes de pago para reclamar el beneficio.</p>
+          <p>El programa de cupones (1 cupón por cada 3 compras) se gestiona de forma manual. El cliente debe contactar a Clash Services por WhatsApp y presentar sus comprobantes de pago para reclamar el beneficio.</p>
         </div>
 
         <div class="terms-section">
           <h3>7. LIMITACIÓN DE RESPONSABILIDAD</h3>
-          <p>Pangea Clasharch no se hace responsable por suspensiones o sanciones que Supercell aplique a las cuentas de los clientes. El uso de servicios externos puede estar en contra de los Términos de Servicio del juego; el cliente actúa bajo su propia responsabilidad.</p>
+          <p>Clash Services no se hace responsable por suspensiones o sanciones que Supercell aplique a las cuentas de los clientes. El uso de servicios externos puede estar en contra de los Términos de Servicio del juego; el cliente actúa bajo su propia responsabilidad.</p>
         </div>
 
         <div class="terms-section">
