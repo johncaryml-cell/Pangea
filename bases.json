@@ -1,0 +1,12 @@
+[
+  {
+    "id": "v1",
+    "type": "vip",
+    "name": "Bases VIP",
+    "price": 4.00,
+    "priceLabel": "Desde $4.00 USD",
+    "img": "img/base_vip_1.jpg",
+    "desc": "Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas.",
+    "icon": "💎"
+  }
+]
