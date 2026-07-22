@@ -1,7 +1,8 @@
 backend:
   name: github
-  repo: johncaryml-cell/Pangea  
-  branch: main                   
+  repo: johncaryml-cell/Pangea
+  branch: main
+  base_url: https://auth.decapcms.org
 
 media_folder: "img"
 public_folder: "img"
@@ -25,5 +26,7 @@ collections:
               {label: "Etiqueta de Precio", name: "priceLabel", widget: "string"},
               {label: "Imagen", name: "img", widget: "image"},
               {label: "Descripción", name: "desc", widget: "text"},
+              {label: "Ícono", name: "icon", widget: "string"}
+            ]}
               {label: "Ícono", name: "icon", widget: "string"}
             ]}
