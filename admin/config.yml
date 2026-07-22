@@ -2,7 +2,6 @@ backend:
   name: github
   repo: johncaryml-cell/Pangea
   branch: main
-  auth_type: "implicit"
 
 media_folder: "img"
 public_folder: "img"
@@ -10,9 +9,6 @@ public_folder: "img"
 collections:
   - name: "bases"
     label: "Bases VIP"
-    folder: "."
-    create: false
-    slug: "{{slug}}"
     files:
       - file: "bases.json"
         name: "bases_vip"
