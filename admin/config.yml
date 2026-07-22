@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: johncaryml-cell/Pangea  
+  branch: main                   
+
+media_folder: "img"
+public_folder: "img"
+
+collections:
+  - name: "bases"
+    label: "Bases VIP"
+    folder: "."
+    create: false
+    slug: "{{slug}}"
+    files:
+      - file: "bases.json"
+        name: "bases_vip"
+        label: "Configuración de Bases VIP"
+        fields:
+          - {label: "Lista de Bases", name: "bases", widget: "list", fields: [
+              {label: "ID", name: "id", widget: "string"},
+              {label: "Tipo", name: "type", widget: "string"},
+              {label: "Nombre", name: "name", widget: "string"},
+              {label: "Precio (Número)", name: "price", widget: "number"},
+              {label: "Etiqueta de Precio", name: "priceLabel", widget: "string"},
+              {label: "Imagen", name: "img", widget: "image"},
+              {label: "Descripción", name: "desc", widget: "text"},
+              {label: "Ícono", name: "icon", widget: "string"}
+            ]}
