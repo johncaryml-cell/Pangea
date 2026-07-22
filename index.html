@@ -1665,7 +1665,8 @@ function openTawkChat() {
 async function cargarBasesDinamicamente() {
   try {
     const respuesta = await fetch('bases.json');
-    const basesData = await respuesta.json();
+    const jsonData = await respuesta.json();
+const basesData = jsonData.bases;
     
     const contenedor = document.getElementById('bases-container');
     contenedor.innerHTML = ''; 
