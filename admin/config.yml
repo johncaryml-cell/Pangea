@@ -2,7 +2,7 @@ backend:
   name: github
   repo: johncaryml-cell/Pangea
   branch: main
-  api_root: https://api.github.com
+  auth_type: "implicit"
 
 media_folder: "img"
 public_folder: "img"
