@@ -1069,16 +1069,7 @@ body {
       -->
       <div class="bases-grid" id="bases-container">
 
-        <div class="base-card vip" data-base='{"id":"v1","type":"vip","icon":"💎","name":"Bases VIP","price":4.00,"priceLabel":"Desde $4.00 USD","img":"img/base_vip_1.jpg","desc":"Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas."}' style="position:relative">
-          <img class="base-card-img" src="img/base_vip_1.jpg" alt="Base VIP" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
-          <div class="base-card-body">
-            <h3>💎 Bases VIP</h3>
-            <p>Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas.</p>
-            <div class="base-price">Desde $4.00 USD</div>
-            <button class="btn-buy btn-buy-vip" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
-          </div>
-        </div>
+
 
       </div>
     </div>
@@ -1668,6 +1659,43 @@ function openTawkChat() {
     }, 1500);
   }
 }
+/* ════════════════════════════════════════════════════
+   CARGA DINÁMICA DE BASES DESDE JSON
+════════════════════════════════════════════════════ */
+async function cargarBasesDinamicamente() {
+  try {
+    const respuesta = await fetch('bases.json');
+    const basesData = await respuesta.json();
+    
+    const contenedor = document.getElementById('bases-container');
+    contenedor.innerHTML = ''; 
+
+    basesData.forEach(base => {
+      // Convertimos el objeto a string para el botón de PayPal
+      const baseDataString = JSON.stringify(base).replace(/'/g, "&#39;");
+      
+      const tarjetaHTML = `
+        <div class="base-card ${base.type}" data-base='${baseDataString}' style="position:relative">
+          <img class="base-card-img" src="${base.img}" alt="${base.name}" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+          <span class="base-badge badge-${base.type}" style="position:absolute;top:10px;right:10px;">${base.type.toUpperCase()}</span>
+          <div class="base-card-body">
+            <h3>${base.icon} ${base.name}</h3>
+            <p>${base.desc}</p>
+            <div class="base-price">${base.priceLabel}</div>
+            <button class="btn-buy btn-buy-${base.type}" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
+          </div>
+        </div>
+      `;
+      contenedor.innerHTML += tarjetaHTML;
+    });
+  } catch (error) {
+    console.error("Error al cargar las bases:", error);
+    document.getElementById('bases-container').innerHTML = '<p style="color:var(--textdim); padding: 20px;">No se pudieron cargar las bases en este momento.</p>';
+  }
+}
+
+// Ejecutamos la función
+cargarBasesDinamicamente();
 
 /* Exponer al scope global — necesario porque este <script type="module">
    tiene su propio ámbito y el HTML usa atributos onclick="…" */
