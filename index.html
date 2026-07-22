@@ -18,8 +18,17 @@
   --bg-capital:   url('img/fondo_cap.jpg')      center/cover no-repeat; /* Vista "Capital del Clan" */
   --bg-ll:        url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Bases Liga Legendaria" */
   --bg-muros:     url('img/fondo_general.jpg')      center/cover no-repeat; /* Vista "Subida de Muros" */
-  --bg-bases:     url('img/fondo_general.jpg')       center/cover no-repeat; /* Encabezado de "Bases VIP" */
-  --bg-cuentas:   url('img/fondo_general.jpg')        center/cover no-repeat; /* Encabezado de "Cuentas" */
+
+  /* Fondo GENERAL: se usa como fondo de página completa en Bases VIP,
+     Cuentas, Soporte, Referencias, y detrás de todo el Home.
+     Cambia SOLO este archivo para actualizar el fondo en las 5 vistas a la vez. */
+  --bg-general:     url('img/fondo_general.jpg') center/cover no-repeat;
+
+  /* Imagen exclusiva de la barra superior del Home (el banner con
+     "⚡ PANEL DE SERVICIOS" y el saludo de bienvenida). Es independiente
+     del --bg-general de arriba: cámbiala aquí si quieres una imagen
+     distinta solo para esa barra. */
+  --bg-home-banner: url('img/fondo_general.jpg') center/cover no-repeat;
 
   --gold:   #f5c518;
   --gold2:  #ffe86a;
@@ -250,6 +259,25 @@ body {
   to   { opacity:1; transform:translateY(0); }
 }
 
+/* Fondo de imagen a pantalla completa para una vista.
+   Uso: agrega la clase "view-bg" al <div class="view ...">
+   y define --view-bg-img en su style, ej: style="--view-bg-img:var(--bg-general);" */
+.view-bg { position: relative; min-height: calc(100vh - var(--navbar-h)); }
+.view-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: var(--view-bg-img, none);
+  background-size: cover; background-position: center;
+  z-index: 0;
+}
+.view-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0d0a06cc 0%, #0d0a06e6 45%, #0d0a06 100%);
+  z-index: 0;
+}
+.view-bg > * { position: relative; z-index: 1; }
+
 /* ══════════════════════════════════════════
    HERO VIEW (con fondo de imagen)
 ══════════════════════════════════════════ */
@@ -327,7 +355,7 @@ body {
   padding: 44px 36px;
   background:
     linear-gradient(120deg, #0d0a06ee 10%, #0d0a06cc 55%, #1a120699 100%),
-    var(--bg-capital);
+    var(--bg-home-banner);
   background-size: cover; background-position: center;
 }
 .home-hero::before {
@@ -785,23 +813,6 @@ body {
 .section-header h2 .r { color: var(--fire); }
 .section-header p { font-size: .92rem; color: var(--textdim); padding-bottom: 18px; }
 
-/* Variante con imagen de fondo (usada en Bases VIP y Cuentas) */
-.section-header-bg {
-  position: relative;
-  border-bottom: none;
-  padding: 40px 28px 32px;
-  margin: 0 0 4px;
-  background-size: cover;
-  background-position: center;
-}
-.section-header-bg::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, #0d0a06bb 0%, #0d0a06ee 75%, #0d0a06 100%);
-}
-.section-header-bg > * { position: relative; z-index: 1; }
-.section-header-bg p { padding-bottom: 0; }
-
 /* FILTER BAR */
 .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; padding: 18px 28px 0; }
 .filter-btn {
@@ -907,7 +918,7 @@ body {
   <main id="content">
 
     <!-- ── HOME ── -->
-    <div class="view active" id="view-home">
+    <div class="view active view-bg" id="view-home" style="--view-bg-img:var(--bg-general);">
       <div class="home-wrap">
 
         <div class="home-hero">
@@ -1046,8 +1057,8 @@ body {
     </div>
 
     <!-- ── BASES NAME (PayPal) ── -->
-    <div class="view" id="view-bases">
-      <div class="section-header section-header-bg" style="background-image:var(--bg-bases);">
+    <div class="view view-bg" id="view-bases" style="--view-bg-img:var(--bg-general);">
+      <div class="section-header">
         <h2><span class="y">Bases</span> <span class="r">VIP</span></h2>
         <p>Tu nombre formado con muros en la aldea. Pago directo y seguro por PayPal.</p>
       </div>
@@ -1077,8 +1088,8 @@ body {
     </div>
 
     <!-- ── CUENTAS ── -->
-    <div class="view" id="view-cuentas">
-      <div class="section-header section-header-bg" style="background-image:var(--bg-cuentas);">
+    <div class="view view-bg" id="view-cuentas" style="--view-bg-img:var(--bg-general);">
+      <div class="section-header">
         <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
         <p>Actualmente no hay cuentas disponibles. Próximamente nuevas opciones.</p>
       </div>
@@ -1134,7 +1145,7 @@ body {
     </div>
 
     <!-- ── REFERENCIAS ── -->
-    <div class="view" id="view-referencias">
+    <div class="view view-bg" id="view-referencias" style="--view-bg-img:var(--bg-general);">
       <div class="section-header">
         <h2><span class="y">Referencias</span> <span class="r">y Reviews</span></h2>
         <p>Comparte tu experiencia y ayuda a la comunidad.</p>
@@ -1174,7 +1185,7 @@ body {
     </div>
 
     <!-- ── SOPORTE ── -->
-    <div class="view" id="view-soporte">
+    <div class="view view-bg" id="view-soporte" style="--view-bg-img:var(--bg-general);">
       <div class="section-header">
         <h2><span class="y">Soporte</span> <span class="r">Directo</span></h2>
         <p>Accede a soporte inmediato mediante nuestro chat en vivo.</p>
