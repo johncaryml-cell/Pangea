@@ -1046,6 +1046,19 @@ body {
           COTIZA TU SERVICIO
         </a>
       </div>
+
+      <!-- ══════════════════════════════════════════
+           Catálogo dinámico: data.liga_bases
+           (ver renderLigaBases() en el script de carga
+           y veRenderLigaBases() en el módulo del editor)
+      ══════════════════════════════════════════ -->
+      <div class="section-header" style="position:relative;z-index:1;">
+        <h2><span class="y">Bases</span> <span class="r">Disponibles</span></h2>
+        <p>Catálogo de bases de Liga Legendaria ya optimizadas.</p>
+      </div>
+      <div class="bases-grid" id="liga-bases-container" style="position:relative;z-index:1;">
+        <p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Cargando bases…</p>
+      </div>
     </div>
 
     <!-- ════════════════════════════════════════
@@ -1099,57 +1112,21 @@ body {
     <div class="view view-bg" id="view-cuentas" style="--view-bg-img:var(--bg-cuentas);">
       <div class="section-header">
         <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
-        <p>Actualmente no hay cuentas disponibles. Próximamente nuevas opciones.</p>
-      </div>
-
-      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
-        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
-        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
-        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
-          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
-        </p>
-        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Avísame por WhatsApp
-        </a>
+        <p>Cuentas verificadas con héroes al nivel indicado. Elige, cotiza y compra por WhatsApp.</p>
       </div>
 
       <!--
         ═══════════════════════════════════════════════════
-        CUANDO TENGAS CUENTAS PARA VENDER:
-        1) Borra el <div> de "Aún no disponible" de arriba.
-        2) Descomenta el bloque <div class="accounts-grid"> de abajo
-           y agrega dentro un .account-card por cada cuenta.
-        3) Héroes correctos a usar en cada hero-box: Rey, Reina,
-           Centinela, Duque, Luchadora, Príncipe.
-        4) Mientras la cuenta esté lista para vender, su status-badge
-           debe decir "Disponible" (clase status-disponible).
+        Este contenedor se llena dinámicamente desde
+        site.json → cuentas[] (ver renderCuentas() al final
+        del archivo, y veRenderCuentas() en el módulo del
+        editor). Si el arreglo está vacío se muestra
+        automáticamente el aviso "Aún no disponible".
         ═══════════════════════════════════════════════════
-      <div class="accounts-grid">
-
-        <div class="account-card">
-          <img class="account-img" src="img/th18_comp.jpg" alt="Cuenta TH" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <div class="heroes-row">
-            <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">95</span><span style="font-size:.5rem;color:#888">Rey</span></div>
-            <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">90</span><span style="font-size:.5rem;color:#888">Reina</span></div>
-            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">65</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
-            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Duque</span></div>
-            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
-            <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
-          </div>
-          <div class="account-body">
-            <h3>Nombre / Town Hall de la cuenta</h3>
-            <p>Descripción breve de la cuenta.</p>
-            <div class="account-footer">
-              <span class="account-price">$0 USD</span>
-              <span class="status-badge status-disponible">Disponible</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      ═══════════════════════════════════════════════════
       -->
+      <div id="cuentas-container">
+        <p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Cargando cuentas…</p>
+      </div>
     </div>
 
     <!-- ════════════════════════════════════════
@@ -1811,6 +1788,16 @@ async function cargarContenido() {
       renderBasesVip(data.bases_vip);
     }
 
+    // 5. Bases de Liga Legendaria (catálogo)
+    if (Array.isArray(data.liga_bases)) {
+      renderLigaBases(data.liga_bases);
+    }
+
+    // 6. Venta de Cuentas
+    if (Array.isArray(data.cuentas)) {
+      renderCuentas(data.cuentas);
+    }
+
   } catch (err) {
     console.error('Error cargando site.json:', err);
   }
@@ -1840,6 +1827,85 @@ function renderBasesVip(bases) {
   `).join('');
 }
 
+/* ── Renderizado de la lista de Bases de Liga Legendaria (solo catálogo, sin compra) ── */
+function renderLigaBases(bases) {
+  const container = document.getElementById('liga-bases-container');
+  if (!container) return;
+
+  if (!bases.length) {
+    container.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Próximamente nuevas bases de Liga Legendaria.</p>';
+    return;
+  }
+
+  container.innerHTML = bases.map(base => `
+    <div class="base-card" style="position:relative">
+      <img class="base-card-img" src="${base.img}" alt="Base Liga Legendaria" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+      <span class="base-badge badge-premium" style="position:absolute;top:10px;right:10px;">⚔️ LL</span>
+      <div class="base-card-body">
+        <p>${base.desc}</p>
+        <div class="base-price">${base.precio}</div>
+        <a class="btn-buy" style="text-decoration:none;text-align:center;display:block;" target="_blank"
+           href="https://wa.me/18295395068?text=${encodeURIComponent('Hola, me interesa esta base de Liga Legendaria: ' + (base.desc || ''))}">
+          💬 Cotizar por WhatsApp
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── Renderizado de la lista de Cuentas en venta ── */
+function renderCuentas(cuentas) {
+  const container = document.getElementById('cuentas-container');
+  if (!container) return;
+
+  if (!cuentas.length) {
+    container.innerHTML = `
+      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
+        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
+        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
+        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
+          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
+        </p>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Avísame por WhatsApp
+        </a>
+      </div>`;
+    return;
+  }
+
+  const statusClass = (estado) => {
+    if (estado === 'Disponible') return 'status-disponible';
+    if (estado === 'En proceso') return 'status-en-proceso';
+    if (estado === 'Vendida') return 'status-vendida';
+    return 'status-en-venta';
+  };
+
+  container.innerHTML = `<div class="accounts-grid">` + cuentas.map(c => {
+    const h = c.heroes || {};
+    return `
+    <div class="account-card">
+      <img class="account-img" src="${c.img || ''}" alt="${c.nombre || 'Cuenta'}" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+      <div class="heroes-row">
+        <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">${h.rey ?? '-'}</span><span style="font-size:.5rem;color:#888">Rey</span></div>
+        <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">${h.reina ?? '-'}</span><span style="font-size:.5rem;color:#888">Reina</span></div>
+        <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">${h.centinela ?? '-'}</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
+        <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">${h.duque ?? '-'}</span><span style="font-size:.5rem;color:#888">Duque</span></div>
+        <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">${h.luchadora ?? '-'}</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
+        <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">${h.principe ?? '-'}</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
+      </div>
+      <div class="account-body">
+        <h3>${c.nombre || 'Cuenta'}</h3>
+        <p>${c.desc || ''}</p>
+        <div class="account-footer">
+          <span class="account-price">${c.precio || ''}</span>
+          <span class="status-badge ${statusClass(c.estado)}">${c.estado || 'En venta'}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
 /* ── Disparo inicial al cargar el DOM ── */
 document.addEventListener('DOMContentLoaded', cargarContenido);
 </script>
@@ -1847,12 +1913,14 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
 <!-- ════════════════════════════════════════════════════════════════
      ██  EDITOR VISUAL EN VIVO — módulo independiente  ██
      No modifica el HTML/CSS original de la página. Solo añade:
-       1. CSS del modal de token + botón flotante + resaltado
+       1. CSS del modal de token + botón flotante + resaltado + panel admin
        2. Modal para pedir el GitHub Personal Access Token
        3. Botón flotante "Guardar Cambios en Vivo"
        4. Lógica JS: carga site.json en memoria, marca los campos
-          conocidos como contenteditable, y al guardar reconstruye
-          el objeto y hace un PUT a la API de GitHub.
+          conocidos como contenteditable, permite añadir/eliminar
+          tarjetas de bases_vip / liga_bases / cuentas, sube imágenes
+          nuevas a img/ vía la API de GitHub (base64) y al guardar
+          reconstruye el objeto completo y hace un PUT a site.json.
 ════════════════════════════════════════════════════════════════ -->
 <style>
   [data-edit-path] {
@@ -1870,6 +1938,57 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     outline: 2px solid var(--gold, #f5c518);
     background: #f5c5181f;
   }
+
+  /* Controles de administración: solo visibles con el editor conectado */
+  .ve-admin-only { display: none; }
+  body.ve-editing .ve-admin-only { display: block; }
+  body.ve-editing .ve-admin-only.ve-flex { display: flex; }
+  body.ve-editing .ve-admin-only.ve-inline { display: inline-flex; }
+
+  /* Botón eliminar tarjeta */
+  .ve-del-btn {
+    position: absolute; top: 8px; left: 8px; z-index: 5;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #e63c1eee; color: #fff; border: none;
+    font-size: .95rem; cursor: pointer; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 10px #000000aa;
+    transition: transform .15s;
+  }
+  .ve-del-btn:hover { transform: scale(1.12); background: #ff4d2b; }
+
+  /* Overlay para cambiar imagen */
+  .ve-img-wrap { position: relative; cursor: pointer; }
+  .ve-img-wrap::after {
+    content: '📷 Cambiar imagen';
+    position: absolute; inset: 0;
+    background: #000000a0;
+    color: #f5c518; font-family:'Bangers',cursive; font-size:.9rem; letter-spacing:1px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .18s;
+  }
+  .ve-img-wrap:hover::after { opacity: 1; }
+
+  /* Tarjeta "Añadir nueva" */
+  .ve-add-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; min-height: 220px;
+    border: 2px dashed #f5c51877; border-radius: 14px;
+    background: #f5c51810; cursor: pointer;
+    color: var(--gold); font-family: 'Bangers', cursive; font-size: 1.05rem; letter-spacing: 1px;
+    transition: background .15s, border-color .15s;
+  }
+  .ve-add-card:hover { background: #f5c5182a; border-color: #f5c518; }
+  .ve-add-card .ve-plus { font-size: 2.4rem; line-height: 1; }
+
+  /* Select de estado (cuentas) */
+  select[data-edit-path] {
+    font-family: 'Bangers', cursive; font-size: .78rem; letter-spacing: 1.5px;
+    padding: 3px 10px; border-radius: 4px; cursor: pointer;
+    background: #0d0a06; color: var(--text); border: 1px solid var(--stone2);
+  }
+
+  /* Modal de conexión */
   #ve-token-overlay {
     position: fixed; inset: 0; z-index: 5000;
     background: #000000c0; backdrop-filter: blur(4px);
@@ -1912,7 +2031,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
 
   #ve-toast {
     position: fixed; right: 24px; bottom: 92px; z-index: 4001;
-    max-width: 320px; font-family:'Nunito',sans-serif; font-size:.88rem;
+    max-width: 340px; font-family:'Nunito',sans-serif; font-size:.88rem;
     background:#161008; border:1.5px solid #4a3618; color:#f2e8d0;
     padding:12px 16px; border-radius:10px; box-shadow:0 8px 24px #000000aa;
     opacity:0; transform:translateY(8px); pointer-events:none;
@@ -1941,7 +2060,8 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
   <div class="ve-box">
     <h2>🔐 Editor Visual — Conexión GitHub</h2>
     <p class="ve-sub">
-      Repositorio destino: <code>johncaryml-cell/Pangea</code> · rama <code>main</code> · archivo <code>site.json</code>.<br>
+      Repositorio destino: <code>johncaryml-cell/Pangea</code> · rama <code>main</code> · archivo <code>site.json</code>
+      · imágenes en <code>img/</code>.<br>
       Pega un <strong>Personal Access Token</strong> con permiso <code>contents: write</code>
       (idealmente un token de tipo <em>fine-grained</em> limitado solo a este repositorio).
       El token se guarda únicamente en memoria mientras esta pestaña está abierta; no se
@@ -1964,6 +2084,9 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
 <!-- Botón flotante de guardado -->
 <button id="ve-save-btn" class="ve-hidden" disabled>💾 Guardar Cambios en Vivo</button>
 
+<!-- Input de archivo oculto, reutilizado para todas las subidas de imagen -->
+<input type="file" id="ve-file-input" accept="image/*" style="display:none">
+
 <!-- Toast de resultado -->
 <div id="ve-toast"></div>
 
@@ -1977,16 +2100,33 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
   const VE_BRANCH = 'main';
   const VE_PATH   = 'site.json';
   const VE_API    = `https://api.github.com/repos/${VE_OWNER}/${VE_REPO}/contents/${encodeURIComponent(VE_PATH)}`;
+  const VE_IMG_API_BASE = `https://api.github.com/repos/${VE_OWNER}/${VE_REPO}/contents/img/`;
 
   /* ── Estado del editor ── */
   let veToken   = null;   // solo en memoria, nunca persistido
-  let veSha     = null;   // sha del último site.json conocido
   let veData    = null;   // objeto site.json en memoria (fuente de verdad al guardar)
+  let vePendingUploads = {}; // { "bases_vip.0": File, "cuentas.2": File, ... }
+  let veUploadTarget   = null; // { section, index } — a qué tarjeta corresponde el próximo archivo elegido
 
-  /* ── Helpers de path tipo "bases_vip.2.desc" ── */
-  function veGetPath(obj, path) {
-    return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+  /* ── Valores por defecto para tarjetas nuevas ── */
+  function veNewId(prefix) {
+    return `${prefix}_${Date.now().toString(36)}${Math.floor(Math.random() * 1000)}`;
   }
+  function veDefaultBaseVip() {
+    return { id: veNewId('v'), type: 'vip', name: 'Nueva Base VIP', price: 0, priceLabel: '$0.00 USD', img: '', desc: '', icon: '💎' };
+  }
+  function veDefaultLigaBase() {
+    return { id: veNewId('ll'), img: '', desc: 'Descripción de la base…', precio: '$0 USD' };
+  }
+  function veDefaultCuenta() {
+    return {
+      id: veNewId('c'), img: '', nombre: 'Nueva cuenta', desc: 'Descripción breve de la cuenta.',
+      precio: '$0 USD', estado: 'Disponible',
+      heroes: { rey: '0', reina: '0', centinela: '0', duque: '0', luchadora: '0', principe: '0' }
+    };
+  }
+
+  /* ── Helpers de path tipo "bases_vip.2.desc" o "cuentas.1.heroes.rey" ── */
   function veSetPath(obj, path, value) {
     const keys = path.split('.');
     let cur = obj;
@@ -2001,7 +2141,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
   function veToast(msg, type) {
     const t = document.getElementById('ve-toast');
     t.textContent = msg;
-    t.className = 've-toast ve-show ' + (type === 'err' ? 've-err' : 've-ok');
+    t.className = 've-show ' + (type === 'err' ? 've-err' : 've-ok');
     t.id = 've-toast';
     clearTimeout(t._veTimer);
     t._veTimer = setTimeout(() => t.classList.remove('ve-show'), 6000);
@@ -2011,12 +2151,45 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     return btoa(unescape(encodeURIComponent(str)));
   }
 
+  function veFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   /* ── Marca un elemento como editable y lo vincula a un path del objeto ── */
   function veBind(el, path) {
     if (!el) return;
     el.setAttribute('contenteditable', 'true');
     el.setAttribute('data-edit-path', path);
     el.setAttribute('spellcheck', 'false');
+  }
+
+  /* ── Dispara el selector de archivos para una tarjeta concreta ── */
+  function veTriggerImageUpload(section, index) {
+    veUploadTarget = { section, index };
+    document.getElementById('ve-file-input').click();
+  }
+
+  function veOnFileChosen() {
+    const input = document.getElementById('ve-file-input');
+    const file = input.files && input.files[0];
+    input.value = '';
+    if (!file || !veUploadTarget) return;
+    const { section, index } = veUploadTarget;
+
+    // Guarda el archivo pendiente para subirlo al guardar
+    vePendingUploads[`${section}.${index}`] = file;
+
+    // Previsualización inmediata (blob local, aún no está en GitHub)
+    const previewUrl = URL.createObjectURL(file);
+    const imgEl = document.querySelector(`img[data-img-target="${section}.${index}"]`);
+    if (imgEl) imgEl.src = previewUrl;
+
+    veToast('Imagen lista — se subirá a GitHub al hacer clic en Guardar.', 'ok');
   }
 
   /* ── Vuelve a pintar el bloque de navbar, con spans editables ── */
@@ -2031,25 +2204,23 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     `).join('');
     cont.querySelectorAll('.nb-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        // Evita navegar mientras se está escribiendo dentro del span editable
         if (e.target.getAttribute('contenteditable') === 'true') return;
         if (typeof navigate === 'function') navigate(item.dataset.view);
       });
     });
   }
 
-  /* ── Vuelve a pintar Bases VIP, con campos editables ── */
-  function veRenderBases(bases) {
+  /* ── BASES VIP: render editable con añadir / eliminar / subir imagen ── */
+  function veRenderBasesVip(bases) {
     const cont = document.getElementById('bases-container');
     if (!cont) return;
-    if (!Array.isArray(bases) || !bases.length) {
-      cont.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;">No hay bases disponibles por ahora.</p>';
-      return;
-    }
-    cont.innerHTML = bases.map((base, i) => `
+    const cards = bases.map((base, i) => `
       <div class="base-card vip" style="position:relative">
-        <img class="base-card-img" src="${base.img || ''}" alt="${base.name || ''}"
-             onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+        <button class="ve-del-btn ve-admin-only" onclick="veDeleteItem('bases_vip', ${i})" title="Eliminar base">🗑️</button>
+        <div class="ve-img-wrap" onclick="veTriggerImageUpload('bases_vip', ${i})">
+          <img class="base-card-img" data-img-target="bases_vip.${i}" src="${base.img || ''}" alt="${base.name || ''}"
+               onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+        </div>
         <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
         <div class="base-card-body">
           <h3>
@@ -2062,11 +2233,100 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
         </div>
       </div>
     `).join('');
+    const addCard = `
+      <div class="ve-add-card ve-admin-only" onclick="veAddItem('bases_vip')">
+        <span class="ve-plus">➕</span>
+        <span>Añadir nueva Base VIP</span>
+      </div>`;
+    cont.innerHTML = (bases.length ? cards : '') + addCard;
+    if (!bases.length) {
+      cont.insertAdjacentHTML('afterbegin', '<p class="ve-admin-hide-when-editing" style="color:var(--textdim);font-size:.9rem;padding:12px 4px;grid-column:1/-1;">No hay bases disponibles por ahora.</p>');
+    }
+  }
+
+  /* ── BASES LIGA LEGENDARIA: render editable con añadir / eliminar / subir imagen ── */
+  function veRenderLigaBases(bases) {
+    const cont = document.getElementById('liga-bases-container');
+    if (!cont) return;
+    const cards = bases.map((base, i) => `
+      <div class="base-card" style="position:relative">
+        <button class="ve-del-btn ve-admin-only" onclick="veDeleteItem('liga_bases', ${i})" title="Eliminar base">🗑️</button>
+        <div class="ve-img-wrap" onclick="veTriggerImageUpload('liga_bases', ${i})">
+          <img class="base-card-img" data-img-target="liga_bases.${i}" src="${base.img || ''}" alt="Base Liga Legendaria"
+               onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+        </div>
+        <span class="base-badge badge-premium" style="position:absolute;top:10px;right:10px;">⚔️ LL</span>
+        <div class="base-card-body">
+          <p data-edit-path="liga_bases.${i}.desc" contenteditable="true" spellcheck="false">${base.desc || ''}</p>
+          <div class="base-price" data-edit-path="liga_bases.${i}.precio" contenteditable="true" spellcheck="false">${base.precio || ''}</div>
+        </div>
+      </div>
+    `).join('');
+    const addCard = `
+      <div class="ve-add-card ve-admin-only" onclick="veAddItem('liga_bases')">
+        <span class="ve-plus">➕</span>
+        <span>Añadir base Liga Legendaria</span>
+      </div>`;
+    cont.innerHTML = (bases.length ? cards : '') + addCard;
+  }
+
+  /* ── CUENTAS: render editable con añadir / eliminar / subir imagen / estado ── */
+  function veRenderCuentas(cuentas) {
+    const cont = document.getElementById('cuentas-container');
+    if (!cont) return;
+
+    const heroFields = [
+      ['rey', '👑', 'Rey'], ['reina', '🏹', 'Reina'], ['centinela', '🏛️', 'Centinela'],
+      ['duque', '🐍', 'Duque'], ['luchadora', '⚒️', 'Luchadora'], ['principe', '🤴', 'Príncipe']
+    ];
+
+    const cards = cuentas.map((c, i) => {
+      const h = c.heroes || {};
+      const heroesHtml = heroFields.map(([key, icon, label]) => `
+        <div class="hero-box">
+          <span class="hb-icon">${icon}</span>
+          <span class="hb-lvl" data-edit-path="cuentas.${i}.heroes.${key}" contenteditable="true" spellcheck="false">${h[key] ?? '0'}</span>
+          <span style="font-size:.5rem;color:#888">${label}</span>
+        </div>`).join('');
+
+      return `
+      <div class="account-card" style="position:relative">
+        <button class="ve-del-btn ve-admin-only" onclick="veDeleteItem('cuentas', ${i})" title="Eliminar cuenta">🗑️</button>
+        <div class="ve-img-wrap" onclick="veTriggerImageUpload('cuentas', ${i})">
+          <img class="account-img" data-img-target="cuentas.${i}" src="${c.img || ''}" alt="${c.nombre || 'Cuenta'}"
+               onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+        </div>
+        <div class="heroes-row">${heroesHtml}</div>
+        <div class="account-body">
+          <h3 data-edit-path="cuentas.${i}.nombre" contenteditable="true" spellcheck="false">${c.nombre || ''}</h3>
+          <p data-edit-path="cuentas.${i}.desc" contenteditable="true" spellcheck="false">${c.desc || ''}</p>
+          <div class="account-footer">
+            <span class="account-price" data-edit-path="cuentas.${i}.precio" contenteditable="true" spellcheck="false">${c.precio || ''}</span>
+            <select data-edit-path="cuentas.${i}.estado">
+              <option value="Disponible" ${c.estado === 'Disponible' ? 'selected' : ''}>Disponible</option>
+              <option value="En proceso" ${c.estado === 'En proceso' ? 'selected' : ''}>En proceso</option>
+              <option value="Vendida" ${c.estado === 'Vendida' ? 'selected' : ''}>Vendida</option>
+            </select>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    const addCard = `
+      <div class="ve-add-card ve-admin-only" onclick="veAddItem('cuentas')" style="min-height:280px;">
+        <span class="ve-plus">➕</span>
+        <span>Añadir nueva cuenta</span>
+      </div>`;
+
+    cont.innerHTML = `<div class="accounts-grid">${cards}${addCard}</div>`;
   }
 
   /* ── Aplica site.json en memoria a la página, dejando todo editable ── */
   function veApplyData(data) {
     veData = data;
+    if (!Array.isArray(data.bases_vip)) data.bases_vip = [];
+    if (!Array.isArray(data.liga_bases)) data.liga_bases = [];
+    if (!Array.isArray(data.cuentas)) data.cuentas = [];
 
     if (Array.isArray(data.navbar)) veRenderNavbar(data.navbar);
 
@@ -2103,19 +2363,53 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
       }
     }
 
-    if (Array.isArray(data.bases_vip)) veRenderBases(data.bases_vip);
+    veRenderBasesVip(data.bases_vip);
+    veRenderLigaBases(data.liga_bases);
+    veRenderCuentas(data.cuentas);
   }
 
   /* ── Recolecta todos los campos editables del DOM y actualiza veData ── */
   function veCollect() {
     document.querySelectorAll('[data-edit-path]').forEach(el => {
       const path = el.getAttribute('data-edit-path');
-      let value = el.innerText;
-      // Limpia espacios sobrantes en campos cortos (no en terminos.contenido, que es multilínea)
-      if (path !== 'terminos.contenido') value = value.trim();
+      let value;
+      if (el.tagName === 'SELECT') {
+        value = el.value;
+      } else {
+        value = el.innerText;
+        if (path !== 'terminos.contenido') value = value.trim();
+      }
       veSetPath(veData, path, value);
     });
     return veData;
+  }
+
+  /* ── Añadir / eliminar tarjetas ── */
+  function veRerenderSection(section) {
+    if (section === 'bases_vip') veRenderBasesVip(veData.bases_vip);
+    if (section === 'liga_bases') veRenderLigaBases(veData.liga_bases);
+    if (section === 'cuentas') veRenderCuentas(veData.cuentas);
+  }
+
+  function veAddItem(section) {
+    veCollect(); // no perder ediciones en curso antes de re-renderizar
+    if (section === 'bases_vip') veData.bases_vip.push(veDefaultBaseVip());
+    if (section === 'liga_bases') veData.liga_bases.push(veDefaultLigaBase());
+    if (section === 'cuentas') veData.cuentas.push(veDefaultCuenta());
+    veRerenderSection(section);
+    veToast('Tarjeta añadida. Edita sus campos y no olvides Guardar.', 'ok');
+  }
+
+  function veDeleteItem(section, index) {
+    if (!confirm('¿Eliminar esta tarjeta? Esta acción se aplicará al hacer clic en "Guardar Cambios en Vivo".')) return;
+    veCollect();
+    veData[section].splice(index, 1);
+    // Limpia cualquier imagen pendiente asociada a índices de esta sección
+    // (los índices cambian tras el splice, así que se recalculan desde cero)
+    const stale = Object.keys(vePendingUploads).filter(k => k.startsWith(section + '.'));
+    stale.forEach(k => delete vePendingUploads[k]);
+    veRerenderSection(section);
+    veToast('Tarjeta eliminada. Recuerda hacer clic en Guardar.', 'ok');
   }
 
   /* ── Llamadas a la API de GitHub ── */
@@ -2135,7 +2429,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     return { sha: json.sha, contentB64: json.content };
   }
 
-  async function veGithubCommit(newDataObj, sha) {
+  async function veGithubCommitJson(newDataObj, sha) {
     const content = veUtf8ToBase64(JSON.stringify(newDataObj, null, 2));
     const res = await fetch(VE_API, {
       method: 'PUT',
@@ -2154,9 +2448,39 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     });
     const body = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(`(${res.status}) ${body.message || 'Falló el commit en GitHub.'}`);
+      throw new Error(`(${res.status}) ${body.message || 'Falló el commit de site.json.'}`);
     }
     return body;
+  }
+
+  /* Sube una imagen nueva a img/ con un nombre único (siempre "crea", nunca pisa un archivo existente) */
+  async function veGithubUploadImage(file, section, id) {
+    const base64 = await veFileToBase64(file);
+    let ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!ext) ext = 'jpg';
+    const safeId = String(id).replace(/[^a-zA-Z0-9_-]/g, '');
+    const filename = `${section}-${safeId}-${Date.now()}.${ext}`;
+    const url = VE_IMG_API_BASE + encodeURIComponent(filename);
+
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${veToken}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Editor visual: subir imagen ${filename}`,
+        content: base64,
+        branch: VE_BRANCH
+      })
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(`(${res.status}) ${body.message || `Falló la subida de ${filename}.`}`);
+    }
+    return `img/${filename}`;
   }
 
   /* ── Flujo: conectar con token ── */
@@ -2174,11 +2498,8 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     veToken = token;
 
     try {
-      const { sha, contentB64 } = await veGithubGetSha();
-      veSha = sha;
+      const { contentB64 } = await veGithubGetSha();
 
-      // Usa el site.json ya cargado por cargarContenido() si existe;
-      // si no, decodifica el contenido que acaba de traer GitHub.
       let dataToUse;
       try {
         const liveRes = await fetch('site.json', { cache: 'no-store' });
@@ -2188,6 +2509,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
       }
 
       veApplyData(dataToUse);
+      document.body.classList.add('ve-editing');
 
       document.getElementById('ve-token-overlay').classList.add('ve-hidden');
       const pill = document.getElementById('ve-status-pill');
@@ -2198,7 +2520,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
       saveBtn.classList.remove('ve-hidden');
       saveBtn.disabled = false;
 
-      veToast('Conectado. Haz clic sobre cualquier texto para editarlo.', 'ok');
+      veToast('Conectado. Edita texto en la página o usa ➕ / 🗑️ en las tarjetas.', 'ok');
     } catch (err) {
       veToken = null;
       errEl.textContent = err.message || 'Token inválido o sin permisos sobre el repositorio.';
@@ -2208,22 +2530,36 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     }
   }
 
-  /* ── Flujo: guardar cambios ── */
+  /* ── Flujo: guardar cambios (imágenes primero, luego site.json) ── */
   async function veSave() {
     const saveBtn = document.getElementById('ve-save-btn');
     if (!veToken || !veData) return;
 
     saveBtn.disabled = true;
     const originalLabel = saveBtn.textContent;
-    saveBtn.textContent = '⏳ Guardando…';
 
     try {
-      // Vuelve a pedir el sha justo antes de guardar, por si el archivo
-      // cambió en GitHub desde que se conectó el editor (evita conflictos).
+      veCollect();
+
+      const pendingKeys = Object.keys(vePendingUploads);
+      let done = 0;
+      for (const key of pendingKeys) {
+        const [section, idxStr] = key.split('.');
+        const index = parseInt(idxStr, 10);
+        const item = veData[section] && veData[section][index];
+        if (!item) continue; // la tarjeta pudo haberse eliminado después de elegir el archivo
+
+        done++;
+        saveBtn.textContent = `⏳ Subiendo imagen ${done}/${pendingKeys.length}…`;
+        const path = await veGithubUploadImage(vePendingUploads[key], section, item.id || index);
+        item.img = path;
+      }
+      vePendingUploads = {};
+
+      saveBtn.textContent = '⏳ Guardando site.json…';
       const { sha } = await veGithubGetSha();
-      const updated = veCollect();
-      const result = await veGithubCommit(updated, sha);
-      veSha = result?.content?.sha || veSha;
+      await veGithubCommitJson(veData, sha);
+
       veToast('✅ Cambios guardados en GitHub (rama main).', 'ok');
     } catch (err) {
       veToast('❌ ' + (err.message || 'No se pudo guardar.'), 'err');
@@ -2235,7 +2571,8 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
 
   function veReset() {
     veToken = null;
-    veSha = null;
+    vePendingUploads = {};
+    document.body.classList.remove('ve-editing');
     document.getElementById('ve-status-pill').classList.add('ve-hidden');
     document.getElementById('ve-status-pill').classList.remove('ve-connected');
     document.getElementById('ve-save-btn').classList.add('ve-hidden');
@@ -2243,6 +2580,11 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     document.getElementById('ve-token-error').textContent = '';
     document.getElementById('ve-token-overlay').classList.remove('ve-hidden');
   }
+
+  /* Expuestas para los onclick= inline generados dinámicamente */
+  window.veTriggerImageUpload = veTriggerImageUpload;
+  window.veAddItem = veAddItem;
+  window.veDeleteItem = veDeleteItem;
 
   /* ── Wiring de eventos ── */
   document.addEventListener('DOMContentLoaded', () => {
@@ -2252,6 +2594,7 @@ document.addEventListener('DOMContentLoaded', cargarContenido);
     });
     document.getElementById('ve-save-btn').addEventListener('click', veSave);
     document.getElementById('ve-status-reset').addEventListener('click', veReset);
+    document.getElementById('ve-file-input').addEventListener('change', veOnFileChosen);
   });
 })();
 </script>
