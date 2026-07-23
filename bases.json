@@ -1,5 +1,9 @@
 {
-  "bases": [
+  "inicio": {
+    "titulo_principal": "Clash Services",
+    "subtitulo": "Los mejores servicios para tu aldea"
+  },
+  "bases_vip": [
     {
       "id": "v1",
       "type": "vip",
@@ -7,8 +11,18 @@
       "price": 4.00,
       "priceLabel": "Desde $4.00 USD",
       "img": "img/base_vip_1.jpg",
-      "desc": "Tu nombre formado con muros en la aldea, con diseños decorativos únicos y elegantes. Representa tu identidad dentro del juego y organiza tu progreso de manera más cómoda. Acabado profesional, nunca repetidas.",
+      "desc": "Tu nombre formado con muros en la aldea, con diseños únicos.",
       "icon": "💎"
     }
-  ]
+  ],
+  "servicios_extra": {
+    "juegos_clan_precio": "$3.00 USD",
+    "juegos_clan_desc": "Completamos tus puntos al 100% súper rápido.",
+    "guerras_precio": "$5.00 USD",
+    "guerras_desc": "Hacemos tus ataques de guerra con 3 estrellas garantizadas."
+  },
+  "terminos": {
+    "titulo": "Términos y Condiciones",
+    "contenido": "Aquí van todas las reglas y políticas de tus servicios..."
+  }
 }
