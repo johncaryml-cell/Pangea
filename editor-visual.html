@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clash Services — Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+
+<!-- ════════════════════════════════════════════════════════════════
+     LIBRERÍAS EXTERNAS (CDN)
+════════════════════════════════════════════════════════════════ -->
+<!-- PayPal SDK — botones de pago -->
+<script src="https://www.paypal.com/sdk/js?client-id=AePArV57KsM4-RHEyqSMDJgjkskAPAuvYicJbaMZKVoWYtO3q1U1-evBJP0DtlOPF1KviyinVCb_lMCS&currency=USD"></script>
+<!-- Marked.js — convierte Markdown a HTML (usado para los Términos y Condiciones) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+
+<style>
+/* ══════════════════════════════════════════
+   CSS VARIABLES — edita aquí para cambiar fondos
+══════════════════════════════════════════ */
+:root {
+  /* ─── FONDOS: reemplaza cada archivo dentro de tu carpeta img/ en GitHub ─── */
+  --bg-login:       url('img/fondo_general.jpg') center/cover no-repeat; /* Pantalla de login/registro */
+  --bg-capital:     url('img/fondo_cap.jpg')      center/cover no-repeat; /* Vista "Capital del Clan" */
+  --bg-ll:          url('img/th18_comp.jpg') center/cover no-repeat; /* Vista "Bases Liga Legendaria" */
+  --bg-muros:       url('img/fondo_muros.jpg') center/cover no-repeat; /* Vista "Subida de Muros" */
+  --bg-bases:       url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Bases VIP" */
+  --bg-cuentas:     url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Cuentas" */
+  --bg-soporte:     url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Soporte" */
+  --bg-referencias: url('img/fondo_general.jpg') center/cover no-repeat; /* Vista "Referencias" */
+
+  /* Imagen exclusiva de la barra superior del Home (el banner con
+     "⚡ PANEL DE SERVICIOS" y el saludo de bienvenida). */
+  --bg-home-banner: url('img/fondo_general.jpg') center/cover no-repeat;
+
+  --gold:   #f5c518;
+  --gold2:  #ffe86a;
+  --fire:   #e63c1e;
+  --dark:   #0d0a06;
+  --dark2:  #161008;
+  --dark3:  #221a0a;
+  --stone:  #2e2214;
+  --stone2: #4a3618;
+  --text:   #f2e8d0;
+  --textdim:#b8a07a;
+  --glow:   0 0 14px #f5c51855, 0 0 36px #f5c51820;
+  --fireglow:0 0 14px #e63c1e88;
+  --navbar-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+}
+
+/* ══════════════════════════════════════════
+   LOGIN OVERLAY
+══════════════════════════════════════════ */
+#login-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: var(--bg-login);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#login-overlay.hidden {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+#login-overlay::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: #00000077;
+}
+
+.login-box {
+  position: relative; z-index: 1;
+  background: #1a1208f0;
+  border: 2px solid var(--gold);
+  border-radius: 18px;
+  padding: 40px 36px 36px;
+  width: min(400px, 92vw);
+  text-align: center;
+  box-shadow: 0 0 60px #f5c51840, 0 24px 60px #000000aa;
+  animation: cardIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cardIn {
+  from { opacity:0; transform:scale(.88) translateY(32px); }
+  to   { opacity:1; transform:scale(1)   translateY(0); }
+}
+
+.login-logo {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.9rem; letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.login-logo .y { color: var(--gold); text-shadow: var(--glow); }
+.login-logo .r { color: var(--fire); text-shadow: var(--fireglow); }
+
+.login-sub {
+  font-family: 'Bangers', cursive;
+  font-size: .95rem; letter-spacing: 2px;
+  color: var(--textdim); margin-bottom: 28px;
+}
+
+.login-input {
+  display: block; width: 100%;
+  background: #0d0a06cc;
+  border: 1.5px solid var(--stone2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif; font-size: 1rem;
+  padding: 11px 14px;
+  margin-bottom: 14px;
+  transition: border-color .2s;
+  outline: none;
+}
+.login-input:focus { border-color: var(--gold); }
+.login-input::placeholder { color: var(--textdim); }
+
+.login-btn {
+  display: block; width: 100%;
+  font-family: 'Bangers', cursive; font-size: 1.2rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), #d49400, var(--gold));
+  color: #1a0e00; border: none; cursor: pointer;
+  padding: 13px 0; border-radius: 8px;
+  box-shadow: 0 4px 18px #f5c51866;
+  transition: transform .18s, box-shadow .18s;
+  margin-bottom: 14px;
+}
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px #f5c518aa; }
+
+.login-create {
+  font-size: .88rem; color: var(--textdim);
+}
+.login-create a {
+  color: var(--gold); text-decoration: none; font-weight: 700;
+}
+.login-create a:hover { text-decoration: underline; }
+
+.login-error {
+  font-size: .85rem; color: var(--fire);
+  margin-bottom: 10px; min-height: 1.2em;
+}
+
+/* ══════════════════════════════════════════
+   MAIN APP LAYOUT
+══════════════════════════════════════════ */
+#app {
+  opacity: 0; transition: opacity .4s ease .1s;
+  min-height: 100vh;
+}
+#app.visible { opacity: 1; }
+
+/* ── TOP NAVBAR ── */
+#navbar {
+  position: sticky; top: 0; z-index: 200;
+  height: var(--navbar-h);
+  display: flex; align-items: center;
+  gap: 24px;
+  padding: 0 28px;
+  background: #100c04ee;
+  backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--stone);
+  transition: box-shadow .25s, border-color .25s;
+}
+#navbar.scrolled {
+  box-shadow: 0 8px 24px #000000aa;
+  border-bottom-color: var(--gold);
+}
+
+.nb-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.25rem; letter-spacing: 1px;
+  flex-shrink: 0; cursor: pointer; user-select: none;
+  white-space: nowrap;
+}
+.nb-logo .y { color: var(--gold); text-shadow: var(--glow); }
+.nb-logo .r { color: var(--fire); text-shadow: var(--fireglow); }
+.nb-logo .badge {
+  font-family: 'Bangers', cursive; font-size: .6rem; letter-spacing: 2px;
+  color: var(--textdim); border: 1px solid var(--stone2);
+  padding: 2px 7px; border-radius: 999px; margin-left: 2px;
+}
+
+.nb-links {
+  display: flex; align-items: center; gap: 4px;
+  flex: 1; justify-content: center;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nb-links::-webkit-scrollbar { display: none; }
+.nb-item {
+  display: flex; align-items: center; gap: 7px;
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 1px;
+  color: var(--textdim);
+  padding: 9px 16px;
+  cursor: pointer; white-space: nowrap;
+  border-radius: 8px;
+  border-bottom: 2.5px solid transparent;
+  transition: all .2s;
+  user-select: none;
+}
+.nb-item .icon { font-size: 1.05rem; }
+.nb-item:hover { color: var(--gold); background: #f5c51810; }
+.nb-item.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  text-shadow: var(--glow);
+}
+
+.nb-user {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+  font-size: .85rem; color: var(--textdim);
+  padding-left: 12px;
+  border-left: 1px solid var(--stone2);
+}
+.nb-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--fire));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bangers', cursive; font-size: .95rem; color: #1a0e00;
+  flex-shrink: 0;
+}
+.nb-email-short { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nb-logout {
+  cursor: pointer;
+  font-size: .8rem; color: var(--fire); font-weight: 700;
+  transition: opacity .2s; white-space: nowrap;
+}
+.nb-logout:hover { opacity: .7; }
+
+.nb-burger {
+  display: none;
+  flex-direction: column; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px; flex-shrink: 0;
+}
+.nb-burger span { width: 22px; height: 2.5px; background: var(--gold); border-radius: 2px; transition: transform .25s, opacity .25s; }
+.nb-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nb-burger.open span:nth-child(2) { opacity: 0; }
+.nb-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── CONTENT AREA ── */
+#content {
+  position: relative;
+  background: var(--dark2);
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ── VIEW ── */
+.view {
+  display: none; min-height: 100%;
+  animation: fadeIn .35s ease both;
+}
+.view.active { display: block; }
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Fondo de imagen a pantalla completa para una vista.
+   Uso: agrega la clase "view-bg" al <div class="view ...">
+   y define --view-bg-img en su style, ej: style="--view-bg-img:var(--bg-bases);" */
+.view-bg { position: relative; min-height: calc(100vh - var(--navbar-h)); }
+.view-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--view-bg-img, none);
+  z-index: 0;
+}
+.view-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0d0a06cc 0%, #0d0a06e6 45%, #0d0a06 100%);
+  z-index: 0;
+}
+.view-bg > * { position: relative; z-index: 1; }
+
+/* ══════════════════════════════════════════
+   HERO VIEW (con fondo de imagen)
+══════════════════════════════════════════ */
+.hero-view {
+  position: relative; min-height: 100vh;
+}
+.hero-view .hero-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+}
+.hero-view .hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0d0a06bb 0%, #0d0a06ee 60%, #0d0a06 100%);
+}
+.hero-view .hero-content {
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
+  padding: 80px 32px 60px;
+}
+.hero-tag {
+  font-family: 'Bangers', cursive; font-size: .9rem; letter-spacing: 3px;
+  color: var(--fire); border: 1.5px solid var(--fire);
+  padding: 3px 16px; border-radius: 999px; display: inline-block;
+  margin-bottom: 18px;
+  animation: pulse-fire 2.5s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+  0%,100% { box-shadow: 0 0 6px #e63c1e44; }
+  50%      { box-shadow: 0 0 20px #e63c1ecc; }
+}
+.hero-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1; letter-spacing: 2px; margin-bottom: 14px;
+}
+.hero-title .y { color: var(--gold); text-shadow: 3px 5px 0 #6a3c00, var(--glow); }
+.hero-title .r { color: var(--fire); text-shadow: 3px 5px 0 #6e0f00, var(--fireglow); }
+.hero-phrase {
+  font-size: 1.1rem; color: var(--textdim); line-height: 1.65;
+  max-width: 560px; margin-bottom: 36px; font-weight: 600;
+}
+.hero-phrase strong { color: var(--gold2); }
+
+.btn-wa-big {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Bangers', cursive; font-size: 1.25rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, #25d366, #128c3c);
+  color: #fff; text-decoration: none; border: none; cursor: pointer;
+  padding: 14px 32px; border-radius: 10px;
+  box-shadow: 0 4px 20px #25d36666;
+  transition: transform .18s, box-shadow .18s;
+}
+.btn-wa-big:hover { transform: translateY(-3px); box-shadow: 0 8px 28px #25d366aa; }
+.btn-wa-big svg { width: 22px; height: 22px; }
+
+/* Precio tag en hero */
+.hero-price-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+.price-chip {
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 1.5px;
+  background: #f5c51820; border: 1.5px solid #f5c51860;
+  color: var(--gold2); padding: 6px 18px; border-radius: 8px;
+}
+
+/* ══════════════════════════════════════════
+   HOME VIEW — DASHBOARD
+══════════════════════════════════════════ */
+.home-wrap { padding-bottom: 40px; }
+
+/* ── Welcome hero banner ── */
+.home-hero {
+  position: relative; overflow: hidden;
+  margin: 28px 28px 0;
+  border-radius: 18px;
+  border: 1.5px solid var(--stone2);
+  padding: 44px 36px;
+  background:
+    linear-gradient(120deg, #0d0a06ee 10%, #0d0a06cc 55%, #1a120699 100%),
+    var(--bg-home-banner);
+  background-size: cover; background-position: center;
+}
+.home-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 85% 20%, #f5c51822, transparent 55%);
+  pointer-events: none;
+}
+.home-hero-tag {
+  position: relative; z-index: 1;
+  display: inline-block;
+  font-family: 'Bangers', cursive; font-size: .85rem; letter-spacing: 3px;
+  color: var(--gold); border: 1.5px solid var(--gold);
+  padding: 3px 14px; border-radius: 999px; margin-bottom: 16px;
+  animation: pulse-fire 2.5s ease-in-out infinite;
+}
+.home-hero h1 {
+  position: relative; z-index: 1;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  letter-spacing: 1.5px; line-height: 1.15; margin-bottom: 10px;
+}
+.home-hero h1 .y { color: var(--gold); text-shadow: 2px 3px 0 #6a3c00, var(--glow); }
+.home-hero-sub {
+  position: relative; z-index: 1;
+  font-size: 1rem; color: var(--textdim); max-width: 560px; line-height: 1.55;
+}
+.home-hero-sub strong { color: var(--gold2); }
+
+/* ── Coupon banner ── */
+.home-banner {
+  margin: 20px 28px 0;
+  background: linear-gradient(135deg, #1a2e14, #0e2210);
+  border: 1.5px solid #25d366;
+  border-radius: 12px; padding: 18px 24px;
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap;
+}
+.home-banner-text { font-size: .97rem; color: var(--text); flex: 1; min-width: 200px; }
+.home-banner-text strong { color: #25d366; }
+
+/* ── Quick access section ── */
+.home-section-title {
+  padding: 32px 28px 4px;
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 2.5px;
+  color: var(--textdim); text-transform: uppercase;
+}
+
+.home-cards-grid {
+  padding: 14px 28px 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.home-card {
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #1a1208ee, #100c04ee);
+  border: 1.5px solid var(--stone2);
+  border-radius: 16px; padding: 26px 22px;
+  cursor: pointer; user-select: none;
+  transition: transform .22s, border-color .22s, box-shadow .22s;
+}
+.home-card::before {
+  content: ''; position: absolute; top: -40%; right: -40%;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, #f5c51833, transparent 70%);
+  opacity: 0; transition: opacity .3s;
+}
+.home-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: var(--gold);
+  box-shadow: 0 14px 36px #f5c51835, 0 0 0 1px #f5c51820 inset;
+}
+.home-card:hover::before { opacity: 1; }
+.home-card .card-icon {
+  font-size: 2.6rem; margin-bottom: 14px; display: inline-block;
+  filter: drop-shadow(0 0 10px #f5c51855);
+  transition: transform .25s;
+}
+.home-card:hover .card-icon { transform: scale(1.12) rotate(-4deg); }
+.home-card .card-title {
+  font-family: 'Bangers', cursive; font-size: 1.2rem; letter-spacing: 1.5px;
+  color: var(--gold); margin-bottom: 5px;
+}
+.home-card .card-sub { font-size: .84rem; color: var(--textdim); line-height: 1.4; }
+.home-card .card-arrow {
+  position: absolute; bottom: 20px; right: 20px;
+  font-size: 1.2rem; color: var(--gold);
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity .2s, transform .2s;
+}
+.home-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+/* ── Novedades / servicio destacado ── */
+.home-featured {
+  margin: 8px 28px 0;
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 780px) { .home-featured { grid-template-columns: 1fr; } }
+.featured-card {
+  background: linear-gradient(135deg, #221a0a, #100c04);
+  border: 1.5px solid var(--stone2);
+  border-radius: 16px; padding: 26px 24px;
+  position: relative; overflow: hidden;
+}
+.featured-card.spotlight { border-color: #9b30ff55; }
+.featured-eyebrow {
+  font-family: 'Bangers', cursive; font-size: .75rem; letter-spacing: 2.5px;
+  color: var(--fire); margin-bottom: 8px; text-transform: uppercase;
+}
+.featured-card.spotlight .featured-eyebrow { color: #bb44ff; }
+.featured-card h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.25rem;
+  color: var(--gold); margin-bottom: 8px; letter-spacing: 1px;
+}
+.featured-card p { font-size: .89rem; color: var(--textdim); line-height: 1.6; margin-bottom: 16px; }
+.featured-list { list-style: none; margin-bottom: 16px; }
+.featured-list li {
+  font-size: .87rem; color: var(--text);
+  padding: 7px 0; border-bottom: 1px dashed var(--stone2);
+  display: flex; justify-content: space-between; gap: 10px;
+}
+.featured-list li:last-child { border-bottom: none; }
+.featured-list .fl-price { color: var(--gold2); font-family: 'Bangers', cursive; letter-spacing: 1px; }
+.btn-featured {
+  display: inline-block;
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 1.5px;
+  background: linear-gradient(135deg, var(--gold), #d49400);
+  color: #1a0e00; border: none; cursor: pointer;
+  padding: 10px 24px; border-radius: 8px;
+  box-shadow: 0 3px 12px #f5c51855;
+  transition: transform .18s;
+}
+.btn-featured:hover { transform: translateY(-2px); }
+.btn-featured.alt { background: linear-gradient(135deg, #9b30ff, #5900cc); color: #fff; box-shadow: 0 3px 12px #9b30ff55; }
+
+/* ══════════════════════════════════════════
+   BASES NAME (PayPal)
+══════════════════════════════════════════ */
+.bases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 22px; padding: 28px;
+}
+.base-card {
+  background: #1a1208ee;
+  border: 1.5px solid var(--stone2);
+  border-radius: 14px; overflow: hidden;
+  transition: transform .22s, border-color .22s, box-shadow .22s;
+}
+.base-card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 10px 32px #f5c51840; }
+.base-card.vip { border-color: #6a1faa44; }
+.base-card.vip:hover { border-color: #bb44ff; box-shadow: 0 10px 32px #bb44ff44; }
+.base-card-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  background: linear-gradient(135deg, #1a1230, #2a1a4a);
+}
+.base-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-family: 'Bangers', cursive; font-size: .85rem; letter-spacing: 2px;
+  padding: 2px 12px; border-radius: 4px;
+}
+.badge-premium { background: linear-gradient(135deg,#f5c518,#d49400); color:#1a0e00; }
+.badge-vip     { background: linear-gradient(135deg,#9b30ff,#5900cc); color:#fff; }
+.base-card-body { padding: 16px 18px 20px; }
+.base-card h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.1rem;
+  color: var(--gold); text-shadow: 1px 2px 0 #6a3c00; margin-bottom: 6px;
+}
+.base-card p { font-size: .87rem; color: var(--textdim); margin-bottom: 12px; line-height: 1.5; }
+.base-price  { font-family: 'Bangers', cursive; font-size: 1.4rem; color: var(--gold2); margin-bottom: 12px; }
+.btn-buy {
+  display: block; width: 100%;
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), #d49400, var(--gold));
+  color: #1a0e00; border: none; cursor: pointer;
+  padding: 12px 0; border-radius: 8px;
+  box-shadow: 0 4px 14px #f5c51855;
+  transition: transform .18s, box-shadow .18s;
+}
+.btn-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 24px #f5c518aa; }
+.btn-buy-vip {
+  background: linear-gradient(135deg, #9b30ff, #5900cc);
+  color: #fff; box-shadow: 0 4px 14px #9b30ff55;
+}
+.btn-buy-vip:hover { box-shadow: 0 8px 24px #9b30ffaa; }
+
+/* ── PAYPAL MODAL ── */
+#pp-overlay {
+  display: none; position: fixed; inset: 0; z-index: 900;
+  background: #000000aa; backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+#pp-overlay.open { display: flex; }
+#pp-modal {
+  background: #130f06fc;
+  border: 2px solid var(--gold);
+  border-radius: 18px; width: min(500px, 94vw);
+  padding: 34px 28px 28px; position: relative;
+  box-shadow: 0 0 60px #f5c51840, 0 24px 60px #00000099;
+  animation: cardIn .32s cubic-bezier(.34,1.56,.64,1) both;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 18px;
+  font-size: 1.6rem; color: var(--textdim);
+  background: none; border: none; cursor: pointer;
+  transition: color .2s;
+}
+.modal-close:hover { color: var(--fire); }
+.modal-title {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.5rem; letter-spacing: 2px;
+  color: var(--gold); text-shadow: var(--glow);
+  text-align: center; margin-bottom: 4px;
+}
+.modal-price-txt {
+  font-family: 'Bangers', cursive; font-size: 1.7rem;
+  color: var(--gold2); text-align: center; margin-bottom: 20px;
+}
+.modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 20px; box-shadow: var(--glow);
+}
+#pp-btn-container { min-height: 50px; }
+.modal-secure { text-align: center; font-size: .8rem; color: var(--textdim); margin-top: 12px; }
+.modal-secure span { color: var(--gold); font-weight: 700; }
+
+/* SUCCESS BANNER */
+#success-banner {
+  display: none; position: fixed;
+  top: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 9999;
+  background: linear-gradient(135deg, #0e2210, #1a3a14);
+  border: 2px solid #25d366; border-radius: 12px;
+  padding: 16px 28px; text-align: center;
+  box-shadow: 0 4px 28px #25d36666;
+  max-width: 90vw;
+}
+#success-banner h3 { font-family: 'Luckiest Guy', cursive; color: #25d366; font-size: 1.3rem; margin-bottom: 4px; }
+#success-banner p  { font-size: .9rem; color: var(--text); }
+
+/* ══════════════════════════════════════════
+   CUENTAS
+══════════════════════════════════════════ */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; padding: 28px;
+}
+.account-card {
+  background: #1a1208ee;
+  border: 1.5px solid var(--stone2);
+  border-radius: 14px; overflow: hidden;
+  transition: transform .22s, box-shadow .22s;
+}
+.account-card:hover { transform: translateY(-5px); box-shadow: 0 8px 28px #f5c51830; }
+.account-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  background: linear-gradient(135deg, #1a1230, #2a1a4a);
+}
+.heroes-row {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 4px; padding: 10px 12px 4px;
+}
+.hero-box {
+  aspect-ratio: 1; border-radius: 6px;
+  background: #0d0a06;
+  border: 1px solid var(--stone2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: .55rem; color: var(--textdim);
+  text-align: center; gap: 2px; padding: 3px;
+}
+.hero-box .hb-icon { font-size: .9rem; }
+.hero-box .hb-lvl  { font-family: 'Bangers', cursive; font-size: .7rem; color: var(--gold); }
+.account-body { padding: 10px 14px 14px; }
+.account-body h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1rem;
+  color: var(--gold); margin-bottom: 4px;
+}
+.account-body p { font-size: .82rem; color: var(--textdim); margin-bottom: 8px; }
+.account-footer { display: flex; align-items: center; justify-content: space-between; }
+.account-price { font-family: 'Bangers', cursive; font-size: 1.2rem; color: var(--gold2); }
+
+/* STATUS BADGE */
+.status-badge {
+  font-family: 'Bangers', cursive; font-size: .78rem; letter-spacing: 1.5px;
+  padding: 3px 10px; border-radius: 4px;
+}
+.status-en-venta    { background: #f5c51822; color: var(--gold); border: 1px solid #f5c51866; }
+.status-disponible  { background: #25d36622; color: #25d366;     border: 1px solid #25d36666; }
+.status-en-proceso  { background: #e63c1e22; color: var(--fire); border: 1px solid #e63c1e66; }
+.status-vendida     { background: #44444422; color: #888;        border: 1px solid #66666666; text-decoration: line-through; }
+
+/* ══════════════════════════════════════════
+   SOPORTE
+══════════════════════════════════════════ */
+.support-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px; padding: 28px;
+}
+.support-card {
+  background: #1a1208cc;
+  border: 1.5px solid var(--stone2);
+  border-radius: 12px; padding: 24px 20px; text-align: center;
+  transition: border-color .2s, transform .2s;
+}
+.support-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.support-card .s-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.support-card h3 {
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 1.5px;
+  color: var(--gold); margin-bottom: 6px;
+}
+.support-card p { font-size: .85rem; color: var(--textdim); margin-bottom: 16px; line-height: 1.5; }
+.btn-support {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 1.5px;
+  padding: 10px 20px; border-radius: 8px; border: none;
+  cursor: pointer; text-decoration: none;
+  transition: transform .18s, box-shadow .18s;
+}
+.btn-support-wa {
+  background: linear-gradient(135deg, #25d366, #128c3c);
+  color: #fff; box-shadow: 0 3px 12px #25d36655;
+}
+.btn-support-wa:hover { transform: translateY(-2px); box-shadow: 0 6px 20px #25d366aa; }
+.btn-support-chat {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  color: #fff; box-shadow: 0 3px 12px #00b4d855;
+}
+.btn-support-chat:hover { transform: translateY(-2px); box-shadow: 0 6px 20px #00b4d8aa; }
+
+/* ══════════════════════════════════════════
+   REFERENCIAS
+══════════════════════════════════════════ */
+.refs-wrap { padding: 28px; max-width: 780px; }
+.coupon-banner {
+  background: linear-gradient(135deg, #2e1a00, #1a0e00);
+  border: 2px solid var(--gold);
+  border-radius: 12px; padding: 18px 24px;
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+}
+.coupon-banner .coup-icon { font-size: 2.2rem; flex-shrink: 0; }
+.coupon-banner-text h3 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.2rem;
+  color: var(--gold); margin-bottom: 4px;
+}
+.coupon-banner-text p { font-size: .88rem; color: var(--textdim); }
+
+.ref-form {
+  background: #1a1208cc;
+  border: 1.5px solid var(--stone2);
+  border-radius: 12px; padding: 22px 22px 18px;
+  margin-bottom: 28px;
+}
+.ref-form h3 {
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 1.5px;
+  color: var(--gold); margin-bottom: 16px;
+}
+.ref-input, .ref-textarea {
+  display: block; width: 100%;
+  background: #0d0a06cc;
+  border: 1.5px solid var(--stone2);
+  border-radius: 8px; color: var(--text);
+  font-family: 'Nunito', sans-serif; font-size: .95rem;
+  padding: 10px 14px; margin-bottom: 12px;
+  outline: none; transition: border-color .2s;
+}
+.ref-input:focus, .ref-textarea:focus { border-color: var(--gold); }
+.ref-input::placeholder, .ref-textarea::placeholder { color: var(--textdim); }
+.ref-textarea { min-height: 90px; resize: vertical; }
+.ref-form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-ref-submit {
+  font-family: 'Bangers', cursive; font-size: 1.05rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), #d49400);
+  color: #1a0e00; border: none; cursor: pointer;
+  padding: 11px 26px; border-radius: 8px;
+  box-shadow: 0 3px 12px #f5c51855;
+  transition: transform .18s;
+}
+.btn-ref-submit:hover { transform: translateY(-2px); }
+.btn-ref-img {
+  font-family: 'Bangers', cursive; font-size: 1.05rem; letter-spacing: 1.5px;
+  background: transparent; color: var(--textdim);
+  border: 1.5px solid var(--stone2); cursor: pointer;
+  padding: 11px 20px; border-radius: 8px;
+  transition: border-color .2s, color .2s;
+}
+.btn-ref-img:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Historial reviews */
+.reviews-title {
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 1.5px;
+  color: var(--gold); margin-bottom: 14px;
+}
+.review-item {
+  background: #1a1208cc;
+  border: 1px solid var(--stone2);
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+  display: flex; gap: 12px;
+}
+.review-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--fire));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bangers', cursive; font-size: .9rem; color: #1a0e00;
+  flex-shrink: 0;
+}
+.review-body h4 { font-size: .9rem; color: var(--gold2); margin-bottom: 2px; }
+.review-body .review-service { font-size: .75rem; color: var(--fire); font-family: 'Bangers', cursive; letter-spacing: 1.5px; margin-bottom: 4px; }
+.review-body p { font-size: .85rem; color: var(--textdim); line-height: 1.5; }
+.review-stars { color: var(--gold); font-size: .85rem; margin-bottom: 2px; }
+
+/* ══════════════════════════════════════════
+   TÉRMINOS
+══════════════════════════════════════════ */
+.terms-wrap {
+  max-width: 720px; padding: 36px 32px;
+  margin: 0 auto;
+}
+.terms-wrap h2 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.8rem;
+  color: var(--gold); text-shadow: var(--glow);
+  letter-spacing: 2px; margin-bottom: 6px;
+}
+.terms-wrap .terms-sub {
+  font-size: .85rem; color: var(--textdim); margin-bottom: 28px;
+  font-family: 'Bangers', cursive; letter-spacing: 2px;
+}
+.terms-section { margin-bottom: 24px; }
+.terms-section h3 {
+  font-family: 'Bangers', cursive; font-size: 1.1rem; letter-spacing: 1.5px;
+  color: var(--fire); margin-bottom: 8px;
+}
+.terms-section p, .terms-section li {
+  font-size: .93rem; color: var(--textdim);
+  line-height: 1.7; margin-bottom: 6px;
+}
+.terms-section ul { padding-left: 20px; }
+
+/* ══════════════════════════════════════════
+   SECTION HEADER
+══════════════════════════════════════════ */
+.section-header {
+  padding: 28px 28px 0;
+  border-bottom: 1px solid var(--stone);
+  margin-bottom: 0;
+}
+.section-header h2 {
+  font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.section-header h2 .y { color: var(--gold); }
+.section-header h2 .r { color: var(--fire); }
+.section-header p { font-size: .92rem; color: var(--textdim); padding-bottom: 18px; }
+
+/* FILTER BAR */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; padding: 18px 28px 0; }
+.filter-btn {
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 2px;
+  padding: 8px 22px; border-radius: 8px;
+  border: 1.5px solid var(--stone2);
+  background: var(--dark3); color: var(--textdim);
+  cursor: pointer; transition: all .2s;
+}
+.filter-btn.active, .filter-btn:hover {
+  border-color: var(--gold); color: var(--gold);
+  background: #f5c51810;
+}
+
+/* ══════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark2); }
+::-webkit-scrollbar-thumb { background: var(--stone2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* RESPONSIVE — NAVBAR */
+@media (max-width: 860px) {
+  .nb-burger { display: flex; }
+  .nb-links {
+    position: fixed; top: var(--navbar-h); left: 0; right: 0;
+    flex-direction: column; align-items: stretch;
+    background: #100c04f5; backdrop-filter: blur(10px);
+    border-bottom: 1.5px solid var(--stone);
+    max-height: 0; overflow: hidden;
+    transition: max-height .3s ease;
+    justify-content: flex-start;
+    z-index: 199;
+  }
+  .nb-links.open { max-height: 70vh; overflow-y: auto; }
+  .nb-item { padding: 14px 22px; border-radius: 0; border-bottom: 1px solid var(--stone); border-left: 3px solid transparent; }
+  .nb-item.active { border-left-color: var(--gold); border-bottom: 1px solid var(--stone); }
+  .nb-email-short { display: none; }
+}
+@media (max-width: 560px) {
+  #navbar { padding: 0 14px; gap: 12px; }
+  .nb-logo { font-size: 1.05rem; }
+  .nb-logo .badge { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     LOGIN OVERLAY
+════════════════════════════════════════ -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <span class="y">Clash</span> <span class="r">Services</span>
+    </div>
+    <p class="login-sub">⚔️ PANEL DE SERVICIOS ⚔️</p>
+    <div class="login-error" id="login-error"></div>
+    <input class="login-input" type="email" id="login-email" placeholder="Correo electrónico" autocomplete="email"/>
+    <input class="login-input" type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password"/>
+    <button class="login-btn" id="login-submit-btn" onclick="handleAuthSubmit()">⚡ INGRESAR</button>
+    <p class="login-create" id="login-toggle-text">¿No tienes cuenta? <a href="#" onclick="toggleAuthMode(event)">Crear cuenta</a></p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     APP PRINCIPAL
+════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR — barra superior fija (sticky)
+  ══════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nb-logo" onclick="navigate('home')">
+      <span class="y">CLASH</span> <span class="r">SERVICES</span>
+      <span class="badge">PANEL</span>
+    </div>
+
+    <button class="nb-burger" id="nb-burger" onclick="toggleMobileNav()" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nb-links" id="nb-links">
+      <div class="nb-item active" data-view="home"><span class="icon">🏠</span> Home</div>
+      <div class="nb-item" data-view="capital"><span class="icon">💰</span> Capital</div>
+      <div class="nb-item" data-view="ll"><span class="icon">⚔️</span> Liga Leg.</div>
+      <div class="nb-item" data-view="muros"><span class="icon">🧱</span> Muros</div>
+      <div class="nb-item" data-view="bases"><span class="icon">🏰</span> Bases VIP</div>
+      <div class="nb-item" data-view="cuentas"><span class="icon">👑</span> Cuentas</div>
+      <div class="nb-item" data-view="soporte"><span class="icon">💬</span> Soporte</div>
+      <div class="nb-item" data-view="referencias"><span class="icon">⭐</span> Referencias</div>
+      <div class="nb-item" data-view="terminos"><span class="icon">📋</span> Términos</div>
+    </div>
+
+    <div class="nb-user">
+      <div class="nb-avatar" id="sb-avatar">?</div>
+      <span id="sb-email-short" class="nb-email-short"></span>
+      <span class="nb-logout" onclick="handleLogout()">Salir</span>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       CONTENT — contenedor de todas las vistas (views)
+  ══════════════════════════════════════════ -->
+  <main id="content">
+
+    <!-- ════════════════════════════════════════
+         VISTA: HOME (Dashboard)
+    ════════════════════════════════════════ -->
+    <div class="view active" id="view-home">
+      <div class="home-wrap">
+
+        <div class="home-hero">
+          <span class="home-hero-tag" id="inicio-titulo-principal">⚡ PANEL DE SERVICIOS</span>
+          <h1>Bienvenido a <span class="y">Clash Services</span>, <span id="home-user-name">Clasher</span> 👋</h1>
+          <p class="home-hero-sub" id="inicio-subtitulo">
+            Tu base, tu clan y tus cuentas — todo gestionado en un solo lugar.
+            <strong>Elige el servicio abajo</strong> para cotizar, comprar o dar seguimiento a tu pedido.
+          </p>
+        </div>
+
+        <div class="home-banner">
+          <span class="coup-icon">🎁</span>
+          <div class="home-banner-text">
+            <strong>Por cada 3 compras recibe un cupón de descuento 🎟️.</strong><br>
+            Toma captura de tus 3 compras y guárdalas como evidencia. Reclama vía WhatsApp.
+          </div>
+          <a href="https://wa.me/18295395068?text=Quiero%20reclamar%20mi%20cupón%20de%20descuento" target="_blank" class="btn-wa-big" style="white-space:nowrap;font-size:1rem;padding:10px 20px;">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Reclamar
+          </a>
+        </div>
+
+        <div class="home-section-title">⚡ Acceso Rápido</div>
+        <div class="home-cards-grid">
+          <div class="home-card" onclick="navigate('capital')">
+            <div class="card-icon">💰</div>
+            <div class="card-title">Capital del Clan</div>
+            <div class="card-sub">Maxeo completo desde $40</div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="home-card" onclick="navigate('ll')">
+            <div class="card-icon">⚔️</div>
+            <div class="card-title">Bases Liga Legendaria</div>
+            <div class="card-sub">Desde $4 USD</div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="home-card" onclick="navigate('muros')">
+            <div class="card-icon">🧱</div>
+            <div class="card-title">Subida de Muros</div>
+            <div class="card-sub">Desde $1 hasta $10 USD</div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="home-card" onclick="navigate('bases')">
+            <div class="card-icon">🏰</div>
+            <div class="card-title">Bases VIP</div>
+            <div class="card-sub">Pago directo con PayPal</div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="home-card" onclick="navigate('cuentas')">
+            <div class="card-icon">👑</div>
+            <div class="card-title">Cuentas</div>
+            <div class="card-sub">Próximamente nuevas opciones</div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="home-card" onclick="navigate('referencias')">
+            <div class="card-icon">⭐</div>
+            <div class="card-title">Referencias</div>
+            <div class="card-sub">Lee y deja tu opinión</div>
+            <div class="card-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="home-section-title">📋 Cómo funciona</div>
+        <div class="home-banner" style="border-color:var(--stone2);background:linear-gradient(135deg,var(--dark3),var(--dark2));">
+          <span class="coup-icon">🧭</span>
+          <div class="home-banner-text" style="color:var(--textdim);">
+            Explora nuestros servicios desde el panel principal: <strong style="color:var(--gold2);">Capital del Clan, Bases de Liga Legendaria, Subida de Muros, Bases VIP</strong> y más. Todo lo que necesitas está organizado en sus apartados correspondientes.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: CAPITAL DEL CLAN
+    ════════════════════════════════════════ -->
+    <div class="view hero-view" id="view-capital">
+      <div class="hero-bg" style="background:var(--bg-capital);"></div>
+      <div class="hero-content">
+        <span class="hero-tag">💰 MEJORA DE LA CAPITAL</span>
+        <h1 class="hero-title">
+          <span class="y">Capital</span><br><span class="r">del Clan</span>
+        </h1>
+        <p class="hero-phrase">
+          Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día, asegurando un progreso rápido y eficiente. <strong>Precio personalizado según tu tanda y cantidad solicitada.</strong>
+        </p>
+        <div class="hero-price-row">
+          <span class="price-chip">Maxeo completo: $40 – $45 USD</span>
+        </div>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Mejora%20de%20Capital%20del%20Clan" target="_blank" class="btn-wa-big">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          COTIZA TU SERVICIO
+        </a>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: BASES LIGA LEGENDARIA
+    ════════════════════════════════════════ -->
+    <div class="view hero-view" id="view-ll">
+      <div class="hero-bg" style="background:var(--bg-ll);"></div>
+      <div class="hero-content">
+        <span class="hero-tag">⚔️ LIGA LEGENDARIA</span>
+        <h1 class="hero-title">
+          <span class="y">Bases</span><br><span class="r">Liga Legendaria</span>
+        </h1>
+        <p class="hero-phrase">
+          Obtén bases de Liga Legendaria probadas en el más alto nivel. Distribuciones populares de jugadores icónicos y diseños que resisten los ataques más exigentes. <strong>Bases seleccionadas y optimizadas para mantenerte firme en Legends League.</strong>
+        </p>
+        <div class="hero-price-row">
+          <span class="price-chip">Desde $4 USD</span>
+        </div>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Liga%20Legendaria" target="_blank" class="btn-wa-big">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          COTIZA TU SERVICIO
+        </a>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: SUBIDA DE MUROS
+    ════════════════════════════════════════ -->
+    <div class="view hero-view" id="view-muros">
+      <div class="hero-bg" style="background:var(--bg-muros);"></div>
+      <div class="hero-content">
+        <span class="hero-tag">🧱 SUBIDA DE MUROS</span>
+        <h1 class="hero-title">
+          <span class="y">Subida</span><br><span class="r">de Muros</span>
+        </h1>
+        <p class="hero-phrase">
+          Maximiza la defensa de tu aldea con muros de nivel máximo. Además de blindar tu base, le da un cambio visual y estético único. Proceso seguro sin necesidad de contraseñas ni acceso directo a tu correo. <strong>Tu aldea nunca había estado tan blindada 🔐, sin riesgo de ban.</strong>
+        </p>
+        <div class="hero-price-row">
+          <span class="price-chip">Desde $1 hasta $10 USD, según cantidad y nivel</span>
+        </div>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Subida%20de%20Muros" target="_blank" class="btn-wa-big">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          COTIZA TU SERVICIO
+        </a>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: BASES VIP (dinámico + PayPal)
+    ════════════════════════════════════════ -->
+    <div class="view view-bg" id="view-bases" style="--view-bg-img:var(--bg-bases);">
+      <div class="section-header">
+        <h2><span class="y">Bases</span> <span class="r">VIP</span></h2>
+        <p>Tu nombre formado con muros en la aldea. Pago directo y seguro por PayPal.</p>
+      </div>
+
+      <!--
+        ═══════════════════════════════════════════════════
+        Este contenedor ahora se llena dinámicamente desde
+        site.json → bases_vip[] (ver <script> al final del
+        archivo, función renderBasesVip()). Ya no hace falta
+        editar tarjetas aquí a mano.
+        ═══════════════════════════════════════════════════
+      -->
+      <div class="bases-grid" id="bases-container">
+        <p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Cargando bases…</p>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: CUENTAS
+    ════════════════════════════════════════ -->
+    <div class="view view-bg" id="view-cuentas" style="--view-bg-img:var(--bg-cuentas);">
+      <div class="section-header">
+        <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
+        <p>Actualmente no hay cuentas disponibles. Próximamente nuevas opciones.</p>
+      </div>
+
+      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
+        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
+        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
+        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
+          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
+        </p>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Avísame por WhatsApp
+        </a>
+      </div>
+
+      <!--
+        ═══════════════════════════════════════════════════
+        CUANDO TENGAS CUENTAS PARA VENDER:
+        1) Borra el <div> de "Aún no disponible" de arriba.
+        2) Descomenta el bloque <div class="accounts-grid"> de abajo
+           y agrega dentro un .account-card por cada cuenta.
+        3) Héroes correctos a usar en cada hero-box: Rey, Reina,
+           Centinela, Duque, Luchadora, Príncipe.
+        4) Mientras la cuenta esté lista para vender, su status-badge
+           debe decir "Disponible" (clase status-disponible).
+        ═══════════════════════════════════════════════════
+      <div class="accounts-grid">
+
+        <div class="account-card">
+          <img class="account-img" src="img/th18_comp.jpg" alt="Cuenta TH" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+          <div class="heroes-row">
+            <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">95</span><span style="font-size:.5rem;color:#888">Rey</span></div>
+            <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">90</span><span style="font-size:.5rem;color:#888">Reina</span></div>
+            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">65</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
+            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Duque</span></div>
+            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
+            <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
+          </div>
+          <div class="account-body">
+            <h3>Nombre / Town Hall de la cuenta</h3>
+            <p>Descripción breve de la cuenta.</p>
+            <div class="account-footer">
+              <span class="account-price">$0 USD</span>
+              <span class="status-badge status-disponible">Disponible</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      ═══════════════════════════════════════════════════
+      -->
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: REFERENCIAS (Firestore en tiempo real)
+    ════════════════════════════════════════ -->
+    <div class="view view-bg" id="view-referencias" style="--view-bg-img:var(--bg-referencias);">
+      <div class="section-header">
+        <h2><span class="y">Referencias</span> <span class="r">y Reviews</span></h2>
+        <p>Comparte tu experiencia y ayuda a la comunidad.</p>
+      </div>
+      <div class="refs-wrap">
+        <div class="coupon-banner">
+          <span class="coup-icon">🎁</span>
+          <div class="coupon-banner-text">
+            <h3>Por cada 3 compras recibe un cupón de descuento 🎟️</h3>
+            <p>Toma captura de tus 3 compras y guárdalas como evidencia. Reclama vía WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="ref-form" id="ref-form" style="display:none;">
+          <h3>📝 DEJAR UNA REFERENCIA</h3>
+          <input class="ref-input" type="text" id="ref-name" placeholder="Tu nombre (ej. ClasherPro123)"/>
+          <input class="ref-input" type="text" id="ref-service" placeholder="Nombre del servicio (ej. Bases VIP)"/>
+          <textarea class="ref-textarea" id="ref-comment" placeholder="Tu comentario sobre el servicio…"></textarea>
+          <div class="ref-form-row">
+            <button class="btn-ref-submit" id="ref-submit-btn" onclick="submitReview()">⭐ Enviar Review</button>
+            <button class="btn-ref-img" id="ref-img-btn" onclick="document.getElementById('ref-img-input').click()">📷 Subir imagen</button>
+            <input type="file" id="ref-img-input" accept="image/*" style="display:none" onchange="handleRefImage(this)"/>
+          </div>
+          <div id="ref-img-preview" style="margin-top:10px;"></div>
+          <div id="ref-upload-status" style="margin-top:8px;font-size:.85rem;color:var(--gold2);"></div>
+        </div>
+
+        <div class="ref-form" id="ref-form-locked" style="text-align:center;">
+          <p style="color:var(--textdim);font-size:.95rem;">🔒 Inicia sesión para dejar tu review.</p>
+        </div>
+
+        <div class="reviews-title">💬 HISTORIAL DE REVIEWS</div>
+        <div id="reviews-list">
+          <p style="color:var(--textdim);font-size:.9rem;">Cargando reviews…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: SOPORTE DIRECTO
+    ════════════════════════════════════════ -->
+    <div class="view view-bg" id="view-soporte" style="--view-bg-img:var(--bg-soporte);">
+      <div class="section-header">
+        <h2><span class="y">Soporte</span> <span class="r">Directo</span></h2>
+        <p>Accede a soporte inmediato mediante nuestro chat en vivo.</p>
+      </div>
+      <div class="support-grid" style="max-width:420px;margin:0 auto;">
+        <div class="support-card">
+          <div class="s-icon">💬</div>
+          <h3>CHAT EN VIVO</h3>
+          <p>Cotizaciones, pagos y reportes en un solo canal directo 📲.</p>
+          <button class="btn-support btn-support-chat" onclick="openTawkChat()">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.59 1.11 4.93 2.9 6.61L4 22l4.64-1.55C9.99 20.79 10.99 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/></svg>
+            Abrir Chat
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         VISTA: TÉRMINOS Y CONDICIONES (Markdown)
+    ════════════════════════════════════════ -->
+    <div class="view" id="view-terminos">
+      <div class="terms-wrap">
+        <h2 id="terminos-titulo">Términos y Condiciones</h2>
+        <p class="terms-sub" id="terminos-contenido">⚔️ CLASH SERVICES — Última actualización: 2026</p>
+
+        <div class="terms-section">
+          <h3>🟢 1. Información General y Declaración de Independencia</h3>
+          <p><strong>🟢 Independencia del Servicio:</strong> Este proyecto opera de manera autónoma y NO mantiene ningún tipo de alianza, patrocinio o respaldo oficial con Supercell ni con desarrolladores externos. Las marcas y nombres mencionados pertenecen enteramente a sus respectivos dueños.</p>
+          <p><strong>🟢 Naturaleza de la Marca:</strong> Clash Services funciona como un espacio especializado en la gestión de cuentas, bases competitivas para Liga Leyenda y optimización de muros.</p>
+          <p><strong>🟢 Aplicación de las Normas:</strong> Todo acuerdo o contratación entre el usuario y nuestro equipo queda sujeto a las directrices de este documento desde el momento en que se efectúa el pago por los canales oficiales.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 2. Consentimiento y Modificaciones</h3>
+          <p><strong>🟢 Aceptación Libre:</strong> Al contratar cualquier prestación, el cliente confirma que ha leído y aceptado cada punto de estas políticas por iniciativa propia.</p>
+          <p><strong>🟢 Actualizaciones:</strong> Nos reservamos el derecho de ajustar los términos cuando sea necesario, notificando con antelación a los usuarios. Los cambios jamás afectarán encargos que ya estén en curso.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 3. Catálogo de Servicios y Formas de Pago</h3>
+          <p><strong>🟢 Oferta Disponible:</strong> Brindamos venta y administración, diseño de bases competitivas de alto nivel y el servicio de mejora de muros, el cual cuenta con un plazo máximo de entrega de 7 días (pudiendo finalizar antes si el avance lo permite).</p>
+          <p><strong>🟢 Precios y Transparencia:</strong> Los costos se manejan en dólares estadounidenses (USD) a través de PayPal o plataformas de pago digital verificadas. Una vez realizado el abono, es obligatorio enviar el comprobante por WhatsApp para iniciar la coordinación.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🔴 4. Seguridad, Accesos y Prohibición de Ingreso</h3>
+          <p><strong>🟢 Privacidad de Credenciales:</strong> Jamás pedimos claves de correo electrónico; utilizamos métodos temporales y seguros mediante códigos de acceso (Supercell ID).</p>
+          <p><strong>🔴 Prohibición de Inicio de Sesión:</strong> Durante las labores de mejora de muros o gestión, el cliente tiene estrictamente prohibido entrar a la cuenta, jugar, hacer compras o intentar reconexiones forzadas.</p>
+          <p><strong>🔴 Sanción por Incumplimiento:</strong> Si el usuario ingresa a la cuenta durante el proceso o cierra sesión en todos los dispositivos vinculados, el servicio se cancelará de forma inmediata sin derecho a reembolso ni reclamos posteriores.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 6. Devoluciones y Reembolsos</h3>
+          <p><strong>🔴 Cero Reembolsos por Avance:</strong> Una vez que el servicio arranca o se entrega oficialmente, no se efectúan devoluciones de dinero.</p>
+          <p><strong>🟢 Garantía por Errores Internos:</strong> Si ocurre un fallo comprobable atribuible directamente a nuestro equipo, evaluaremos una compensación justa (servicio equivalente o devolución parcial/total).</p>
+          <p><strong>🔴 Excepciones de Reembolso:</strong> No aplican devoluciones por cambios de opinión, gastos hechos por el usuario dentro del juego o sanciones derivadas de desobedecer las instrucciones de seguridad.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🔴 7. Responsabilidad y Conducta</h3>
+          <p><strong>🔴 Riesgos del Juego:</strong> Aunque aplicamos protocolos seguros, el uso de servicios externos en videojuegos conlleva riesgos normativos por parte de las desarrolladoras. Clash Services no asume culpas por baneos si el usuario ignora las pautas o contacta indebidamente al soporte oficial del juego.</p>
+          <p><strong>🔴 Trato Respetuoso:</strong> Esperamos paciencia y cordialidad. Comportamientos abusivos o disruptivos facultarán a nuestro equipo para suspender cualquier atención sin derecho a ningún tipo de reembolso.</p>
+          <p><strong>🟢 Respaldo de Pruebas:</strong> Todos los chats, comprobantes y transacciones en WhatsApp se archivan como registro oficial para esclarecer cualquier disputa de forma objetiva.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 8. Programa de Bonificaciones</h3>
+          <p><strong>🟢 Dinámica de Cupones:</strong> Los descuentos especiales se liberan al cumplir dos condiciones obligatorias: concretar tres compras exitosas y aportar tres referencias de nuevos clientes que también adquieran nuestros servicios.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 9. Horarios y Soporte</h3>
+          <p><strong>🟢 Disponibilidad:</strong> Atendemos de lunes a domingo, en un horario general de 8:00 a.m. a 8:00 p.m. (con extensiones puntuales hasta las 10:00 p.m., hora de República Dominicana).</p>
+          <p><strong>🟢 Canal Oficial:</strong> Toda la comunicación y validación de pagos se gestiona exclusivamente de forma personalizada a través de nuestro WhatsApp.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>🟢 10. Privacidad y Datos Personales</h3>
+          <p><strong>🟢 Información Recopilada:</strong> Solo solicitamos el correo electrónico cuando es estrictamente indispensable para el acceso temporal del servicio (como la mejora de muros, no se suministran contraseñas), además del historial de transacciones necesarias.</p>
+          <p><strong>🟢 Protección de Datos:</strong> No almacenamos números telefónicos de forma externa, contraseñas permanentes ni datos bancarios. Una vez concluido el trabajo, cualquier credencial temporal es eliminada de nuestros registros por seguridad.</p>
+        </div>
+        
+        <div class="terms-section" style="margin-top: 36px; border-top: 1px solid var(--stone2); padding-top: 24px;">
+          <h3 style="color: var(--gold);">🏁 Cierre y Contacto</h3>
+          <p><strong>Clash Services © 2026 | Todos los derechos reservados.</strong><br>
+          Para resolver dudas, gestionar consultas o recibir asistencia personalizada sobre estos términos, comunícate directamente con nuestro equipo de soporte a través de nuestros canales oficiales.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL: PAGO PAYPAL
+════════════════════════════════════════ -->
+<div id="pp-overlay" role="dialog" aria-modal="true">
+  <div id="pp-modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-name-txt">Nombre</div>
+    <div class="modal-price-txt" id="modal-price-txt">$0.00 USD</div>
+    <div class="modal-divider"></div>
+    <div id="pp-btn-container"></div>
+    <p class="modal-secure">🔒 Pago cifrado por <span>PayPal</span></p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BANNER: CONFIRMACIÓN DE PAGO EXITOSO
+════════════════════════════════════════ -->
+<div id="success-banner">
+  <h3>✅ ¡Pago Confirmado!</h3>
+  <p>Redirigiendo a la página de confirmación…</p>
+</div>
+
+<!-- ════════════════════════════════════════
+     TAWK.TO CHAT
+════════════════════════════════════════ -->
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69e8380412cc6f1c3c722f4b/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+<!-- ════════════════════════════════════════════════════════════════
+     ██  LÓGICA PRINCIPAL DE LA APP (Firebase · UI · Reviews · PayPal)  ██
+════════════════════════════════════════════════════════════════ -->
+<script type="module">
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: FIREBASE — Configuración y SDK (v10, modular)
+   Credenciales del proyecto + inicialización de Auth,
+   Firestore y Storage.
+════════════════════════════════════════════════════ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getStorage, ref, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+/* ⬇️ PEGA AQUÍ TUS CREDENCIALES DE FIREBASE ⬇️ */
+/* ⬇️ PEGA AQUÍ TUS CREDENCIALES DE FIREBASE ⬇️ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBV31eRHUcpQFpQ1xx7VnwGsGqymyy7VhY",
+  authDomain: "pangea-clasharch.firebaseapp.com",
+  projectId: "pangea-clasharch",
+  storageBucket: "pangea-clasharch.firebasestorage.app",
+  messagingSenderId: "587653225006",
+  appId: "1:587653225006:web:3a00bec7440dd1af839dbf",
+  measurementId: "G-PVDZXJJN3C"
+};
+/* ⬆️ PEGA AQUÍ TUS CREDENCIALES DE FIREBASE ⬆️ */
+/* ⬆️ PEGA AQUÍ TUS CREDENCIALES DE FIREBASE ⬆️ */
+
+const fbApp   = initializeApp(firebaseConfig);
+const auth    = getAuth(fbApp);
+const db      = getFirestore(fbApp);
+const storage = getStorage(fbApp);
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: AUTH — Firebase Authentication (Correo/Contraseña)
+   Exporta: login(email,pass), register(email,pass), logout(), currentUser()
+════════════════════════════════════════════════════ */
+const Auth = (() => {
+
+  let _user = null;
+
+  onAuthStateChanged(auth, user => {
+    _user = user;
+    const overlay = document.getElementById('login-overlay');
+    const appEl   = document.getElementById('app');
+    if (user) {
+      UI.setUser(user);
+      overlay.classList.add('hidden');
+      appEl.classList.add('visible');
+    } else {
+      overlay.classList.remove('hidden');
+      appEl.classList.remove('visible');
+    }
+    UI.setReviewFormAccess(!!user);
+  });
+
+  function login(email, pass) {
+    return signInWithEmailAndPassword(auth, email, pass).then(cred => cred.user);
+  }
+
+  function register(email, pass) {
+    return createUserWithEmailAndPassword(auth, email, pass).then(cred => cred.user);
+  }
+
+  function logout() {
+    return signOut(auth);
+  }
+
+  function currentUser() { return _user; }
+
+  return { login, register, logout, currentUser };
+})();
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: UI — Navegación entre vistas y estado visual
+════════════════════════════════════════════════════ */
+const UI = (() => {
+
+  function navigate(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nb-item').forEach(i => i.classList.remove('active'));
+    const view = document.getElementById('view-' + viewId);
+    if (view) view.classList.add('active');
+    const item = document.querySelector(`.nb-item[data-view="${viewId}"]`);
+    if (item) item.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeMobileNav();
+  }
+
+  function setUser(user) {
+    if (!user) return;
+    const name     = user.email ? user.email.split('@')[0] : 'Clasher';
+    const initials = name.substring(0,2).toUpperCase();
+    document.getElementById('sb-avatar').textContent      = initials;
+    document.getElementById('sb-email-short').textContent = user.email || '';
+    const homeName = document.getElementById('home-user-name');
+    if (homeName) homeName.textContent = name;
+  }
+
+  function toggleMobileNav() {
+    document.getElementById('nb-links').classList.toggle('open');
+    document.getElementById('nb-burger').classList.toggle('open');
+  }
+
+  function closeMobileNav() {
+    document.getElementById('nb-links').classList.remove('open');
+    document.getElementById('nb-burger').classList.remove('open');
+  }
+
+  function setReviewFormAccess(isLoggedIn) {
+    const form   = document.getElementById('ref-form');
+    const locked = document.getElementById('ref-form-locked');
+    if (!form || !locked) return;
+    form.style.display   = isLoggedIn ? '' : 'none';
+    locked.style.display = isLoggedIn ? 'none' : '';
+  }
+
+  return { navigate, setUser, toggleMobileNav, setReviewFormAccess };
+})();
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: REVIEWS — Firestore + Storage en tiempo real
+   (colección "reviews", imágenes en "reviews_images/")
+════════════════════════════════════════════════════ */
+const Reviews = (() => {
+
+  let _refFile = null; // File pendiente de subir a Storage
+  const reviewsCol = collection(db, 'reviews');
+
+  onSnapshot(query(reviewsCol, orderBy('ts', 'desc')), snapshot => {
+    const list = document.getElementById('reviews-list');
+    if (snapshot.empty) {
+      list.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;">Aún no hay reviews. ¡Sé el primero en dejar una!</p>';
+      return;
+    }
+    list.innerHTML = '';
+    snapshot.forEach(docSnap => {
+      const r = docSnap.data();
+      const initials = escapeHtml((r.name || '??').substring(0,2).toUpperCase());
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      div.innerHTML = `
+        <div class="review-avatar">${initials}</div>
+        <div class="review-body">
+          <div class="review-stars">★★★★★</div>
+          <h4>${escapeHtml(r.name)}</h4>
+          <div class="review-service">${escapeHtml(r.service || 'Servicio general')}</div>
+          <p>${escapeHtml(r.comment)}</p>
+          ${r.imageUrl ? `<img src="${r.imageUrl}" alt="Imagen adjunta de ${escapeHtml(r.name)}" loading="lazy" style="max-width:160px;border-radius:8px;margin-top:8px;border:1px solid var(--stone2);display:block;">` : ''}
+        </div>`;
+      list.appendChild(div);
+    });
+  }, err => {
+    console.error(err);
+    document.getElementById('reviews-list').innerHTML =
+      '<p style="color:var(--fire);font-size:.9rem;">No se pudieron cargar las reviews. Revisa tu configuración de Firebase.</p>';
+  });
+
+  async function submit(name, service, comment) {
+    if (!name.trim() || !comment.trim()) return false;
+    if (!Auth.currentUser()) {
+      alert('Debes iniciar sesión para dejar una review.');
+      return false;
+    }
+
+    const btn    = document.getElementById('ref-submit-btn');
+    const status = document.getElementById('ref-upload-status');
+    btn.disabled = true;
+
+    try {
+      let imageUrl = null;
+
+      if (_refFile) {
+        status.textContent = '⏳ Subiendo imagen…';
+        const fileName    = `reviews_images/${Date.now()}_${_refFile.name}`;
+        const storageRef  = ref(storage, fileName);
+        await uploadBytes(storageRef, _refFile);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
+      status.textContent = '⏳ Guardando review…';
+      await addDoc(reviewsCol, {
+        name:     name.trim(),
+        service:  service.trim(),
+        comment:  comment.trim(),
+        ts:       serverTimestamp(),
+        imageUrl: imageUrl
+      });
+
+      status.textContent = '';
+      _refFile = null;
+      document.getElementById('ref-img-preview').innerHTML = '';
+      return true;
+
+    } catch (err) {
+      console.error(err);
+      status.textContent = '';
+      alert('No se pudo enviar tu review. Intenta de nuevo.');
+      return false;
+
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function handleImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    _refFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('ref-img-preview').innerHTML =
+        `<img src="${e.target.result}" style="max-width:100px;border-radius:6px;border:1px solid var(--stone2)">`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  return { submit, handleImage };
+})();
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: PAYPAL — Modal de pago y botones de PayPal
+════════════════════════════════════════════════════ */
+const PayPalModule = (() => {
+
+  let _current = null;
+
+  function openModal(product) {
+    _current = product;
+    document.getElementById('modal-name-txt').textContent  = product.name;
+    document.getElementById('modal-price-txt').textContent = product.priceLabel;
+    document.getElementById('pp-overlay').classList.add('open');
+    _renderButtons(product);
+  }
+
+  function closeModal() {
+    document.getElementById('pp-overlay').classList.remove('open');
+    document.getElementById('pp-btn-container').innerHTML = '';
+    _current = null;
+  }
+
+  function _renderButtons(product) {
+    const container = document.getElementById('pp-btn-container');
+    container.innerHTML = '';
+    paypal.Buttons({
+      style: { layout:'vertical', color:'gold', shape:'rect', label:'pay', height:44 },
+      createOrder: (data, actions) => actions.order.create({
+        purchase_units: [{ description: product.name, amount: { currency_code:'USD', value: product.price.toFixed(2) } }]
+      }),
+      onApprove: (data, actions) => actions.order.capture().then(() => {
+        closeModal();
+        _onSuccess(product);
+      }),
+      onError: err => { console.error(err); alert('Hubo un problema con el pago. Intenta de nuevo.'); }
+    }).render('#pp-btn-container');
+  }
+
+  function _onSuccess(product) {
+    const banner = document.getElementById('success-banner');
+    banner.style.display = 'block';
+    const param = encodeURIComponent(product.name.replace(/\s+/g,'_'));
+    setTimeout(() => { banner.style.display='none'; window.location.href=`gracias.html?servicio=${param}`; }, 2800);
+  }
+
+  return { openModal, closeModal };
+})();
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: HANDLERS GLOBALES — funciones llamadas desde
+   atributos onclick="" del HTML (expuestas en window)
+════════════════════════════════════════════════════ */
+let _authMode = 'login'; // 'login' | 'register'
+
+function toggleAuthMode(e) {
+  if (e) e.preventDefault();
+  _authMode = _authMode === 'login' ? 'register' : 'login';
+  const btn         = document.getElementById('login-submit-btn');
+  const toggleText  = document.getElementById('login-toggle-text');
+  document.getElementById('login-error').textContent = '';
+  if (_authMode === 'register') {
+    btn.textContent = '⚡ CREAR CUENTA';
+    toggleText.innerHTML = '¿Ya tienes cuenta? <a href="#" onclick="toggleAuthMode(event)">Inicia sesión</a>';
+  } else {
+    btn.textContent = '⚡ INGRESAR';
+    toggleText.innerHTML = '¿No tienes cuenta? <a href="#" onclick="toggleAuthMode(event)">Crear cuenta</a>';
+  }
+}
+
+function friendlyAuthError(e) {
+  const map = {
+    'auth/invalid-email':       'Correo electrónico inválido.',
+    'auth/user-not-found':      'No existe una cuenta con ese correo.',
+    'auth/wrong-password':      'Contraseña incorrecta.',
+    'auth/invalid-credential':  'Correo o contraseña incorrectos.',
+    'auth/email-already-in-use':'Ya existe una cuenta con ese correo.',
+    'auth/weak-password':       'La contraseña es demasiado débil (mínimo 6 caracteres).',
+    'auth/too-many-requests':   'Demasiados intentos. Intenta más tarde.',
+  };
+  return (e && map[e.code]) || 'Ocurrió un error. Intenta de nuevo.';
+}
+
+function handleAuthSubmit() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const err   = document.getElementById('login-error');
+  if (!email) { err.textContent = 'Ingresa tu correo.'; return; }
+  if (!pass || pass.length < 6) { err.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return; }
+  err.textContent = _authMode === 'login' ? '⏳ Verificando…' : '⏳ Creando cuenta…';
+  const action = _authMode === 'login' ? Auth.login(email, pass) : Auth.register(email, pass);
+  action
+    .then(() => { err.textContent = ''; })
+    .catch(e => { err.textContent = friendlyAuthError(e); });
+}
+
+function handleLogout() {
+  Auth.logout();
+}
+
+function navigate(viewId) { UI.navigate(viewId); }
+
+function toggleMobileNav() { UI.toggleMobileNav(); }
+
+function openBaseModal(btn) {
+  const card = btn.closest('[data-base]');
+  const product = JSON.parse(card.getAttribute('data-base'));
+  PayPalModule.openModal(product);
+}
+
+function closeModal() { PayPalModule.closeModal(); }
+
+async function submitReview() {
+  const name    = document.getElementById('ref-name').value;
+  const service = document.getElementById('ref-service').value;
+  const comment = document.getElementById('ref-comment').value;
+  if (!name.trim() || !comment.trim()) { alert('Completa tu nombre y comentario.'); return; }
+  const ok = await Reviews.submit(name, service, comment);
+  if (!ok) return;
+  document.getElementById('ref-name').value    = '';
+  document.getElementById('ref-service').value = '';
+  document.getElementById('ref-comment').value = '';
+}
+
+function handleRefImage(input) { Reviews.handleImage(input); }
+
+function openTawkChat() {
+  if (typeof Tawk_API !== 'undefined' && typeof Tawk_API.maximize === 'function') {
+    Tawk_API.maximize();
+  } else {
+    setTimeout(() => {
+      if (typeof Tawk_API !== 'undefined' && typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
+    }, 1500);
+  }
+}
+
+/* Exponer al scope global — necesario porque este <script type="module">
+   tiene su propio ámbito y el HTML usa atributos onclick="…" */
+window.toggleAuthMode   = toggleAuthMode;
+window.handleAuthSubmit = handleAuthSubmit;
+window.handleLogout     = handleLogout;
+window.navigate         = navigate;
+window.toggleMobileNav  = toggleMobileNav;
+window.openBaseModal    = openBaseModal;
+window.closeModal       = closeModal;
+window.submitReview     = submitReview;
+window.handleRefImage   = handleRefImage;
+window.openTawkChat     = openTawkChat;
+
+/* ════════════════════════════════════════════════════
+   MÓDULO: INICIALIZACIÓN — listeners que se activan al
+   cargar la página (clics de navbar, filtros, scroll…)
+════════════════════════════════════════════════════ */
+document.querySelectorAll('.nb-item').forEach(item => {
+  item.addEventListener('click', () => navigate(item.dataset.view));
+});
+
+document.querySelectorAll('[data-bfilter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-bfilter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.bfilter;
+    document.querySelectorAll('#bases-container [data-base]').forEach(card => {
+      const type = JSON.parse(card.getAttribute('data-base')).type;
+      card.style.display = (filter === 'all' || type === filter) ? '' : 'none';
+    });
+  });
+});
+
+document.getElementById('pp-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('pp-overlay')) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !document.getElementById('login-overlay').classList.contains('hidden')) handleAuthSubmit();
+});
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 8);
+});
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     ██  CARGA DINÁMICA — site.json (Sveltia CMS)  ██
+     Bloque independiente del <script type="module"> de arriba.
+     Lee site.json y vuelca cada campo en los id / class del HTML:
+       • Menú de navegación (data.navbar)
+       • Portada: título y subtítulo (data.inicio)
+       • Capital, Liga Legendaria, Muros (data.capital / .liga / .muros)
+       • Términos y Condiciones, en Markdown vía Marked.js (data.terminos)
+       • Bases VIP en tiempo real (data.bases_vip)
+════════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Carga principal: dispara todas las secciones dinámicas ── */
+async function cargarContenido() {
+  try {
+    const res = await fetch('site.json');
+    if (!res.ok) throw new Error('No se pudo leer site.json');
+    const data = await res.json();
+
+    // 0. Crear Menú de Navegación Dinámico
+    if (Array.isArray(data.navbar)) {
+      const navLinks = document.getElementById('nb-links');
+      if (navLinks) {
+        navLinks.innerHTML = data.navbar.map((item, index) => `
+          <div class="nb-item ${index === 0 ? 'active' : ''}" data-view="${item.id}">
+            <span class="icon">${item.icon}</span> ${item.label}
+          </div>
+        `).join('');
+        // Reactivar los clics del nuevo menú
+        document.querySelectorAll('.nb-item').forEach(item => {
+          item.addEventListener('click', () => navigate(item.dataset.view));
+        });
+      }
+    }
+
+    // 1. Portada
+    if (data.inicio) {
+      document.getElementById('inicio-titulo-principal').innerText = data.inicio.titulo_principal;
+      document.getElementById('inicio-subtitulo').innerText = data.inicio.subtitulo;
+    }
+
+    // 2. Servicios Exactos
+    if (data.capital) {
+      document.querySelector('#view-capital .price-chip').innerText = data.capital.precio;
+      document.querySelector('#view-capital .hero-phrase').innerText = data.capital.desc;
+    }
+    if (data.liga) {
+      document.querySelector('#view-ll .price-chip').innerText = data.liga.precio;
+      document.querySelector('#view-ll .hero-phrase').innerText = data.liga.desc;
+    }
+    if (data.muros) {
+      document.querySelector('#view-muros .price-chip').innerText = data.muros.precio;
+      document.querySelector('#view-muros .hero-phrase').innerText = data.muros.desc;
+    }
+
+    // 3. Términos (Usando el traductor Marked.js para quitar los asteriscos)
+    if (data.terminos) {
+      document.getElementById('terminos-titulo').innerText = data.terminos.titulo;
+      if (typeof marked !== 'undefined') {
+        document.getElementById('terminos-contenido').innerHTML = marked.parse(data.terminos.contenido);
+      } else {
+        document.getElementById('terminos-contenido').innerText = data.terminos.contenido;
+      }
+    }
+
+    // 4. Bases VIP
+    if (Array.isArray(data.bases_vip)) {
+      renderBasesVip(data.bases_vip);
+    }
+
+  } catch (err) {
+    console.error('Error cargando site.json:', err);
+  }
+}
+
+/* ── Renderizado de la lista de Bases VIP ── */
+function renderBasesVip(bases) {
+  const container = document.getElementById('bases-container');
+  if (!container) return;
+
+  if (!bases.length) {
+    container.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;">No hay bases disponibles por ahora.</p>';
+    return;
+  }
+
+  container.innerHTML = bases.map(base => `
+    <div class="base-card vip" data-base='${JSON.stringify(base).replace(/'/g, "&#39;")}' style="position:relative">
+      <img class="base-card-img" src="${base.img}" alt="${base.name}" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+      <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
+      <div class="base-card-body">
+        <h3>${base.icon || '💎'} ${base.name}</h3>
+        <p>${base.desc}</p>
+        <div class="base-price">${base.priceLabel}</div>
+        <button class="btn-buy btn-buy-vip" onclick="openBaseModal(this)">🛒 Comprar Ahora</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── Disparo inicial al cargar el DOM ── */
+document.addEventListener('DOMContentLoaded', cargarContenido);
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     ██  EDITOR VISUAL EN VIVO — módulo independiente  ██
+     No modifica el HTML/CSS original de la página. Solo añade:
+       1. CSS del modal de token + botón flotante + resaltado
+       2. Modal para pedir el GitHub Personal Access Token
+       3. Botón flotante "Guardar Cambios en Vivo"
+       4. Lógica JS: carga site.json en memoria, marca los campos
+          conocidos como contenteditable, y al guardar reconstruye
+          el objeto y hace un PUT a la API de GitHub.
+════════════════════════════════════════════════════════════════ -->
+<style>
+  [data-edit-path] {
+    outline: 1px dashed transparent;
+    outline-offset: 3px;
+    border-radius: 4px;
+    transition: outline-color .15s, background-color .15s;
+    cursor: text;
+  }
+  [data-edit-path]:hover {
+    outline-color: #f5c51888;
+    background: #f5c51812;
+  }
+  [data-edit-path]:focus {
+    outline: 2px solid var(--gold, #f5c518);
+    background: #f5c5181f;
+  }
+  #ve-token-overlay {
+    position: fixed; inset: 0; z-index: 5000;
+    background: #000000c0; backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #ve-token-overlay.ve-hidden { display: none; }
+  .ve-box {
+    background: #1a1208f5; border: 2px solid #f5c518; border-radius: 16px;
+    padding: 32px 30px; width: min(440px, 92vw); color: #f2e8d0;
+    font-family: 'Nunito', sans-serif; box-shadow: 0 24px 60px #000000cc;
+  }
+  .ve-box h2 { font-family:'Bangers',cursive; letter-spacing:1px; color:#f5c518; margin-bottom:6px; font-size:1.4rem; }
+  .ve-box p.ve-sub { font-size:.85rem; color:#b8a07a; margin-bottom:18px; line-height:1.5; }
+  .ve-box code { background:#0d0a06; padding:1px 6px; border-radius:4px; color:#ffe86a; }
+  .ve-box input[type="password"], .ve-box input[type="text"] {
+    display:block; width:100%; background:#0d0a06cc; border:1.5px solid #4a3618;
+    border-radius:8px; color:#f2e8d0; font-size:.95rem; padding:11px 14px; margin-bottom:12px; outline:none;
+  }
+  .ve-box input:focus { border-color:#f5c518; }
+  .ve-box .ve-btn {
+    display:block; width:100%; font-family:'Bangers',cursive; font-size:1.1rem; letter-spacing:1px;
+    background:linear-gradient(135deg,#f5c518,#d49400,#f5c518); color:#1a0e00; border:none;
+    cursor:pointer; padding:12px 0; border-radius:8px; margin-bottom:10px;
+  }
+  .ve-box .ve-btn:disabled { opacity:.55; cursor:not-allowed; }
+  .ve-box .ve-error { font-size:.85rem; color:#e63c1e; min-height:1.2em; margin-bottom:8px; }
+  .ve-box .ve-note { font-size:.75rem; color:#b8a07a; line-height:1.5; margin-top:6px; }
+
+  #ve-save-btn {
+    position: fixed; right: 24px; bottom: 24px; z-index: 4000;
+    font-family:'Bangers',cursive; font-size:1.15rem; letter-spacing:1px;
+    background:linear-gradient(135deg,#f5c518,#d49400,#f5c518); color:#1a0e00;
+    border:none; border-radius:999px; padding:16px 26px; cursor:pointer;
+    box-shadow:0 8px 30px #f5c51877, 0 4px 14px #000000aa;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+  }
+  #ve-save-btn:hover { transform: translateY(-3px); box-shadow:0 12px 36px #f5c518aa; }
+  #ve-save-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+  #ve-save-btn.ve-hidden { display:none; }
+
+  #ve-toast {
+    position: fixed; right: 24px; bottom: 92px; z-index: 4001;
+    max-width: 320px; font-family:'Nunito',sans-serif; font-size:.88rem;
+    background:#161008; border:1.5px solid #4a3618; color:#f2e8d0;
+    padding:12px 16px; border-radius:10px; box-shadow:0 8px 24px #000000aa;
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition:opacity .25s, transform .25s;
+  }
+  #ve-toast.ve-show { opacity:1; transform:translateY(0); }
+  #ve-toast.ve-ok { border-color:#3fae5a; }
+  #ve-toast.ve-err { border-color:#e63c1e; }
+
+  #ve-status-pill {
+    position: fixed; left: 24px; bottom: 24px; z-index: 4000;
+    font-family:'Nunito',sans-serif; font-size:.78rem; color:#b8a07a;
+    background:#161008dd; border:1px solid #4a3618; border-radius:999px;
+    padding:7px 14px; display:flex; align-items:center; gap:8px;
+  }
+  #ve-status-pill .ve-dot { width:8px; height:8px; border-radius:50%; background:#e63c1e; }
+  #ve-status-pill.ve-connected .ve-dot { background:#3fae5a; }
+  #ve-status-pill button {
+    background:none; border:none; color:#f5c518; font-size:.75rem; cursor:pointer; text-decoration:underline;
+    font-family:'Nunito',sans-serif;
+  }
+</style>
+
+<!-- Modal: pedir el GitHub Personal Access Token -->
+<div id="ve-token-overlay">
+  <div class="ve-box">
+    <h2>🔐 Editor Visual — Conexión GitHub</h2>
+    <p class="ve-sub">
+      Repositorio destino: <code>johncaryml-cell/Pangea</code> · rama <code>main</code> · archivo <code>site.json</code>.<br>
+      Pega un <strong>Personal Access Token</strong> con permiso <code>contents: write</code>
+      (idealmente un token de tipo <em>fine-grained</em> limitado solo a este repositorio).
+      El token se guarda únicamente en memoria mientras esta pestaña está abierta; no se
+      escribe en localStorage ni se envía a ningún servidor que no sea api.github.com.
+    </p>
+    <input type="password" id="ve-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx o github_pat_xxxx" autocomplete="off">
+    <div class="ve-error" id="ve-token-error"></div>
+    <button class="ve-btn" id="ve-token-connect">Conectar y activar edición</button>
+    <p class="ve-note">Al conectar, se hace una llamada de solo lectura a la API de GitHub para verificar el token y obtener el <code>sha</code> actual de <code>site.json</code>.</p>
+  </div>
+</div>
+
+<!-- Indicador de estado + botón de reconexión -->
+<div id="ve-status-pill" class="ve-hidden">
+  <span class="ve-dot"></span>
+  <span id="ve-status-text">Sin conectar</span>
+  <button id="ve-status-reset">cambiar token</button>
+</div>
+
+<!-- Botón flotante de guardado -->
+<button id="ve-save-btn" class="ve-hidden" disabled>💾 Guardar Cambios en Vivo</button>
+
+<!-- Toast de resultado -->
+<div id="ve-toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Configuración fija del repositorio ── */
+  const VE_OWNER  = 'johncaryml-cell';
+  const VE_REPO   = 'Pangea';
+  const VE_BRANCH = 'main';
+  const VE_PATH   = 'site.json';
+  const VE_API    = `https://api.github.com/repos/${VE_OWNER}/${VE_REPO}/contents/${encodeURIComponent(VE_PATH)}`;
+
+  /* ── Estado del editor ── */
+  let veToken   = null;   // solo en memoria, nunca persistido
+  let veSha     = null;   // sha del último site.json conocido
+  let veData    = null;   // objeto site.json en memoria (fuente de verdad al guardar)
+
+  /* ── Helpers de path tipo "bases_vip.2.desc" ── */
+  function veGetPath(obj, path) {
+    return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+  }
+  function veSetPath(obj, path, value) {
+    const keys = path.split('.');
+    let cur = obj;
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i];
+      if (cur[k] === undefined) cur[k] = /^\d+$/.test(keys[i + 1]) ? [] : {};
+      cur = cur[k];
+    }
+    cur[keys[keys.length - 1]] = value;
+  }
+
+  function veToast(msg, type) {
+    const t = document.getElementById('ve-toast');
+    t.textContent = msg;
+    t.className = 've-toast ve-show ' + (type === 'err' ? 've-err' : 've-ok');
+    t.id = 've-toast';
+    clearTimeout(t._veTimer);
+    t._veTimer = setTimeout(() => t.classList.remove('ve-show'), 6000);
+  }
+
+  function veUtf8ToBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  /* ── Marca un elemento como editable y lo vincula a un path del objeto ── */
+  function veBind(el, path) {
+    if (!el) return;
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('data-edit-path', path);
+    el.setAttribute('spellcheck', 'false');
+  }
+
+  /* ── Vuelve a pintar el bloque de navbar, con spans editables ── */
+  function veRenderNavbar(navbar) {
+    const cont = document.getElementById('nb-links');
+    if (!cont || !Array.isArray(navbar)) return;
+    cont.innerHTML = navbar.map((item, i) => `
+      <div class="nb-item ${i === 0 ? 'active' : ''}" data-view="${item.id}">
+        <span class="icon" data-edit-path="navbar.${i}.icon" contenteditable="true" spellcheck="false">${item.icon}</span>
+        <span data-edit-path="navbar.${i}.label" contenteditable="true" spellcheck="false"> ${item.label}</span>
+      </div>
+    `).join('');
+    cont.querySelectorAll('.nb-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        // Evita navegar mientras se está escribiendo dentro del span editable
+        if (e.target.getAttribute('contenteditable') === 'true') return;
+        if (typeof navigate === 'function') navigate(item.dataset.view);
+      });
+    });
+  }
+
+  /* ── Vuelve a pintar Bases VIP, con campos editables ── */
+  function veRenderBases(bases) {
+    const cont = document.getElementById('bases-container');
+    if (!cont) return;
+    if (!Array.isArray(bases) || !bases.length) {
+      cont.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;">No hay bases disponibles por ahora.</p>';
+      return;
+    }
+    cont.innerHTML = bases.map((base, i) => `
+      <div class="base-card vip" style="position:relative">
+        <img class="base-card-img" src="${base.img || ''}" alt="${base.name || ''}"
+             onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+        <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
+        <div class="base-card-body">
+          <h3>
+            <span data-edit-path="bases_vip.${i}.icon" contenteditable="true" spellcheck="false">${base.icon || '💎'}</span>
+            <span data-edit-path="bases_vip.${i}.name" contenteditable="true" spellcheck="false">${base.name || ''}</span>
+          </h3>
+          <p data-edit-path="bases_vip.${i}.desc" contenteditable="true" spellcheck="false">${base.desc || ''}</p>
+          <div class="base-price" data-edit-path="bases_vip.${i}.priceLabel" contenteditable="true" spellcheck="false">${base.priceLabel || ''}</div>
+          <button class="btn-buy btn-buy-vip" onclick="if(typeof openBaseModal==='function') openBaseModal(this)">🛒 Comprar Ahora</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ── Aplica site.json en memoria a la página, dejando todo editable ── */
+  function veApplyData(data) {
+    veData = data;
+
+    if (Array.isArray(data.navbar)) veRenderNavbar(data.navbar);
+
+    if (data.inicio) {
+      veBind(document.getElementById('inicio-titulo-principal'), 'inicio.titulo_principal');
+      veBind(document.getElementById('inicio-subtitulo'), 'inicio.subtitulo');
+      document.getElementById('inicio-titulo-principal').innerText = data.inicio.titulo_principal ?? '';
+      document.getElementById('inicio-subtitulo').innerText = data.inicio.subtitulo ?? '';
+    }
+
+    [['capital', '#view-capital'], ['liga', '#view-ll'], ['muros', '#view-muros']].forEach(([key, sel]) => {
+      if (!data[key]) return;
+      const priceEl = document.querySelector(`${sel} .price-chip`);
+      const descEl  = document.querySelector(`${sel} .hero-phrase`);
+      veBind(priceEl, `${key}.precio`);
+      veBind(descEl, `${key}.desc`);
+      if (priceEl) priceEl.innerText = data[key].precio ?? '';
+      if (descEl) descEl.innerText = data[key].desc ?? '';
+    });
+
+    if (data.terminos) {
+      const tituloEl = document.getElementById('terminos-titulo');
+      veBind(tituloEl, 'terminos.titulo');
+      if (tituloEl) tituloEl.innerText = data.terminos.titulo ?? '';
+
+      // El contenido original se renderiza como Markdown->HTML (marked.js).
+      // Editar el HTML ya renderizado in-place rompería el Markdown fuente,
+      // así que aquí se muestra y edita el Markdown crudo (texto plano).
+      const contEl = document.getElementById('terminos-contenido');
+      if (contEl) {
+        veBind(contEl, 'terminos.contenido');
+        contEl.innerText = data.terminos.contenido ?? '';
+        contEl.style.whiteSpace = 'pre-wrap';
+      }
+    }
+
+    if (Array.isArray(data.bases_vip)) veRenderBases(data.bases_vip);
+  }
+
+  /* ── Recolecta todos los campos editables del DOM y actualiza veData ── */
+  function veCollect() {
+    document.querySelectorAll('[data-edit-path]').forEach(el => {
+      const path = el.getAttribute('data-edit-path');
+      let value = el.innerText;
+      // Limpia espacios sobrantes en campos cortos (no en terminos.contenido, que es multilínea)
+      if (path !== 'terminos.contenido') value = value.trim();
+      veSetPath(veData, path, value);
+    });
+    return veData;
+  }
+
+  /* ── Llamadas a la API de GitHub ── */
+  async function veGithubGetSha() {
+    const res = await fetch(`${VE_API}?ref=${VE_BRANCH}`, {
+      headers: {
+        'Authorization': `Bearer ${veToken}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(`(${res.status}) ${body.message || 'No se pudo leer site.json en GitHub.'}`);
+    }
+    const json = await res.json();
+    return { sha: json.sha, contentB64: json.content };
+  }
+
+  async function veGithubCommit(newDataObj, sha) {
+    const content = veUtf8ToBase64(JSON.stringify(newDataObj, null, 2));
+    const res = await fetch(VE_API, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${veToken}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Editor visual: actualizar site.json (${new Date().toISOString()})`,
+        content: content,
+        sha: sha,
+        branch: VE_BRANCH
+      })
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(`(${res.status}) ${body.message || 'Falló el commit en GitHub.'}`);
+    }
+    return body;
+  }
+
+  /* ── Flujo: conectar con token ── */
+  async function veConnect() {
+    const input = document.getElementById('ve-token-input');
+    const errEl = document.getElementById('ve-token-error');
+    const btn   = document.getElementById('ve-token-connect');
+    const token = input.value.trim();
+    errEl.textContent = '';
+
+    if (!token) { errEl.textContent = 'Pega tu Personal Access Token.'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Verificando…';
+    veToken = token;
+
+    try {
+      const { sha, contentB64 } = await veGithubGetSha();
+      veSha = sha;
+
+      // Usa el site.json ya cargado por cargarContenido() si existe;
+      // si no, decodifica el contenido que acaba de traer GitHub.
+      let dataToUse;
+      try {
+        const liveRes = await fetch('site.json', { cache: 'no-store' });
+        dataToUse = await liveRes.json();
+      } catch (e) {
+        dataToUse = JSON.parse(decodeURIComponent(escape(atob(contentB64.replace(/\n/g, '')))));
+      }
+
+      veApplyData(dataToUse);
+
+      document.getElementById('ve-token-overlay').classList.add('ve-hidden');
+      const pill = document.getElementById('ve-status-pill');
+      pill.classList.remove('ve-hidden');
+      pill.classList.add('ve-connected');
+      document.getElementById('ve-status-text').textContent = 'Editor conectado';
+      const saveBtn = document.getElementById('ve-save-btn');
+      saveBtn.classList.remove('ve-hidden');
+      saveBtn.disabled = false;
+
+      veToast('Conectado. Haz clic sobre cualquier texto para editarlo.', 'ok');
+    } catch (err) {
+      veToken = null;
+      errEl.textContent = err.message || 'Token inválido o sin permisos sobre el repositorio.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Conectar y activar edición';
+    }
+  }
+
+  /* ── Flujo: guardar cambios ── */
+  async function veSave() {
+    const saveBtn = document.getElementById('ve-save-btn');
+    if (!veToken || !veData) return;
+
+    saveBtn.disabled = true;
+    const originalLabel = saveBtn.textContent;
+    saveBtn.textContent = '⏳ Guardando…';
+
+    try {
+      // Vuelve a pedir el sha justo antes de guardar, por si el archivo
+      // cambió en GitHub desde que se conectó el editor (evita conflictos).
+      const { sha } = await veGithubGetSha();
+      const updated = veCollect();
+      const result = await veGithubCommit(updated, sha);
+      veSha = result?.content?.sha || veSha;
+      veToast('✅ Cambios guardados en GitHub (rama main).', 'ok');
+    } catch (err) {
+      veToast('❌ ' + (err.message || 'No se pudo guardar.'), 'err');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = originalLabel;
+    }
+  }
+
+  function veReset() {
+    veToken = null;
+    veSha = null;
+    document.getElementById('ve-status-pill').classList.add('ve-hidden');
+    document.getElementById('ve-status-pill').classList.remove('ve-connected');
+    document.getElementById('ve-save-btn').classList.add('ve-hidden');
+    document.getElementById('ve-token-input').value = '';
+    document.getElementById('ve-token-error').textContent = '';
+    document.getElementById('ve-token-overlay').classList.remove('ve-hidden');
+  }
+
+  /* ── Wiring de eventos ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ve-token-connect').addEventListener('click', veConnect);
+    document.getElementById('ve-token-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') veConnect();
+    });
+    document.getElementById('ve-save-btn').addEventListener('click', veSave);
+    document.getElementById('ve-status-reset').addEventListener('click', veReset);
+  });
+})();
+</script>
+</body>
+</html>
