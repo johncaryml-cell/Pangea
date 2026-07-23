@@ -72,17 +72,44 @@
       "img": "img/base_vip_1.jpg",
       "desc": "Tu nombre formado con muros en la aldea, con diseños únicos.",
       "icon": "💎"
+    },
+    {
+      "id": "v_mrwzi2gz291",
+      "type": "vip",
+      "name": "Nueva Base VIP",
+      "price": 0,
+      "priceLabel": "$0.00 USD",
+      "img": "img/bases_vip-v_mrwzi2gz291-1784779296909.jpg",
+      "desc": "",
+      "icon": "💎"
     }
   ],
   "liga_bases": [
     {
       "id": "ll_mrwzc5aa937",
       "img": "img/liga_bases-ll_mrwzc5aa937-1784779018581.jpg",
-      "desc": "Descripción de la base…",
+      "desc": "Descripción de la bqwdqase…",
       "precio": "$0 USD"
     }
   ],
-  "cuentas": [],
+  "cuentas": [
+    {
+      "id": "c_mrwzi9pl541",
+      "img": "img/cuentas-c_mrwzi9pl541-1784779298205.jpg",
+      "nombre": "Nueva cuenta",
+      "desc": "Descripción breve de la cuenta.",
+      "precio": "$0 USD",
+      "estado": "Disponible",
+      "heroes": {
+        "rey": "0",
+        "reina": "0",
+        "centinela": "0",
+        "duque": "0",
+        "luchadora": "0",
+        "principe": "0"
+      }
+    }
+  ],
   "terminos": {
     "titulo": "Términos y Condiciones",
     "contenido": ""
