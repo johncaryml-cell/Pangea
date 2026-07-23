@@ -1,7 +1,30 @@
 {
+  "navbar": [
+    { "id": "home", "icon": "🏠", "label": "Home" },
+    { "id": "capital", "icon": "💰", "label": "Capital" },
+    { "id": "ll", "icon": "⚔️", "label": "Liga Leg." },
+    { "id": "muros", "icon": "🧱", "label": "Muros" },
+    { "id": "bases", "icon": "🏰", "label": "Bases VIP" },
+    { "id": "cuentas", "icon": "👑", "label": "Cuentas" },
+    { "id": "soporte", "icon": "💬", "label": "Soporte" },
+    { "id": "referencias", "icon": "⭐", "label": "Referencias" },
+    { "id": "terminos", "icon": "📋", "label": "Términos" }
+  ],
   "inicio": {
     "titulo_principal": "Clash Services",
     "subtitulo": "Los mejores servicios para tu aldea"
+  },
+  "capital": {
+    "precio": "Maxeo completo: $40 – $45 USD",
+    "desc": "Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día, asegurando un progreso rápido y eficiente. Precio personalizado según tu tanda y cantidad solicitada."
+  },
+  "liga": {
+    "precio": "Desde $4 USD",
+    "desc": "Obtén bases de Liga Legendaria probadas en el más alto nivel. Distribuciones populares de jugadores icónicos y diseños que resisten los ataques más exigentes. Bases seleccionadas y optimizadas para mantenerte firme en Legends League."
+  },
+  "muros": {
+    "precio": "Desde $1 hasta $10 USD, según cantidad y nivel",
+    "desc": "Maximiza la defensa de tu aldea con muros de nivel máximo. Además de blindar tu base, le da un cambio visual y estético único. Proceso seguro sin necesidad de contraseñas ni acceso directo a tu correo. Tu aldea nunca había estado tan blindada 🔐, sin riesgo de ban."
   },
   "bases_vip": [
     {
@@ -15,15 +38,9 @@
       "icon": "💎"
     }
   ],
-  "servicios_extra": {
-    "juegos_clan_precio": "$3.00 USD",
-    "juegos_clan_desc": "Completamos tus puntos al 100% súper rápido.",
-    "guerras_precio": "$5.00 USD",
-    "guerras_desc": "Hacemos tus ataques de guerra con 3 estrellas garantizadas."
-  },
   "terminos": {
     "titulo": "Términos y Condiciones",
-    "contenido": "Aquí van todas las reglas y políticas de tus servicios..."
+    "contenido": "Aquí van todas las reglas y políticas de tus servicios. Puedes usar formato para resaltar el texto."
   }
 }
 
