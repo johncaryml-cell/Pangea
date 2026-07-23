@@ -72,16 +72,6 @@
       "img": "img/base_vip_1.jpg",
       "desc": "Tu nombre formado con muros en la aldea, con diseños únicos.",
       "icon": "💎"
-    },
-    {
-      "id": "v_mrwzi2gz291",
-      "type": "vip",
-      "name": "Nueva Base VIP",
-      "price": 0,
-      "priceLabel": "$0.00 USD",
-      "img": "img/bases_vip-v_mrwzi2gz291-1784779296909.jpg",
-      "desc": "",
-      "icon": "💎"
     }
   ],
   "liga_bases": [
