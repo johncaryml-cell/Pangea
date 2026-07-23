@@ -1046,6 +1046,19 @@ body {
           COTIZA TU SERVICIO
         </a>
       </div>
+
+      <!-- ══════════════════════════════════════════
+           Catálogo dinámico: data.liga_bases
+           (ver renderLigaBases() en el script de carga
+           al final del archivo)
+      ══════════════════════════════════════════ -->
+      <div class="section-header" style="position:relative;z-index:1;">
+        <h2><span class="y">Bases</span> <span class="r">Disponibles</span></h2>
+        <p>Catálogo de bases de Liga Legendaria ya optimizadas.</p>
+      </div>
+      <div class="bases-grid" id="liga-bases-container" style="position:relative;z-index:1;">
+        <p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Cargando bases…</p>
+      </div>
     </div>
 
     <!-- ════════════════════════════════════════
@@ -1099,57 +1112,20 @@ body {
     <div class="view view-bg" id="view-cuentas" style="--view-bg-img:var(--bg-cuentas);">
       <div class="section-header">
         <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
-        <p>Actualmente no hay cuentas disponibles. Próximamente nuevas opciones.</p>
-      </div>
-
-      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
-        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
-        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
-        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
-          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
-        </p>
-        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Avísame por WhatsApp
-        </a>
+        <p>Cuentas verificadas con héroes al nivel indicado. Elige, cotiza y compra por WhatsApp.</p>
       </div>
 
       <!--
         ═══════════════════════════════════════════════════
-        CUANDO TENGAS CUENTAS PARA VENDER:
-        1) Borra el <div> de "Aún no disponible" de arriba.
-        2) Descomenta el bloque <div class="accounts-grid"> de abajo
-           y agrega dentro un .account-card por cada cuenta.
-        3) Héroes correctos a usar en cada hero-box: Rey, Reina,
-           Centinela, Duque, Luchadora, Príncipe.
-        4) Mientras la cuenta esté lista para vender, su status-badge
-           debe decir "Disponible" (clase status-disponible).
+        Este contenedor se llena dinámicamente desde
+        site.json → cuentas[] (ver renderCuentas() al final
+        del archivo). Si el arreglo está vacío se muestra
+        automáticamente el aviso "Aún no disponible".
         ═══════════════════════════════════════════════════
-      <div class="accounts-grid">
-
-        <div class="account-card">
-          <img class="account-img" src="img/th18_comp.jpg" alt="Cuenta TH" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
-          <div class="heroes-row">
-            <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">95</span><span style="font-size:.5rem;color:#888">Rey</span></div>
-            <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">90</span><span style="font-size:.5rem;color:#888">Reina</span></div>
-            <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">65</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
-            <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Duque</span></div>
-            <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
-            <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">45</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
-          </div>
-          <div class="account-body">
-            <h3>Nombre / Town Hall de la cuenta</h3>
-            <p>Descripción breve de la cuenta.</p>
-            <div class="account-footer">
-              <span class="account-price">$0 USD</span>
-              <span class="status-badge status-disponible">Disponible</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      ═══════════════════════════════════════════════════
       -->
+      <div id="cuentas-container">
+        <p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Cargando cuentas…</p>
+      </div>
     </div>
 
     <!-- ════════════════════════════════════════
@@ -1811,6 +1787,16 @@ async function cargarContenido() {
       renderBasesVip(data.bases_vip);
     }
 
+    // 5. Bases de Liga Legendaria (catálogo)
+    if (Array.isArray(data.liga_bases)) {
+      renderLigaBases(data.liga_bases);
+    }
+
+    // 6. Venta de Cuentas
+    if (Array.isArray(data.cuentas)) {
+      renderCuentas(data.cuentas);
+    }
+
   } catch (err) {
     console.error('Error cargando site.json:', err);
   }
@@ -1838,6 +1824,85 @@ function renderBasesVip(bases) {
       </div>
     </div>
   `).join('');
+}
+
+/* ── Renderizado de la lista de Bases de Liga Legendaria (solo catálogo, sin compra) ── */
+function renderLigaBases(bases) {
+  const container = document.getElementById('liga-bases-container');
+  if (!container) return;
+
+  if (!bases.length) {
+    container.innerHTML = '<p style="color:var(--textdim);font-size:.9rem;padding:12px 4px;">Próximamente nuevas bases de Liga Legendaria.</p>';
+    return;
+  }
+
+  container.innerHTML = bases.map(base => `
+    <div class="base-card" style="position:relative">
+      <img class="base-card-img" src="${base.img}" alt="Base Liga Legendaria" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+      <span class="base-badge badge-premium" style="position:absolute;top:10px;right:10px;">⚔️ LL</span>
+      <div class="base-card-body">
+        <p>${base.desc}</p>
+        <div class="base-price">${base.precio}</div>
+        <a class="btn-buy" style="text-decoration:none;text-align:center;display:block;" target="_blank"
+           href="https://wa.me/18295395068?text=${encodeURIComponent('Hola, me interesa esta base de Liga Legendaria: ' + (base.desc || ''))}">
+          💬 Cotizar por WhatsApp
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── Renderizado de la lista de Cuentas en venta ── */
+function renderCuentas(cuentas) {
+  const container = document.getElementById('cuentas-container');
+  if (!container) return;
+
+  if (!cuentas.length) {
+    container.innerHTML = `
+      <div style="max-width:480px;margin:20px auto 0;text-align:center;background:linear-gradient(160deg,#1a1208ee,#100c04ee);border:1.5px solid var(--stone2);border-radius:16px;padding:48px 32px;">
+        <div style="font-size:3rem;margin-bottom:14px;">🕓</div>
+        <h3 style="font-family:'Luckiest Guy',cursive;color:var(--gold);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;">Aún no disponible</h3>
+        <p style="color:var(--textdim);font-size:.92rem;line-height:1.6;margin-bottom:20px;">
+          Estamos preparando nuevas cuentas para la venta. Escríbenos por WhatsApp si quieres que te avisemos apenas haya opciones disponibles.
+        </p>
+        <a href="https://wa.me/18295395068?text=Hola,%20quiero%20que%20me%20avisen%20cuando%20haya%20cuentas%20disponibles" target="_blank" class="btn-wa-big" style="font-size:1rem;padding:11px 26px;">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Avísame por WhatsApp
+        </a>
+      </div>`;
+    return;
+  }
+
+  const statusClass = (estado) => {
+    if (estado === 'Disponible') return 'status-disponible';
+    if (estado === 'En proceso') return 'status-en-proceso';
+    if (estado === 'Vendida') return 'status-vendida';
+    return 'status-en-venta';
+  };
+
+  container.innerHTML = `<div class="accounts-grid">` + cuentas.map(c => {
+    const h = c.heroes || {};
+    return `
+    <div class="account-card">
+      <img class="account-img" src="${c.img || ''}" alt="${c.nombre || 'Cuenta'}" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
+      <div class="heroes-row">
+        <div class="hero-box"><span class="hb-icon">👑</span><span class="hb-lvl">${h.rey ?? '-'}</span><span style="font-size:.5rem;color:#888">Rey</span></div>
+        <div class="hero-box"><span class="hb-icon">🏹</span><span class="hb-lvl">${h.reina ?? '-'}</span><span style="font-size:.5rem;color:#888">Reina</span></div>
+        <div class="hero-box"><span class="hb-icon">🏛️</span><span class="hb-lvl">${h.centinela ?? '-'}</span><span style="font-size:.5rem;color:#888">Centinela</span></div>
+        <div class="hero-box"><span class="hb-icon">🐍</span><span class="hb-lvl">${h.duque ?? '-'}</span><span style="font-size:.5rem;color:#888">Duque</span></div>
+        <div class="hero-box"><span class="hb-icon">⚒️</span><span class="hb-lvl">${h.luchadora ?? '-'}</span><span style="font-size:.5rem;color:#888">Luchadora</span></div>
+        <div class="hero-box"><span class="hb-icon">🤴</span><span class="hb-lvl">${h.principe ?? '-'}</span><span style="font-size:.5rem;color:#888">Príncipe</span></div>
+      </div>
+      <div class="account-body">
+        <h3>${c.nombre || 'Cuenta'}</h3>
+        <p>${c.desc || ''}</p>
+        <div class="account-footer">
+          <span class="account-price">${c.precio || ''}</span>
+          <span class="status-badge ${statusClass(c.estado)}">${c.estado || 'En venta'}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
 }
 
 /* ── Disparo inicial al cargar el DOM ── */
