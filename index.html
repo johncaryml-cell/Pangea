@@ -5,8 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Clash Services — Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet"/>
-<!-- PayPal SDK -->
+
+<!-- ════════════════════════════════════════════════════════════════
+     LIBRERÍAS EXTERNAS (CDN)
+════════════════════════════════════════════════════════════════ -->
+<!-- PayPal SDK — botones de pago -->
 <script src="https://www.paypal.com/sdk/js?client-id=AePArV57KsM4-RHEyqSMDJgjkskAPAuvYicJbaMZKVoWYtO3q1U1-evBJP0DtlOPF1KviyinVCb_lMCS&currency=USD"></script>
+<!-- Marked.js — convierte Markdown a HTML (usado para los Términos y Condiciones) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 
 <style>
 /* ══════════════════════════════════════════
@@ -880,7 +887,9 @@ body {
 ════════════════════════════════════════ -->
 <div id="app">
 
-  <!-- TOP NAVBAR -->
+  <!-- ══════════════════════════════════════════
+       NAVBAR — barra superior fija (sticky)
+  ══════════════════════════════════════════ -->
   <nav id="navbar">
     <div class="nb-logo" onclick="navigate('home')">
       <span class="y">CLASH</span> <span class="r">SERVICES</span>
@@ -910,10 +919,14 @@ body {
     </div>
   </nav>
 
-  <!-- CONTENT -->
+  <!-- ══════════════════════════════════════════
+       CONTENT — contenedor de todas las vistas (views)
+  ══════════════════════════════════════════ -->
   <main id="content">
 
-    <!-- ── HOME ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: HOME (Dashboard)
+    ════════════════════════════════════════ -->
     <div class="view active" id="view-home">
       <div class="home-wrap">
 
@@ -989,7 +1002,9 @@ body {
       </div>
     </div>
 
-    <!-- ── CAPITAL ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: CAPITAL DEL CLAN
+    ════════════════════════════════════════ -->
     <div class="view hero-view" id="view-capital">
       <div class="hero-bg" style="background:var(--bg-capital);"></div>
       <div class="hero-content">
@@ -997,11 +1012,11 @@ body {
         <h1 class="hero-title">
           <span class="y">Capital</span><br><span class="r">del Clan</span>
         </h1>
-        <p class="hero-phrase" id="servicios-juegos-clan-desc">
+        <p class="hero-phrase">
           Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día, asegurando un progreso rápido y eficiente. <strong>Precio personalizado según tu tanda y cantidad solicitada.</strong>
         </p>
         <div class="hero-price-row">
-          <span class="price-chip" id="servicios-juegos-clan-precio">Maxeo completo: $40 – $45 USD</span>
+          <span class="price-chip">Maxeo completo: $40 – $45 USD</span>
         </div>
         <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Mejora%20de%20Capital%20del%20Clan" target="_blank" class="btn-wa-big">
           <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -1010,7 +1025,9 @@ body {
       </div>
     </div>
 
-    <!-- ── LIGA LEGENDARIA ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: BASES LIGA LEGENDARIA
+    ════════════════════════════════════════ -->
     <div class="view hero-view" id="view-ll">
       <div class="hero-bg" style="background:var(--bg-ll);"></div>
       <div class="hero-content">
@@ -1018,11 +1035,11 @@ body {
         <h1 class="hero-title">
           <span class="y">Bases</span><br><span class="r">Liga Legendaria</span>
         </h1>
-        <p class="hero-phrase" id="servicios-guerras-desc">
+        <p class="hero-phrase">
           Obtén bases de Liga Legendaria probadas en el más alto nivel. Distribuciones populares de jugadores icónicos y diseños que resisten los ataques más exigentes. <strong>Bases seleccionadas y optimizadas para mantenerte firme en Legends League.</strong>
         </p>
         <div class="hero-price-row">
-          <span class="price-chip" id="servicios-guerras-precio">Desde $4 USD</span>
+          <span class="price-chip">Desde $4 USD</span>
         </div>
         <a href="https://wa.me/18295395068?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Liga%20Legendaria" target="_blank" class="btn-wa-big">
           <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -1031,7 +1048,9 @@ body {
       </div>
     </div>
 
-    <!-- ── MUROS ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: SUBIDA DE MUROS
+    ════════════════════════════════════════ -->
     <div class="view hero-view" id="view-muros">
       <div class="hero-bg" style="background:var(--bg-muros);"></div>
       <div class="hero-content">
@@ -1052,7 +1071,9 @@ body {
       </div>
     </div>
 
-    <!-- ── BASES NAME (PayPal) ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: BASES VIP (dinámico + PayPal)
+    ════════════════════════════════════════ -->
     <div class="view view-bg" id="view-bases" style="--view-bg-img:var(--bg-bases);">
       <div class="section-header">
         <h2><span class="y">Bases</span> <span class="r">VIP</span></h2>
@@ -1072,7 +1093,9 @@ body {
       </div>
     </div>
 
-    <!-- ── CUENTAS ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: CUENTAS
+    ════════════════════════════════════════ -->
     <div class="view view-bg" id="view-cuentas" style="--view-bg-img:var(--bg-cuentas);">
       <div class="section-header">
         <h2><span class="y">Venta de</span> <span class="r">Cuentas</span></h2>
@@ -1129,7 +1152,9 @@ body {
       -->
     </div>
 
-    <!-- ── REFERENCIAS ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: REFERENCIAS (Firestore en tiempo real)
+    ════════════════════════════════════════ -->
     <div class="view view-bg" id="view-referencias" style="--view-bg-img:var(--bg-referencias);">
       <div class="section-header">
         <h2><span class="y">Referencias</span> <span class="r">y Reviews</span></h2>
@@ -1169,7 +1194,9 @@ body {
       </div>
     </div>
 
-    <!-- ── SOPORTE ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: SOPORTE DIRECTO
+    ════════════════════════════════════════ -->
     <div class="view view-bg" id="view-soporte" style="--view-bg-img:var(--bg-soporte);">
       <div class="section-header">
         <h2><span class="y">Soporte</span> <span class="r">Directo</span></h2>
@@ -1188,7 +1215,9 @@ body {
       </div>
     </div>
 
-    <!-- ── TÉRMINOS ── -->
+    <!-- ════════════════════════════════════════
+         VISTA: TÉRMINOS Y CONDICIONES (Markdown)
+    ════════════════════════════════════════ -->
     <div class="view" id="view-terminos">
       <div class="terms-wrap">
         <h2 id="terminos-titulo">Términos y Condiciones</h2>
@@ -1262,7 +1291,9 @@ body {
   </main>
 </div>
 
-<!-- PAYPAL MODAL -->
+<!-- ════════════════════════════════════════
+     MODAL: PAGO PAYPAL
+════════════════════════════════════════ -->
 <div id="pp-overlay" role="dialog" aria-modal="true">
   <div id="pp-modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1274,7 +1305,9 @@ body {
   </div>
 </div>
 
-<!-- SUCCESS BANNER -->
+<!-- ════════════════════════════════════════
+     BANNER: CONFIRMACIÓN DE PAGO EXITOSO
+════════════════════════════════════════ -->
 <div id="success-banner">
   <h3>✅ ¡Pago Confirmado!</h3>
   <p>Redirigiendo a la página de confirmación…</p>
@@ -1297,15 +1330,15 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 <!--End of Tawk.to Script-->
 
-<!-- ════════════════════════════════════════
-     JAVASCRIPT MODULAR
-════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════════
+     ██  LÓGICA PRINCIPAL DE LA APP (Firebase · UI · Reviews · PayPal)  ██
+════════════════════════════════════════════════════════════════ -->
 <script type="module">
 
 /* ════════════════════════════════════════════════════
-   FIREBASE — SDK Modular (v10)
-   Rellena firebaseConfig con los datos de TU proyecto
-   (ver guía numerada al final de la respuesta del chat).
+   MÓDULO: FIREBASE — Configuración y SDK (v10, modular)
+   Credenciales del proyecto + inicialización de Auth,
+   Firestore y Storage.
 ════════════════════════════════════════════════════ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
@@ -1343,7 +1376,7 @@ function escapeHtml(str) {
 }
 
 /* ════════════════════════════════════════════════════
-   MODULE: AUTH — Firebase Authentication (Correo/Contraseña)
+   MÓDULO: AUTH — Firebase Authentication (Correo/Contraseña)
    Exporta: login(email,pass), register(email,pass), logout(), currentUser()
 ════════════════════════════════════════════════════ */
 const Auth = (() => {
@@ -1383,7 +1416,7 @@ const Auth = (() => {
 })();
 
 /* ════════════════════════════════════════════════════
-   MODULE: UI — navegación y vistas
+   MÓDULO: UI — Navegación entre vistas y estado visual
 ════════════════════════════════════════════════════ */
 const UI = (() => {
 
@@ -1430,7 +1463,8 @@ const UI = (() => {
 })();
 
 /* ════════════════════════════════════════════════════
-   MODULE: REVIEWS — Firestore en tiempo real (colección "reviews")
+   MÓDULO: REVIEWS — Firestore + Storage en tiempo real
+   (colección "reviews", imágenes en "reviews_images/")
 ════════════════════════════════════════════════════ */
 const Reviews = (() => {
 
@@ -1529,7 +1563,7 @@ const Reviews = (() => {
 })();
 
 /* ════════════════════════════════════════════════════
-   MODULE: PAYPAL
+   MÓDULO: PAYPAL — Modal de pago y botones de PayPal
 ════════════════════════════════════════════════════ */
 const PayPalModule = (() => {
 
@@ -1576,7 +1610,8 @@ const PayPalModule = (() => {
 })();
 
 /* ════════════════════════════════════════════════════
-   GLOBAL HANDLERS (llamados desde HTML)
+   MÓDULO: HANDLERS GLOBALES — funciones llamadas desde
+   atributos onclick="" del HTML (expuestas en window)
 ════════════════════════════════════════════════════ */
 let _authMode = 'login'; // 'login' | 'register'
 
@@ -1675,7 +1710,8 @@ window.handleRefImage   = handleRefImage;
 window.openTawkChat     = openTawkChat;
 
 /* ════════════════════════════════════════════════════
-   INIT: navbar clicks + filter bar + scroll
+   MÓDULO: INICIALIZACIÓN — listeners que se activan al
+   cargar la página (clics de navbar, filtros, scroll…)
 ════════════════════════════════════════════════════ */
 document.querySelectorAll('.nb-item').forEach(item => {
   item.addEventListener('click', () => navigate(item.dataset.view));
@@ -1706,62 +1742,81 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<!-- ════════════════════════════════════════
-     CONTENIDO DINÁMICO — site.json (Sveltia CMS)
-     Este bloque es independiente del <script type="module">
-     de arriba: solo lee texto/imágenes de site.json y los
-     inyecta en los id= que ya existen en el HTML.
-════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════════
+     ██  CARGA DINÁMICA — site.json (Sveltia CMS)  ██
+     Bloque independiente del <script type="module"> de arriba.
+     Lee site.json y vuelca cada campo en los id / class del HTML:
+       • Menú de navegación (data.navbar)
+       • Portada: título y subtítulo (data.inicio)
+       • Capital, Liga Legendaria, Muros (data.capital / .liga / .muros)
+       • Términos y Condiciones, en Markdown vía Marked.js (data.terminos)
+       • Bases VIP en tiempo real (data.bases_vip)
+════════════════════════════════════════════════════════════════ -->
 <script>
+/* ── Carga principal: dispara todas las secciones dinámicas ── */
 async function cargarContenido() {
   try {
     const res = await fetch('site.json');
-    if (!res.ok) throw new Error('No se pudo leer site.json (' + res.status + ')');
+    if (!res.ok) throw new Error('No se pudo leer site.json');
     const data = await res.json();
 
-    // ── Inicio ──
+    // 0. Crear Menú de Navegación Dinámico
+    if (Array.isArray(data.navbar)) {
+      const navLinks = document.getElementById('nb-links');
+      if (navLinks) {
+        navLinks.innerHTML = data.navbar.map((item, index) => `
+          <div class="nb-item ${index === 0 ? 'active' : ''}" data-view="${item.id}">
+            <span class="icon">${item.icon}</span> ${item.label}
+          </div>
+        `).join('');
+        // Reactivar los clics del nuevo menú
+        document.querySelectorAll('.nb-item').forEach(item => {
+          item.addEventListener('click', () => navigate(item.dataset.view));
+        });
+      }
+    }
+
+    // 1. Portada
     if (data.inicio) {
-      const titulo = document.getElementById('inicio-titulo-principal');
-      const subtitulo = document.getElementById('inicio-subtitulo');
-      if (titulo && data.inicio.titulo_principal) titulo.innerText = data.inicio.titulo_principal;
-      if (subtitulo && data.inicio.subtitulo) subtitulo.innerText = data.inicio.subtitulo;
+      document.getElementById('inicio-titulo-principal').innerText = data.inicio.titulo_principal;
+      document.getElementById('inicio-subtitulo').innerText = data.inicio.subtitulo;
     }
 
-    // ── Servicios extra (Capital del Clan / Liga Legendaria) ──
-    if (data.servicios_extra) {
-      const s = data.servicios_extra;
-      const jcPrecio = document.getElementById('servicios-juegos-clan-precio');
-      const jcDesc   = document.getElementById('servicios-juegos-clan-desc');
-      const gPrecio  = document.getElementById('servicios-guerras-precio');
-      const gDesc    = document.getElementById('servicios-guerras-desc');
-      if (jcPrecio && s.juegos_clan_precio) jcPrecio.innerText = s.juegos_clan_precio;
-      if (jcDesc   && s.juegos_clan_desc)   jcDesc.innerText   = s.juegos_clan_desc;
-      if (gPrecio  && s.guerras_precio)     gPrecio.innerText  = s.guerras_precio;
-      if (gDesc    && s.guerras_desc)       gDesc.innerText    = s.guerras_desc;
+    // 2. Servicios Exactos
+    if (data.capital) {
+      document.querySelector('#view-capital .price-chip').innerText = data.capital.precio;
+      document.querySelector('#view-capital .hero-phrase').innerText = data.capital.desc;
+    }
+    if (data.liga) {
+      document.querySelector('#view-ll .price-chip').innerText = data.liga.precio;
+      document.querySelector('#view-ll .hero-phrase').innerText = data.liga.desc;
+    }
+    if (data.muros) {
+      document.querySelector('#view-muros .price-chip').innerText = data.muros.precio;
+      document.querySelector('#view-muros .hero-phrase').innerText = data.muros.desc;
     }
 
-    // ── Términos ──
+    // 3. Términos (Usando el traductor Marked.js para quitar los asteriscos)
     if (data.terminos) {
-      const tTitulo = document.getElementById('terminos-titulo');
-      const tContenido = document.getElementById('terminos-contenido');
-      if (tTitulo && data.terminos.titulo) tTitulo.innerText = data.terminos.titulo;
-      if (tContenido && data.terminos.contenido) tContenido.innerText = data.terminos.contenido;
+      document.getElementById('terminos-titulo').innerText = data.terminos.titulo;
+      if (typeof marked !== 'undefined') {
+        document.getElementById('terminos-contenido').innerHTML = marked.parse(data.terminos.contenido);
+      } else {
+        document.getElementById('terminos-contenido').innerText = data.terminos.contenido;
+      }
     }
 
-    // ── Bases VIP (lista dinámica) ──
+    // 4. Bases VIP
     if (Array.isArray(data.bases_vip)) {
       renderBasesVip(data.bases_vip);
     }
 
   } catch (err) {
     console.error('Error cargando site.json:', err);
-    const container = document.getElementById('bases-container');
-    if (container) {
-      container.innerHTML = '<p style="color:var(--fire);font-size:.9rem;">No se pudo cargar el contenido (site.json).</p>';
-    }
   }
 }
 
+/* ── Renderizado de la lista de Bases VIP ── */
 function renderBasesVip(bases) {
   const container = document.getElementById('bases-container');
   if (!container) return;
@@ -1772,7 +1827,7 @@ function renderBasesVip(bases) {
   }
 
   container.innerHTML = bases.map(base => `
-    <div class="base-card vip" data-base='${JSON.stringify(base)}' style="position:relative">
+    <div class="base-card vip" data-base='${JSON.stringify(base).replace(/'/g, "&#39;")}' style="position:relative">
       <img class="base-card-img" src="${base.img}" alt="${base.name}" onerror="this.style.background='linear-gradient(135deg,#1a1230,#2a1a4a)'">
       <span class="base-badge badge-vip" style="position:absolute;top:10px;right:10px;">VIP</span>
       <div class="base-card-body">
@@ -1785,6 +1840,7 @@ function renderBasesVip(bases) {
   `).join('');
 }
 
+/* ── Disparo inicial al cargar el DOM ── */
 document.addEventListener('DOMContentLoaded', cargarContenido);
 </script>
 </body>
