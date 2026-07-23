@@ -1,31 +1,36 @@
 {
   "navbar": [
-    { "id": "home", "icon": "🏠", "label": "Home" },
-    { "id": "capital", "icon": "💰", "label": "Capital" },
-    { "id": "ll", "icon": "⚔️", "label": "Liga Leg." },
-    { "id": "muros", "icon": "🧱", "label": "Muros" },
-    { "id": "bases", "icon": "🏰", "label": "Bases VIP" },
-    { "id": "cuentas", "icon": "👑", "label": "Cuentas" },
-    { "id": "soporte", "icon": "💬", "label": "Soporte" },
+    { "id": "home",        "icon": "🏠", "label": "Home" },
+    { "id": "capital",     "icon": "💰", "label": "Capital" },
+    { "id": "ll",          "icon": "⚔️", "label": "Liga Leg." },
+    { "id": "muros",       "icon": "🧱", "label": "Muros" },
+    { "id": "bases",       "icon": "🏰", "label": "Bases VIP" },
+    { "id": "cuentas",     "icon": "👑", "label": "Cuentas" },
+    { "id": "soporte",     "icon": "💬", "label": "Soporte" },
     { "id": "referencias", "icon": "⭐", "label": "Referencias" },
-    { "id": "terminos", "icon": "📋", "label": "Términos" }
+    { "id": "terminos",    "icon": "📋", "label": "Términos" }
   ],
+
   "inicio": {
-    "titulo_principal": "Clash Services",
-    "subtitulo": "Los mejores servicios para tu aldea"
+    "titulo_principal": "⚡ PANEL DE SERVICIOS",
+    "subtitulo": "Tu base, tu clan y tus cuentas — todo gestionado en un solo lugar."
   },
+
   "capital": {
     "precio": "Maxeo completo: $40 – $45 USD",
-    "desc": "Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día, asegurando un progreso rápido y eficiente. Precio personalizado según tu tanda y cantidad solicitada."
+    "desc": "Acelera las mejoras de tu distrito de la capital sin esperar años de farmeo. Nuestro equipo maximiza todas las mejoras de tu capital en menos de un día."
   },
+
   "liga": {
     "precio": "Desde $4 USD",
-    "desc": "Obtén bases de Liga Legendaria probadas en el más alto nivel. Distribuciones populares de jugadores icónicos y diseños que resisten los ataques más exigentes. Bases seleccionadas y optimizadas para mantenerte firme en Legends League."
+    "desc": "Obtén bases de Liga Legendaria probadas en el más alto nivel, con diseños que resisten los ataques más exigentes."
   },
+
   "muros": {
     "precio": "Desde $1 hasta $10 USD, según cantidad y nivel",
-    "desc": "Maximiza la defensa de tu aldea con muros de nivel máximo. Además de blindar tu base, le da un cambio visual y estético único. Proceso seguro sin necesidad de contraseñas ni acceso directo a tu correo. Tu aldea nunca había estado tan blindada 🔐, sin riesgo de ban."
+    "desc": "Maximiza la defensa de tu aldea con muros de nivel máximo, sin necesidad de contraseñas ni acceso directo a tu correo."
   },
+
   "bases_vip": [
     {
       "id": "v1",
@@ -38,8 +43,10 @@
       "icon": "💎"
     }
   ],
+
   "terminos": {
     "titulo": "Términos y Condiciones",
-    "contenido": "Aquí van todas las reglas y políticas de tus servicios. Puedes usar formato para resaltar el texto."
+    "contenido": "**Clash Services** funciona de manera independiente y no está afiliado a Supercell.\n\n- Los pagos se procesan por PayPal.\n- Todo cambio debe coordinarse por WhatsApp.\n\nPara más información contáctanos directamente."
   }
 }
+
