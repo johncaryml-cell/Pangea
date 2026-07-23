@@ -74,32 +74,8 @@
       "icon": "💎"
     }
   ],
-  "liga_bases": [
-    {
-      "id": "ll_mrwzzxp2636",
-      "img": "img/liga_bases-ll_mrwzzxp2636-1784780132590.jpg",
-      "desc": "Descripción de la base…",
-      "precio": "$0 USD"
-    }
-  ],
-  "cuentas": [
-    {
-      "id": "c_mrx007oo970",
-      "img": "img/cuentas-c_mrx007oo970-1784780133681.jpg",
-      "nombre": "Nueva cuenta",
-      "desc": "Descripción breve de la cuenta.",
-      "precio": "$0 USD",
-      "estado": "Disponible",
-      "heroes": {
-        "rey": "0",
-        "reina": "0",
-        "centinela": "0",
-        "duque": "0",
-        "luchadora": "0",
-        "principe": "0"
-      }
-    }
-  ],
+  "liga_bases": [],
+  "cuentas": [],
   "terminos": {
     "titulo": "Términos y Condiciones",
     "contenido": ""
