@@ -14,6 +14,14 @@ collections:
         name: "site"
         label: "Editar Todo el Sitio"
         fields:
+          - label: "0. MENÚ DE NAVEGACIÓN (Barra Superior)"
+            name: "navbar"
+            widget: "list"
+            fields:
+              - {label: "ID de la sección (¡No cambiar!)", name: "id", widget: "string"}
+              - {label: "Ícono (Emoji)", name: "icon", widget: "string"}
+              - {label: "Texto del botón", name: "label", widget: "string"}
+
           - label: "1. PORTADA E INICIO"
             name: "inicio"
             widget: "object"
@@ -21,29 +29,41 @@ collections:
               - {label: "Título Principal", name: "titulo_principal", widget: "string"}
               - {label: "Subtítulo", name: "subtitulo", widget: "string"}
           
-          - label: "2. BASES VIP"
+          - label: "2. CAPITAL DEL CLAN"
+            name: "capital"
+            widget: "object"
+            fields:
+              - {label: "Precio Capital", name: "precio", widget: "string"}
+              - {label: "Descripción", name: "desc", widget: "text"}
+              
+          - label: "3. LIGA LEGENDARIA"
+            name: "liga"
+            widget: "object"
+            fields:
+              - {label: "Precio Liga", name: "precio", widget: "string"}
+              - {label: "Descripción", name: "desc", widget: "text"}
+
+          - label: "4. MUROS"
+            name: "muros"
+            widget: "object"
+            fields:
+              - {label: "Precio Muros", name: "precio", widget: "string"}
+              - {label: "Descripción", name: "desc", widget: "text"}
+
+          - label: "5. BASES VIP (Listado)"
             name: "bases_vip"
             widget: "list"
             fields:
               - {label: "ID", name: "id", widget: "string"}
-              - {label: "Tipo", name: "type", widget: "string"}
+              - {label: "Tipo (Escribir 'vip')", name: "type", widget: "string"}
               - {label: "Nombre", name: "name", widget: "string"}
-              - {label: "Precio (Número)", name: "price", widget: "number"}
-              - {label: "Etiqueta de Precio", name: "priceLabel", widget: "string"}
+              - {label: "Precio Numérico (Para PayPal)", name: "price", widget: "number"}
+              - {label: "Etiqueta de Precio (Visual)", name: "priceLabel", widget: "string"}
               - {label: "Imagen", name: "img", widget: "image"}
               - {label: "Descripción", name: "desc", widget: "text"}
               - {label: "Ícono", name: "icon", widget: "string"}
 
-          - label: "3. SERVICIOS EXTRA (Juegos de Clan y Guerras)"
-            name: "servicios_extra"
-            widget: "object"
-            fields:
-              - {label: "Precio Juegos de Clan", name: "juegos_clan_precio", widget: "string"}
-              - {label: "Descripción Juegos de Clan", name: "juegos_clan_desc", widget: "text"}
-              - {label: "Precio Guerras", name: "guerras_precio", widget: "string"}
-              - {label: "Descripción Guerras", name: "guerras_desc", widget: "text"}
-
-          - label: "4. TÉRMINOS Y CONDICIONES"
+          - label: "6. TÉRMINOS Y CONDICIONES"
             name: "terminos"
             widget: "object"
             fields:
