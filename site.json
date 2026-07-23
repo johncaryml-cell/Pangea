@@ -1,50 +1,14 @@
 {
   "navbar": [
-    {
-      "id": "home",
-      "icon": "🏠",
-      "label": "Home"
-    },
-    {
-      "id": "capital",
-      "icon": "💰",
-      "label": "Capital"
-    },
-    {
-      "id": "ll",
-      "icon": "⚔️",
-      "label": "Liga Leg."
-    },
-    {
-      "id": "muros",
-      "icon": "🧱",
-      "label": "Muros"
-    },
-    {
-      "id": "bases",
-      "icon": "🏰",
-      "label": "Bases VIP"
-    },
-    {
-      "id": "cuentas",
-      "icon": "👑",
-      "label": "Cuentas"
-    },
-    {
-      "id": "soporte",
-      "icon": "💬",
-      "label": "Soporte"
-    },
-    {
-      "id": "referencias",
-      "icon": "⭐",
-      "label": "Referencias"
-    },
-    {
-      "id": "terminos",
-      "icon": "📋",
-      "label": "Términos"
-    }
+    { "id": "home", "icon": "🏠", "label": "Home" },
+    { "id": "capital", "icon": "💰", "label": "Capital" },
+    { "id": "ll", "icon": "⚔️", "label": "Liga Leg." },
+    { "id": "muros", "icon": "🧱", "label": "Muros" },
+    { "id": "bases", "icon": "🏰", "label": "Bases VIP" },
+    { "id": "cuentas", "icon": "👑", "label": "Cuentas" },
+    { "id": "soporte", "icon": "💬", "label": "Soporte" },
+    { "id": "referencias", "icon": "⭐", "label": "Referencias" },
+    { "id": "terminos", "icon": "📋", "label": "Términos" }
   ],
   "inicio": {
     "titulo_principal": "⚡ PANEL DE SERVICIOS",
@@ -74,6 +38,8 @@
       "icon": "💎"
     }
   ],
+  "liga_bases": [],
+  "cuentas": [],
   "terminos": {
     "titulo": "Términos y Condiciones",
     "contenido": ""
