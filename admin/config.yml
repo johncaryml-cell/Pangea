@@ -7,15 +7,22 @@ media_folder: "img"
 public_folder: "img"
 
 collections:
-  - name: "bases"
-    label: "Bases VIP"
+  - name: "contenido_global"
+    label: "Gestión de Toda la Web"
     files:
-      - file: "bases.json"
-        name: "bases_vip"
-        label: "Configuración de Bases VIP"
+      - file: "site.json"
+        name: "site"
+        label: "Editar Todo el Sitio"
         fields:
-          - label: "Lista de Bases"
-            name: "bases"
+          - label: "1. PORTADA E INICIO"
+            name: "inicio"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "titulo_principal", widget: "string"}
+              - {label: "Subtítulo", name: "subtitulo", widget: "string"}
+          
+          - label: "2. BASES VIP"
+            name: "bases_vip"
             widget: "list"
             fields:
               - {label: "ID", name: "id", widget: "string"}
@@ -26,3 +33,19 @@ collections:
               - {label: "Imagen", name: "img", widget: "image"}
               - {label: "Descripción", name: "desc", widget: "text"}
               - {label: "Ícono", name: "icon", widget: "string"}
+
+          - label: "3. SERVICIOS EXTRA (Juegos de Clan y Guerras)"
+            name: "servicios_extra"
+            widget: "object"
+            fields:
+              - {label: "Precio Juegos de Clan", name: "juegos_clan_precio", widget: "string"}
+              - {label: "Descripción Juegos de Clan", name: "juegos_clan_desc", widget: "text"}
+              - {label: "Precio Guerras", name: "guerras_precio", widget: "string"}
+              - {label: "Descripción Guerras", name: "guerras_desc", widget: "text"}
+
+          - label: "4. TÉRMINOS Y CONDICIONES"
+            name: "terminos"
+            widget: "object"
+            fields:
+              - {label: "Título de Términos", name: "titulo", widget: "string"}
+              - {label: "Contenido de Términos", name: "contenido", widget: "markdown"}
